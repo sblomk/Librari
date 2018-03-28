@@ -4,32 +4,32 @@ body {
   font-family: sans-serif;
 }
 
-.App {
+.Index {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
+.Index-logo {
+  animation: Index-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App-header {
+.Index-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
 }
 
-.App-title {
+.Index-title {
   font-family: Times New Roman;
   font-size: 1.5em;
 }
 
-.App-intro {
+.Index-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+@keyframes Index-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
