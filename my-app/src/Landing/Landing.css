@@ -1,0 +1,48 @@
+.bookresults{
+    	overflow-x: scroll;
+    	overflow-y: hidden;
+    	white-space:nowrap;
+	height:300px;
+}
+
+
+.bookfound{
+	display:inline-block;
+	margin-top:2%;
+	margin-right:1%;
+	margin-left:1%;
+}
+
+/* relevant styles */
+.bookimg {
+
+  position: relative;
+  height: 204px;
+  width: 128px;
+}
+
+.booktitle {
+  display:block;
+  position: absolute;
+  height: 204px;
+  width: 128px;
+  margin-top:0px;
+  margin-left:9%;	
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+
+  /* transition effect. not necessary */
+  transition: opacity .5s, visibility .5s;
+}
+
+.bookfound:hover .booktitle {
+  visibility: visible;
+  opacity: 1;
+}
+

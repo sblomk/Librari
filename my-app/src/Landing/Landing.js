@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import '../App.css';
+//import '../App.css';
+import './Landing.css';
 
 class Landing extends Component {
 	constructor(props) {
@@ -41,8 +42,8 @@ class Landing extends Component {
         break;
       case 'LOADED':
 				bookList = this.state.books.items.map((book) =>
-          <div key={book.id}><img src={book.volumeInfo.imageLinks.thumbnail}/>
-          <h3>{book.volumeInfo.title}</h3></div>
+          <div className="bookfound col-md-1"key={book.id}><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+          <h3 className="booktitle">{book.volumeInfo.title}</h3></div>
         )
         break;
       default:
@@ -50,7 +51,7 @@ class Landing extends Component {
         break;
     }
 		return (
-				<div>
+				<div className="bookresults row">
 					{bookList}
 				</div>
 	     );
