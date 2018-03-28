@@ -9,7 +9,7 @@ body {
 }
 
 .Index-logo {
-  animation: Index-logo-spin infinite 20s linear;
+  animation: Index-logo-spin infinite 0.20s linear;
   height: 80px;
 }
 
