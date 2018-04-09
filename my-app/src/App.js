@@ -4,7 +4,8 @@ import { Route } from 'react-router-dom';
 import Landing from './Landing/Landing';
 import Header from './Header/Header';
 import { modelInstance } from './data/BookModel'
-import Search from './Search/Search'
+import Search from './Search/Search';
+import Book from './Book/Book';
 
 class App extends Component {
   constructor(props){
@@ -21,6 +22,7 @@ class App extends Component {
         <Route exact path="/" component={Header}/>
         <Route exact path="/" render={()=> <Search model ={modelInstance}/>}/>
         <Route exact path="/" render={()=> <Landing model ={modelInstance}/>}/>
+        <Route path="/book/:value" render={()=> <Book model = {modelInstance}/>}/>
       </div>
     );
   }

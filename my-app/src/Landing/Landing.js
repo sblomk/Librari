@@ -3,17 +3,23 @@ import logo from './logo.svg';
 //import '../App.css';
 import './Landing.css';
 import { debounce } from 'lodash';
+import { Link } from 'react-router-dom';
 
 class Landing extends Component {
 	constructor(props) {
     super(props);
 
 		this.props.model.addObserver(this)
+		this.handleClick = this.handleClick.bind(this);
 		
     this.state = {
 			status: 'INITIAL'
 		}
 		this.update();
+	}
+	handleClick = (event) => {
+		console.log('!!!!!!!!!!' + event.target);
+		this.props.model.setChosen(event.target);
 	}
 
 	getBooks = () => {
@@ -59,9 +65,8 @@ class Landing extends Component {
 					}
 				}
 				bookList = this.state.books.items.map((book) => 
-					//if(book.volumeInfo.imageLinks.thumbnail)
-						<div className="bookfound col-md-1"key={book.id}><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-						<h3 className="booktitle">{book.volumeInfo.title}</h3></div>
+						<Link to={'/book/'} params={book} key={book.id} onClick={this.handeClick}><div className="bookfound col-md-1 col-lg-1" ><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+						<h3 className="booktitle">{book.volumeInfo.title}</h3></div></Link>
         )
         break;
       default:
@@ -69,7 +74,7 @@ class Landing extends Component {
         break;
     }
 		return (
-				<div className="bookresults row">
+				<div className="bookresults row" >
 					{bookList}
 				</div>
 	     );

@@ -2,6 +2,7 @@ const BookModel = function(){
     let apiKey = 'AIzaSyBnc2ubpX3pUGpAfNpxFsjO3RfWK-r1nzg';
     let filter = 'Tolkien';
     let observers = [];
+    let book;
 
     this.setFilter = function(q) {
       if (!(Object.is(q, ''))){
@@ -10,6 +11,13 @@ const BookModel = function(){
       }
     }
     
+    this.setChosen = function(b){
+      console.log("i modellen, vald bok är " + b);
+      book = b;
+    }
+    this.getChosen = function(){
+      return book;
+    }
 
     this.getAllBooks = function() {
         const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&key=' + apiKey;

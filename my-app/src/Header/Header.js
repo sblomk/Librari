@@ -9,9 +9,6 @@ class Header extends Component {
 	          <img src={logo} className="Landing-logo" alt="logo" />
 	          <h1 className="Landing-title">Librari</h1>
 	        </header>
-	        <p className="Landing-intro">
-	          To get started, edit <code>src/App.js</code> and save to reload.
-	        </p>
 	      </div>
 	     );
 	}
