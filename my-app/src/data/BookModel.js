@@ -4,9 +4,10 @@ const BookModel = function(){
     let observers = [];
 
     this.setFilter = function(q) {
+      if (!(Object.is(q, ''))){
         filter = q;
-        console.log("i modellen " + filter)
         notifyObservers();
+      }
     }
     
 

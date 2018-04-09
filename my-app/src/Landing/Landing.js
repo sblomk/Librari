@@ -51,10 +51,16 @@ class Landing extends Component {
       case 'INITIAL':
 				bookList = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
         break;
-      case 'LOADED':
+			case 'LOADED':
+				for (let i = 0; i < this.state.books.items.length; i++){
+					console.log(this.state.books.items[i].volumeInfo.imageLinks)
+					if (this.state.books.items[i].volumeInfo.imageLinks == null) {
+						this.state.books.items[i].volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+					}
+				}
 				bookList = this.state.books.items.map((book) => 
 					//if(book.volumeInfo.imageLinks.thumbnail)
-						<div className="bookfound col-md-1"key={book.id}><img className="bookimg" src="https://ia.media-imdb.com/images/M/MV5BMGMxMmRkNzctMWQzYy00MTY3LWEzMDAtMzEzMDhkZWI4MjZlXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SY1000_CR0,0,703,1000_AL_.jpg"/>
+						<div className="bookfound col-md-1"key={book.id}><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
 						<h3 className="booktitle">{book.volumeInfo.title}</h3></div>
         )
         break;
