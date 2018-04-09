@@ -3,12 +3,30 @@ const BookModel = function(){
     let filter = 'Tolkien';
     let observers = [];
     let book;
+    let search = [];
 
     this.setFilter = function(q) {
       if (!(Object.is(q, ''))){
         filter = q;
         notifyObservers();
       }
+    }
+
+    this.setSearch = function(results){
+      search = results;
+      console.log("i modellen, search är: " + search);
+      //notifyObservers();
+    }
+
+    this.getSearch = function(id){
+      for (var i = 0; i < search.length; i++){
+        if (search[i].id === id){
+          console.log( 'i getSearch, id för den sökta är:  ' + search[i].id);
+          console.log(search[i]);
+          return (search[i]);
+        }
+      }
+      return search[0];
     }
     
     this.setChosen = function(b){

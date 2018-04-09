@@ -23,9 +23,10 @@ class Landing extends Component {
 	}
 
 	getBooks = () => {
-		console.log("hallååååå" + this.status);
+		//console.log("hallååååå" + this.status);
     this.props.model.getAllBooks().then(books => {
-			console.log(books);
+			console.log(books.items);
+			this.props.model.setSearch(books.items);
       this.setState({
         status: 'LOADED',
         books: books
@@ -40,10 +41,9 @@ class Landing extends Component {
 	update = () => {
     // when data is retrieved we update the state
 		// this will cause the component to re-render
-		console.log("i update")
+		//console.log("i update")
 		this.getBooks();
 		//debounce(this.getBooks,500);
-		console.log('sho')
 
 
   }
@@ -59,13 +59,13 @@ class Landing extends Component {
         break;
 			case 'LOADED':
 				for (let i = 0; i < this.state.books.items.length; i++){
-					console.log(this.state.books.items[i].volumeInfo.imageLinks)
+				//	console.log(this.state.books.items[i].volumeInfo.imageLinks)
 					if (this.state.books.items[i].volumeInfo.imageLinks == null) {
 						this.state.books.items[i].volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
 					}
 				}
 				bookList = this.state.books.items.map((book) => 
-						<Link to={'/book/'} params={book} key={book.id} onClick={this.handeClick}><div className="bookfound col-md-1 col-lg-1" ><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+						<Link to={'/book/' + book.id} key={book.id} onClick={this.handeClick}><div className="bookfound col-md-1 col-lg-1" ><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
 						<h3 className="booktitle">{book.volumeInfo.title}</h3></div></Link>
         )
         break;
