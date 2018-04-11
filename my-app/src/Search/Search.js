@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Search.css';
 
 
 var filter = '';
@@ -22,8 +23,8 @@ class Search extends Component {
 
     render(){
         return(
-            <div className = "col-md-12">
-            <input name="filter" type="text" value={this.state.value}  id="filter" placeholder="Enter key words" onChange={this.handleChange}/>
+            <div className="col-md-12 searchbar">
+                <input name="filter" type="text" value={this.state.value}  className="searchWindow" id="filter" placeholder="Enter key words" onChange={this.handleChange}/>
             </div>
         )
     }

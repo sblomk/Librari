@@ -65,8 +65,12 @@ class Landing extends Component {
 					}
 				}
 				bookList = this.state.books.items.map((book) => 
-						<Link to={'/book/' + book.id} key={book.id} onClick={this.handeClick}><div className="bookfound col-md-1 col-lg-1" ><img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-						<h3 className="booktitle">{book.volumeInfo.title}</h3></div></Link>
+						<Link className="book" to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
+							<div className="bookfound col-md-1.5 col-lg-1.5" >
+								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+								<div className="booktitle">{book.volumeInfo.title}</div>
+							</div>
+						</Link>
         )
         break;
       default:

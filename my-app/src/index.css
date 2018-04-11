@@ -5,7 +5,6 @@ body {
 }
 
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -27,6 +26,10 @@ body {
 
 .App-intro {
   font-size: large;
+}
+
+.row{
+width: 100%;
 }
 
 @keyframes App-logo-spin {

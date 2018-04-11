@@ -1,0 +1,17 @@
+.searchbar{
+padding: 1%;
+}
+
+.searchWindow{
+border: 0px;
+border-radius: 5px;
+background: #F2F2F2;
+width: 50%;
+padding: 5px;
+font-family: Futura;
+color: #000;
+}
+
+.searchWindow:focus {
+outline: none;
+}
