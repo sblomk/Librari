@@ -26,16 +26,7 @@ class Book extends Component {
     render(){
         let chosen = this.props.model.getSearch(this.state.id)
         return(
-            <div className="book row">
-                <div className="col-sm-6 col-lg-6 bookImage">
-                    <img src={chosen.volumeInfo.imageLinks.thumbnail}/>
-                </div>
-                <div className="col-sm-6 col-lg-6 bookInformation">
-                    <h1>{chosen.volumeInfo.title}</h1>
-                    <h2>{chosen.volumeInfo.subtitle}</h2>
-                    <h3>{chosen.volumeInfo.authors[0]}</h3>
-                    <button onClick={() => this.props.model.addToShelf(1)}>Add to MyLibrari</button>
-                </div>
+            <div className="library">
             </div>
             );
     }
