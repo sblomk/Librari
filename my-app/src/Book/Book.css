@@ -1,0 +1,34 @@
+.book{
+margin: 5% 25%;
+width: 50%;
+text-align: center;
+padding: 10px;
+color: #000000;
+border: 0px;
+border-radius: 5px;
+background-color: #f2f2f2;
+}
+
+.book img{
+margin: 50px;
+}
+
+h1, h2, h3{
+font-family: Futura;
+}
+
+.book button{
+padding: 10px;
+border-radius: 5px;
+border: 0px;
+margin: 20px;
+font-family: Futura;
+}
+
+.book button:focus{
+outline: none;
+}
+
+.book button:hover{
+opacity: 0.9;
+}
