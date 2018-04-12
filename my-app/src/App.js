@@ -25,7 +25,7 @@ class App extends Component {
       name: "David",
       age: 25
     }
-    itemsRef.push(item);    
+    //itemsRef.push(item);    
 
     return (
       <div className='App'>

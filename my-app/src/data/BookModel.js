@@ -3,7 +3,10 @@ const BookModel = function(){
     let filter = 'Tolkien';
     let observers = [];
     let book;
-    let search = [];
+    let search = JSON.parse(localStorage.getItem('search'));
+    if (search == null) {
+      search = []
+    };
 
     this.setFilter = function(q) {
       if (!(Object.is(q, ''))){
@@ -14,12 +17,13 @@ const BookModel = function(){
 
     this.setSearch = function(results){
       search = results;
-      //console.log("i modellen, search är: " + search);
-      //notifyObservers();
+      localStorage.setItem('search', JSON.stringify(search));
     }
 
     this.getSearch = function(id){
-      console.log("Vi vill ha " + id);
+      console.log(id+"id in getSearch")
+      console.log(search.length)
+      console.log(search+"search");
       for (var i = 0; i < search.length; i++){
         console.log(i + " " + search[i].id);
         if (search[i].id === id){

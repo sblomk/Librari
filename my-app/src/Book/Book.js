@@ -24,11 +24,21 @@ class Book extends Component {
     */
 
     render(){
-        //console.log(this.state.id);
         let chosen = this.props.model.getSearch(this.state.id)
-        //console.log(chosen);
-        //console.log("i books, id för vald bok är: " + chosen.id);
-        return(<h1>{chosen.volumeInfo.title}</h1>);
+        console.log(chosen + "chosen")
+        return(
+            <div className="book row">
+                <div className="col-sm-6 col-lg-6 bookImage"></div>
+                    <img src={chosen.volumeInfo.imageLinks.thumbnail}/>
+                <div className="col-sm-6 col-lg-6 bookInformation">
+                    <h1>{chosen.volumeInfo.title}</h1>
+                    <h2>{chosen.volumeInfo.subtitle}</h2>
+                    <h3>{chosen.volumeInfo.authors[0]}</h3>
+                    <button>Add to MyLibrari</button>
+                </div>
+                
+            </div>
+            );
     }
 }
 export default Book;
