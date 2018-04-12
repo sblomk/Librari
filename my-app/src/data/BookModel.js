@@ -14,14 +14,16 @@ const BookModel = function(){
 
     this.setSearch = function(results){
       search = results;
-      console.log("i modellen, search är: " + search);
+      //console.log("i modellen, search är: " + search);
       //notifyObservers();
     }
 
     this.getSearch = function(id){
+      console.log("Vi vill ha " + id);
       for (var i = 0; i < search.length; i++){
+        console.log(i + " " + search[i].id);
         if (search[i].id === id){
-          console.log( 'i getSearch, id för den sökta är:  ' + search[i].id);
+          //console.log( 'i getSearch, id för den sökta är:  ' + search[i].id);
           console.log(search[i]);
           return (search[i]);
         }
@@ -30,8 +32,9 @@ const BookModel = function(){
     }
     
     this.setChosen = function(b){
-      console.log("i modellen, vald bok är " + b);
+      //console.log("i modellen, vald bok är " + b);
       book = b;
+      //console.log(book);
     }
     this.getChosen = function(){
       return book;
