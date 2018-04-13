@@ -8,8 +8,7 @@ const BookModel = function(){
     if (book == null){
       book = {id: 'hej'};
     }
-    let shelves = [{id:1, name: 'Hello', books: []}];
-    let counter = 0;
+    let shelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
 
     // Sparar sökresultatet i cookies så en kan refrescha utan kaos
     let search = JSON.parse(localStorage.getItem('search'));
@@ -55,25 +54,42 @@ const BookModel = function(){
     }
 
     //Lägger till aktiv bok till shelf med id som skickas in. Just nu skickas alla böcker in i id=1.
-    this.addToShelf = function(id) {
+    this.addToShelf = function(shelfId, bookId) {
       for (var i = 0; i < shelves.length; i++) {
-        if (shelves[i].id === id) {
-          shelves[i].books.push(this.getSearch(id));
+        if (shelves[i].id === shelfId) {
+          for(var j = 0; j < shelves[i].books.length; j++){
+            if(shelves[i].books[j].id == bookId){
+              return
+            } 
+          }
+          shelves[i].books.push(this.getSearch(bookId));
         }
       }
-      console.log(shelves)
     }
 
+    this.createShelfId = function() {
+      let counter = 1
+      for(var i = 0; i < shelves.length; i++) {
+        if(shelves[i].id == counter){
+          counter += 1;
+        } else {
+          return counter
+        }
+      }
+      return counter
+    }
 
-    // Inte implementerad just nu
-    this.createShelf = function(){
-      let shelfID = counter +1
+    this.createShelf = function(id, name){
       let shelf = {
-        id: shelfID,
-        name: "Hello",
+        id: id,
+        name: name,
         books: []
       }
       shelves.push(shelf)
+    }
+
+    this.getShelves = function() {
+      return shelves;
     }
   
     // API Helper methods

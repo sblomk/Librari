@@ -18,14 +18,11 @@ class Landing extends Component {
 		this.update();
 	}
 	handleClick = (event) => {
-		//console.log('!!!!!!!!!!' + event.target);
 		this.props.model.setChosen(event.target);
 	}
 
 	getBooks = () => {
-		//console.log("hallååååå" + this.status);
     this.props.model.getAllBooks().then(books => {
-			//console.log(books.items);
 			this.props.model.setSearch(books.items);
       this.setState({
         status: 'LOADED',

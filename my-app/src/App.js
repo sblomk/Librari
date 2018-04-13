@@ -35,9 +35,9 @@ class App extends Component {
     return (
       <div className='App'>
         <Route exact path="/" component={Header}/>
-        <Route exact path="/" render={()=> <Search model ={modelInstance}/>}/>
-        <Route exact path="/" render={()=> <Landing model ={modelInstance}/>}/>
-        <Route path="/book/:value" render={()=> <Book model = {modelInstance}/>}/>
+        <Route exact path="/" render={()=> <Search model={modelInstance}/>}/>
+        <Route exact path="/" render={()=> <Landing model={modelInstance}/>}/>
+        <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
       </div>
     );
   }
