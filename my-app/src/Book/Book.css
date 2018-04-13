@@ -23,6 +23,8 @@ border-radius: 5px;
 border: 0px;
 margin: 20px;
 font-family: Futura;
+background: #666699;
+text-transform: uppercase;
 }
 
 .book button:focus{
@@ -31,4 +33,21 @@ outline: none;
 
 .book button:hover{
 opacity: 0.9;
+}
+
+.book input, .book select {
+border: 0px;
+border-radius: 5px;
+background: #FFF;
+width: 50%;
+padding: 5px;
+margin: 10px 50px ;
+font-family: Futura;
+font-size: 14px;
+color: #000;
+text-align: center;
+}
+
+.book input:focus {
+outline: none;
 }
