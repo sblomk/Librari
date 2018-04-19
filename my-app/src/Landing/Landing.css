@@ -1,25 +1,28 @@
 .bookresults{
-/*overflow-x: scroll;*/
+background: #FFF;
+overflow-x: scroll;
 overflow-y: hidden;
+position: relative;
 white-space: nowrap;
 height: auto;
 max-height: 300px;
-display: inline-block;
+display: block;
 width: 98%;
 margin-left: 1%;
 margin-right: 1%;
+padding-top: 10px;
+padding-bottom: 10px;
+border-bottom: 15px solid #446083;
 }
 
 
 .bookfound{
 display: inline-block;
 margin-right: 1%;
-width:auto;
 }
 
 /* relevant styles */
 .bookimg {
-display: block;
 height: 204px;
 width: 128px;
 }
@@ -28,7 +31,7 @@ width: 128px;
 font-family: Futura;
 font-size: 14px;
 display: block;
-position: relative;
+position: absolute;
 height: 204px;
 width: 128px;
 padding: 15px;
@@ -38,13 +41,11 @@ color: #fff;
 opacity: 0;
 visibility: hidden;
 text-align: center;
-
-/* transition effect. not necessary */
 transition: opacity .5s, visibility .5s;
+white-space: normal;
 }
 
 .bookfound:hover .booktitle {
 visibility: visible;
 opacity: 1;
 }
-

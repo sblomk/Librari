@@ -63,7 +63,7 @@ class Landing extends Component {
 				// Each book item gets a link to a more detailed view (the book view)
 				bookList = this.state.books.items.map((book) => 
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
-							<div className="bookfound col-md-1.5 col-lg-1.5" >
+							<div className="bookfound" >
 								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
 								<div className="booktitle">{book.volumeInfo.title}</div>
 							</div>
@@ -75,7 +75,7 @@ class Landing extends Component {
         break;
     }
 		return (
-				<div className="bookresults row" >
+				<div className="bookresults" >
 					{bookList}
 				</div>
 	     );
