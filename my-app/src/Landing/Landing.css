@@ -23,7 +23,12 @@ display: block;
 height: 204px;
 width: 128px;
 }
-
+#hej {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
 .booktitle {
 font-family: Futura;
 font-size: 14px;

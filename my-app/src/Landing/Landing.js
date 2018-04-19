@@ -19,7 +19,7 @@ class Landing extends Component {
 		}
 		this.update();
 	}
-	
+
 	// handleClick will save the book object chosen by the user
 	handleClick = (event) => {
 		this.props.model.setChosen(event.target);
@@ -65,7 +65,7 @@ class Landing extends Component {
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
 							<div className="bookfound col-md-1.5 col-lg-1.5" >
 								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-								<div className="booktitle">{book.volumeInfo.title}</div>
+								<div id="hej" className="booktitle">{book.volumeInfo.title}</div>
 							</div>
 						</Link>
         )
