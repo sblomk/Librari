@@ -47,7 +47,7 @@ const BookModel = function(){
     }
 
     this.getAllBooks = function() {
-        const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&key=' + apiKey;
+        const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40' + '&key=' + apiKey;
         return fetch(url)
             .then(processResponse)
             .catch(handleError)

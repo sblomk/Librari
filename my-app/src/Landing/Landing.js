@@ -5,6 +5,8 @@ import './Landing.css';
 import { debounce } from 'lodash';
 import { Link } from 'react-router-dom';
 
+//In this view, the books that corresponds to the user's search are displayed
+
 class Landing extends Component {
 	constructor(props) {
     super(props);
@@ -17,6 +19,8 @@ class Landing extends Component {
 		}
 		this.update();
 	}
+	
+	// handleClick will save the book object chosen by the user
 	handleClick = (event) => {
 		this.props.model.setChosen(event.target);
 	}
@@ -38,29 +42,25 @@ class Landing extends Component {
 	update = () => {
     // when data is retrieved we update the state
 		// this will cause the component to re-render
-		//console.log("i update")
 		this.getBooks();
 		//debounce(this.getBooks,500);
-
-
   }
 
 	render() {
 		let bookList = null;
-    // depending on the state we either generate
-    // useful message to the user or show the list
-    // of returned dishes
+		// For different cases, we display either a message or the returned books
     switch (this.state.status) {
       case 'INITIAL':
 				bookList = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
         break;
 			case 'LOADED':
 				for (let i = 0; i < this.state.books.items.length; i++){
-				//	console.log(this.state.books.items[i].volumeInfo.imageLinks)
+					// Checking if there are any books that are missing an image, adding a placeholder img in those cases
 					if (this.state.books.items[i].volumeInfo.imageLinks == null) {
 						this.state.books.items[i].volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
 					}
 				}
+				// Each book item gets a link to a more detailed view (the book view)
 				bookList = this.state.books.items.map((book) => 
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
 							<div className="bookfound col-md-1.5 col-lg-1.5" >

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Book.css';
 
+// This view displays the chosen book, after clicking on it in the Landing view.
+// Here, the book can be added to one of the shelves.
+
 var id;
 
 class Book extends Component {
@@ -15,22 +18,25 @@ class Book extends Component {
         
         this.state = {
             status: 'INITIAL',
-            id: window.location.href.toString().split("book/")[1]  
+            id: window.location.href.toString().split("book/")[1]  // Fetching the id from the URL
         }
     }
 
+    // handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
         this.setState({ 
             activeShelf: e.target.value
         }, this.update)
     }
 
+    // handler for creating new shelves
     handleInputChange(e) {
         this.setState({
             newShelfName: e.target.value
         }, this.update)
     }
 
+    // returns a shelf id, and creates an id in the case that there is none
     getShelfId(){
         if(this.state.activeShelf!=null){
             return parseInt(this.state.activeShelf)
@@ -41,25 +47,25 @@ class Book extends Component {
         }
     }
 
-    /*
-    update(){
-        var urlType = new URL(window.location.href).toString();
-        id = urlType.split("book/")[1]
-        console.log("coolt id " + id);
-    }
-    */
 
     render(){
         let chosen = this.props.model.getSearch(this.state.id);
         let shelves = this.props.model.getShelves();
+        // for each shelf, display the value of shelf.name as the option in the dropdown menu
         let shelfList = shelves.map((shelf) => 
             <option value={shelf.id} key={shelf.id}>
                 {shelf.name}
             </option>
             
         )
+        // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
+        if (chosen.volumeInfo.imageLinks == null) {
+            chosen.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+        }
         console.log(this.state.activeShelf)
+
         return(
+            // displaying information about the book, as well as the option of shelves
             <div className="book row">
                 <div className="col-sm-6 col-lg-6 bookImage">
                     <img src={chosen.volumeInfo.imageLinks.thumbnail}/>
