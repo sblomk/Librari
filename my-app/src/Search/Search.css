@@ -1,28 +1,19 @@
 .searchbar{ 
-padding: 1%;
-text-align:center;
+padding-bottom: 10px;
+text-align: center;
 }
 
 .searchWindow{
 border: 0px;
 border-radius: 5px;
 background: #FFF;
-width: 50%;
+width: 400px;
 padding: 5px;
 font-family: Futura;
 color: #000;
+text-align: center;
 }
 
 .searchWindow:focus {
 outline: none;
-}
-
-
-.box{
-    width: 100%;
-}
-
-#filter {
-    margin: 0 auto;
-    display: inline-block;
 }

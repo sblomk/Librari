@@ -1,19 +1,44 @@
-.bookfound{
-display: inline-block;
-margin-right: 1%;
+.myLibrari{
+padding: 20px;
 }
 
-/* relevant styles */
+.shelfname{
+font-family: Futura;
+font-size: 18px;
+color: #FFF;
+margin-bottom: 5px;
+}
+
+.personalShelf{
+background: #446083;
+margin-bottom: 20px
+}
+
+.collection{
+background: #FFF;
+overflow-x: scroll;
+overflow-y: hidden;
+position: relative;
+white-space: nowrap;
+height: auto;
+max-height: 300px;
+display: block;
+width: 100%;
+padding: 10px;
+border: 0px;
+border-radius: 5px;
+}
+
+.collectionBook{
+display: inline-block;
+margin-right: 3px;
+}
+
 .bookimg {
 height: 204px;
 width: 128px;
 }
-#hej {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-}
+
 .booktitle {
 font-family: Futura;
 font-size: 14px;
@@ -23,7 +48,7 @@ height: 204px;
 width: 128px;
 padding: 15px;
 margin-top: -204px;
-background: rgba(29, 106, 154, 0.72);
+background: #446083;
 color: #fff;
 opacity: 0;
 visibility: hidden;
@@ -32,10 +57,7 @@ transition: opacity .5s, visibility .5s;
 white-space: normal;
 }
 
-.bookfound:hover .booktitle {
+.book:hover .booktitle {
 visibility: visible;
 opacity: 1;
 }
- .shelfname {
-color: #446083;
- }

@@ -8,6 +8,7 @@ import Search from './Search/Search';
 import Book from './Book/Book';
 import Landing from './Landing/Landing';
 import MyLibrari from './MyLibrari/MyLibrari';
+import Navbar from './Navbar/Navbar';
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
 
     return (
       <div className='App'>
+        <Route path="/" component={Navbar}/> 
         <Route exact path="/(|profile)" component={Header}/>
         <Route exact path="/" render={()=> <Landing model={modelInstance}/>}/>
         <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>

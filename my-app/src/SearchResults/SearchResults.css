@@ -1,4 +1,4 @@
-.bookresults{
+.searchResults{
 background: #FFF;
 overflow-x: scroll;
 overflow-y: hidden;
@@ -7,31 +7,22 @@ white-space: nowrap;
 height: auto;
 max-height: 300px;
 display: block;
-width: 98%;
-margin-left: 1%;
-margin-right: 1%;
-padding-top: 10px;
-padding-bottom: 10px;
-border-bottom: 15px solid #446083;
+width: 100%;
+padding: 10px;
+border: 0px;
+border-radius: 5px;
 }
-
 
 .bookfound{
 display: inline-block;
 margin-right: 1%;
 }
 
-/* relevant styles */
 .bookimg {
 height: 204px;
 width: 128px;
 }
-#hej {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-}
+
 .booktitle {
 font-family: Futura;
 font-size: 14px;
@@ -52,5 +43,5 @@ white-space: normal;
 
 .bookfound:hover .booktitle {
 visibility: visible;
-opacity: 1;
+opacity: 0.9;
 }

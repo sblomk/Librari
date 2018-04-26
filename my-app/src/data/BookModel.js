@@ -10,9 +10,9 @@ const BookModel = function(){
     //  book = {id: 'hej'};
     //}
 
-    //let shelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
+    let initialshelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
     //localStorage.setItem('shelves', JSON.stringify(shelves));
-    let shelves = JSON.parse(localStorage.getItem('shelves'));
+    let shelves = JSON.parse(localStorage.getItem('initialshelves'));
     // saves the initial search result in local storage
     let search = JSON.parse(localStorage.getItem('search'));
     if (search == null) {

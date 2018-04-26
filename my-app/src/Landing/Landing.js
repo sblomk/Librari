@@ -6,21 +6,15 @@ import SearchResults from '../SearchResults/SearchResults';
 
 
 class Landing extends Component {
+
   render() {
+
     return (
-      <div className="Landing col-md-12">
-        <div className="col-md-12">
-          <div className="col-md-2">
-            <Link to="/profile" className="btn btn-info btn-lg">
-                <span className="glyphicon glyphicon-user"></span> User
-            </Link>
-          </div>
-          <Search model={this.props.model}/>
-        </div>
+      <div className="landing">
+        <Search model={this.props.model}/>
         <SearchResults model={this.props.model}/>
-
-
       </div>
+
     );
   }
 }

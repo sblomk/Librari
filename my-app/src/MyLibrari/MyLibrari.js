@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './MyLibrari.css';
 
 var shelves;
+
 class MyLibrari extends Component {
     constructor(props){
         super(props);
@@ -21,27 +22,27 @@ class MyLibrari extends Component {
       this.forceUpdate();
     }
 
-      render(){
-        let shelfList = null;
-        shelfList = this.state.shelves.map((shelf) => {
-          var bookList = shelf.books.map((book) =>
-        <div className="bookfound">
-          <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-          <div id="hej" className="booktitle">{book.volumeInfo.title}></div>
-        </div>);
-          return(
-            <div className="shelf" id={shelf.id} key={shelf.id}>
-              <h1 className="shelfname">{shelf.name}</h1>
-              <div className="books">
-                {bookList}
-              </div>
+    render(){
+      let shelfList = null;
+      shelfList = this.state.shelves.map((shelf) => {
+        var bookList = shelf.books.map((book) =>
+          <div className="collectionBook">
+            <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+            <div className="booktitle">{book.volumeInfo.title}></div>
+          </div>);
+
+        return(
+          <div className="personalShelf" id={shelf.id} key={shelf.id}>
+            <div className="shelfname">{shelf.name}</div>
+            <div className="collection">
+              {bookList}
             </div>
-              );
+          </div>
+        );
       })
       return (
-        <div className="MyLibrari">
+        <div className="myLibrari">
           {shelfList}
-
         </div>
 
       );

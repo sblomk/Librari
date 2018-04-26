@@ -65,7 +65,7 @@ class SearchResults extends Component {
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
 							<div className="bookfound" >
 								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-								<div id="hej" className="booktitle">{book.volumeInfo.title}</div>
+								<div className="booktitle">{book.volumeInfo.title}</div>
 							</div>
 						</Link>
         )
@@ -75,7 +75,7 @@ class SearchResults extends Component {
         break;
     }
 		return (
-				<div className="bookresults">
+				<div className="searchResults">
 					{bookList}
 				</div>
 	     );

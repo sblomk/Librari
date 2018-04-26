@@ -7,12 +7,10 @@ import './Header.css';
 class Header extends Component {
 	render() {
 		return (
-	      <div className="Landing">
-	        <header className="Landing-header">
-	          <img src={logo} className="Landing-logo" alt="logo" />
-	          <h1 className="Landing-title">Librari</h1>
+		    <header className="header">
+	    	    <img src={logo} className="headerLogo" alt="logo" />
+	        	<h1 className="headerTitle">Librari</h1>
 	        </header>
-	      </div>
 	     );
 	}
 }

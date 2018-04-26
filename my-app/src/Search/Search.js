@@ -23,7 +23,7 @@ class Search extends Component {
 
     render(){
         return(
-            <div className="col-md-12 searchbar">
+            <div className="searchbar">
                 <input name="filter" type="text" value={this.state.value} className="searchWindow" id="filter" placeholder="Enter key words to search for books..." onChange={this.handleChange}/>
             </div>
         )

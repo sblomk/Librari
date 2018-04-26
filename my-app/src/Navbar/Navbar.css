@@ -1,0 +1,20 @@
+.navbar{
+background: none;
+padding: 20px;
+border-radius: 0px;
+font-family: Futura;
+font-size: 15px;
+margin-bottom: 0px;
+}
+
+
+.navbar a{
+color: #fff;
+text-decoration: none;
+margin-right: 30px;
+}
+
+.navbar a:hover{
+text-decoration: none;
+opacity: 0.9
+}
