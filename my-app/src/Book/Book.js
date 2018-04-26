@@ -49,7 +49,7 @@ class Book extends Component {
 
 
     render(){
-        let chosen = this.props.model.getSearch(this.state.id);
+        let chosenBook = this.props.model.getSearch(this.state.id);
         let shelves = this.props.model.getShelves();
         // for each shelf, display the value of shelf.name as the option in the dropdown menu
         let shelfList = shelves.map((shelf) => 
@@ -59,8 +59,8 @@ class Book extends Component {
             
         )
         // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
-        if (chosen.volumeInfo.imageLinks == null) {
-            chosen.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+        if (chosenBook.volumeInfo.imageLinks == null) {
+            chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
         }
         console.log(this.state.activeShelf)
 
@@ -68,18 +68,18 @@ class Book extends Component {
             // displaying information about the book, as well as the option of shelves
             <div className="book row">
                 <div className="col-sm-6 col-lg-6 bookImage">
-                    <img src={chosen.volumeInfo.imageLinks.thumbnail}/>
+                    <img src={chosenBook.volumeInfo.imageLinks.thumbnail}/>
                 </div>
                 <div className="col-sm-6 col-lg-6 bookInformation">
-                    <h1>{chosen.volumeInfo.title}</h1>
-                    <h2>{chosen.volumeInfo.subtitle}</h2>
-                    <h3>{chosen.volumeInfo.authors[0]}</h3>
+                    <h1>{chosenBook.volumeInfo.title}</h1>
+                    <h2>{chosenBook.volumeInfo.subtitle}</h2>
+                    <h3>{chosenBook.volumeInfo.authors[0]}</h3>
                     <select onChange={this.handleDropdownChange} id="choiceOfLibrary">
                         <option value="">Select a shelf</option>
                         {shelfList}
                         </select>
                         <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
-                    <button onClick={() => this.props.model.addToShelf(this.getShelfId(), chosen.id)}>Add to shelf</button>
+                    <button onClick={() => this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
                 </div>
             </div>
             );
