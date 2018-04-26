@@ -12,7 +12,7 @@ class Navbar extends Component {
 	            <span className="glyphicon glyphicon-user"></span> MyLibrari
 	          </Link>
 	          <Link to="/">
-	          	<span class="glyphicon glyphicon-search"></span> Search
+	          	<span className="glyphicon glyphicon-search"></span> Search
 	          </Link>
 	        </div> 
 	     );

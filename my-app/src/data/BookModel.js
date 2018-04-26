@@ -9,10 +9,14 @@ const BookModel = function(){
     //if (book == null){
     //  book = {id: 'hej'};
     //}
+    if (localStorage.getItem('shelves') === null){
+      let initialshelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
+      localStorage.setItem('shelves', JSON.stringify(initialshelves));
+      //let shelves = JSON.parse(localStorage.getItem('shelves'));
+    }
+    let shelves = JSON.parse(localStorage.getItem('shelves'));
+    
 
-    let initialshelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
-    //localStorage.setItem('shelves', JSON.stringify(shelves));
-    let shelves = JSON.parse(localStorage.getItem('initialshelves'));
     // saves the initial search result in local storage
     let search = JSON.parse(localStorage.getItem('search'));
     if (search == null) {
@@ -94,6 +98,7 @@ const BookModel = function(){
 
     // checks the number of shelves and assigns the next unused integer as the id to the new shelf
     this.createShelfId = function() {
+      var shelves = JSON.parse(localStorage.getItem('shelves'));
       let counter = 1
       for(var i = 0; i < shelves.length; i++) {
         if(shelves[i].id == counter){
@@ -106,6 +111,7 @@ const BookModel = function(){
     }
 
     this.createShelf = function(id, name){
+      var shelves = JSON.parse(localStorage.getItem('shelves'));
       let shelf = {
         id: id,
         name: name,
