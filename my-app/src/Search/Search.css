@@ -1,5 +1,6 @@
-.searchbar{
+.searchbar{ 
 padding: 1%;
+text-align:center;
 }
 
 .searchWindow{
@@ -14,4 +15,14 @@ color: #000;
 
 .searchWindow:focus {
 outline: none;
+}
+
+
+.box{
+    width: 100%;
+}
+
+#filter {
+    margin: 0 auto;
+    display: inline-block;
 }

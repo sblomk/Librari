@@ -7,7 +7,7 @@ var filter = '';
 class Search extends Component {
     constructor(props){
         super(props);
-        
+
         this.state = {
             status: 'INITIAL'
         }
@@ -24,7 +24,7 @@ class Search extends Component {
     render(){
         return(
             <div className="col-md-12 searchbar">
-                <input name="filter" type="text" value={this.state.value}  className="searchWindow" id="filter" placeholder="Enter key words" onChange={this.handleChange}/>
+                <input name="filter" type="text" value={this.state.value} className="searchWindow" id="filter" placeholder="Enter key words to search for books..." onChange={this.handleChange}/>
             </div>
         )
     }

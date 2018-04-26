@@ -1,0 +1,41 @@
+.bookfound{
+display: inline-block;
+margin-right: 1%;
+}
+
+/* relevant styles */
+.bookimg {
+height: 204px;
+width: 128px;
+}
+#hej {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+.booktitle {
+font-family: Futura;
+font-size: 14px;
+display: block;
+position: absolute;
+height: 204px;
+width: 128px;
+padding: 15px;
+margin-top: -204px;
+background: rgba(29, 106, 154, 0.72);
+color: #fff;
+opacity: 0;
+visibility: hidden;
+text-align: center;
+transition: opacity .5s, visibility .5s;
+white-space: normal;
+}
+
+.bookfound:hover .booktitle {
+visibility: visible;
+opacity: 1;
+}
+ .shelfname {
+color: #446083;
+ }

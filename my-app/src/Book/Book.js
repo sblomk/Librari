@@ -11,20 +11,25 @@ class Book extends Component {
     constructor(props){
         super(props);
 
-        //this.props.model.addObserver(this);
+        this.props.model.addObserver(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
         this.getShelfId = this.getShelfId.bind(this)
-        
+
         this.state = {
             status: 'INITIAL',
-            id: window.location.href.toString().split("book/")[1]  // Fetching the id from the URL
+            id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
+            shelves: this.props.model.getShelves()
         }
     }
-
+    update() {
+      this.setState({
+        shelves: this.props.model.getShelves()
+      })
+    }
     // handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
-        this.setState({ 
+        this.setState({
             activeShelf: e.target.value
         }, this.update)
     }
@@ -50,13 +55,13 @@ class Book extends Component {
 
     render(){
         let chosen = this.props.model.getSearch(this.state.id);
-        let shelves = this.props.model.getShelves();
+        //let shelves = this.props.model.getShelves();
         // for each shelf, display the value of shelf.name as the option in the dropdown menu
-        let shelfList = shelves.map((shelf) => 
+        let shelfList = this.state.shelves.map((shelf) =>
             <option value={shelf.id} key={shelf.id}>
                 {shelf.name}
             </option>
-            
+
         )
         // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
         if (chosen.volumeInfo.imageLinks == null) {
@@ -67,6 +72,9 @@ class Book extends Component {
         return(
             // displaying information about the book, as well as the option of shelves
             <div className="book row">
+              <Link to="/">
+                <span className="glyphicon glyphicon-remove-circle"></span>
+              </Link>
                 <div className="col-sm-6 col-lg-6 bookImage">
                     <img src={chosen.volumeInfo.imageLinks.thumbnail}/>
                 </div>
