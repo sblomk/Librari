@@ -5,7 +5,6 @@ import './Book.css';
 // This view displays the chosen book, after clicking on it in the Landing view.
 // Here, the book can be added to one of the shelves.
 
-var id;
 
 class Book extends Component {
     constructor(props){
@@ -48,7 +47,8 @@ class Book extends Component {
     // returns a shelf id, and creates an id in the case that there is none
     getShelfId(){
         if(this.state.activeShelf!=null){
-            return parseInt(this.state.activeShelf)
+            // 8 är radix, blev ett error utan, inte helt hundra på användningen
+            return parseInt(this.state.activeShelf, 8)
         } else {
             let shelfId = this.props.model.createShelfId()
             this.props.model.createShelf(shelfId, this.state.newShelfName)
@@ -82,7 +82,7 @@ class Book extends Component {
                     </Link>
                 </div>
                 <div className="left">
-                    <img src={chosenBook.volumeInfo.imageLinks.thumbnail}/>
+                    <img src={chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
                 </div>
                 <div className="right">
                     <h1>{chosenBook.volumeInfo.title}</h1>

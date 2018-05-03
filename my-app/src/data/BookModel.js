@@ -96,8 +96,8 @@ const BookModel = function(){
 
 
     this.removeBookFromShelf = function(shelfId, bookId) {
-      console.log('shelf ' + shelfId);
-      console.log('book ' + bookId);
+      //console.log('shelf ' + shelfId);
+      //console.log('book ' + bookId);
       var shelves = JSON.parse(localStorage.getItem('shelves'));
       for (var i = 0; i < shelves.length; i++) {
         if (shelves[i].id === shelfId) {
@@ -105,10 +105,10 @@ const BookModel = function(){
             if(shelves[i].books[j].id === bookId){
               console.log("tar bort " + shelves[i].books[j].id)
               shelves[i].books.splice(j,1);
+              localStorage.setItem('shelves', JSON.stringify(shelves));
               notifyObservers();
             }
           }
-          localStorage.setItem('shelves', JSON.stringify(shelves));
         }
       }
     }

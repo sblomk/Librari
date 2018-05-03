@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import './MyLibrari.css';
 
-var shelves;
+//var shelves;
 
 class MyLibrari extends Component {
     constructor(props){
@@ -22,7 +22,7 @@ class MyLibrari extends Component {
     }
 
     handleRemove = (sID, bID) => {
-      console.log("försöker ta bort en bok" + sID + ' ' + bID)
+      //console.log("försöker ta bort en bok " + sID + ' ' + bID)
       this.props.model.removeBookFromShelf(sID, bID);
     }
 
@@ -39,7 +39,7 @@ class MyLibrari extends Component {
       shelfList = this.state.shelves.map((shelf) => {
         var bookList = shelf.books.map((book, i) => 
           <div className="collectionBook" key={i}>
-            <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+            <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
             <div className="booktitle">
               <div className="col-md-1">
                 <span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 //import './App.css';
-import SearchResults from './SearchResults/SearchResults';
+//import SearchResults from './SearchResults/SearchResults';
 import Header from './Header/Header';
 import { modelInstance } from './data/BookModel'
-import Search from './Search/Search';
+//import Search from './Search/Search';
 import Book from './Book/Book';
 import Landing from './Landing/Landing';
 import MyLibrari from './MyLibrari/MyLibrari';

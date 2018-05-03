@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-//import '../App.css';
 import './SearchResults.css';
-import { debounce } from 'lodash';
+//import { debounce } from 'lodash';
 import { Link } from 'react-router-dom';
 
 //In this view, the books that corresponds to the user's search are displayed
@@ -15,7 +13,7 @@ class SearchResults extends Component {
 		this.handleClick = this.handleClick.bind(this);
 
     this.state = {
-			status: 'INITIAL'
+			status: 'INITIAL',
 		}
 		this.update();
 	}
@@ -68,7 +66,7 @@ class SearchResults extends Component {
 				bookList = this.state.books.items.map((book) =>
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
 							<div className="bookfound col-md-1" >
-								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
+								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 								<div className="booktitle">{book.volumeInfo.title}</div>
 							</div>
 						</Link>
