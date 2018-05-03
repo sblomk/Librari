@@ -1,18 +1,24 @@
 const BookModel = function(){
     let apiKey = 'AIzaSyBnc2ubpX3pUGpAfNpxFsjO3RfWK-r1nzg';
-    let filter = 'Tolkien'; //default search value
     let observers = [];
     console.log("hej");
 
     // saves the chosen book in local storage
     let book = JSON.parse(localStorage.getItem('chosen'));
 
+
+    // Saving initial values for filter and shelves in local storage
+
+    if (localStorage.getItem('filter') === null){
+      localStorage.setItem('filter', 'Tolkien');
+    }
+
     if (localStorage.getItem('shelves') === null){
       let initialshelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
       localStorage.setItem('shelves', JSON.stringify(initialshelves));
       //let shelves = JSON.parse(localStorage.getItem('shelves'));
     }
-    let shelves = JSON.parse(localStorage.getItem('shelves'));
+    //let shelves = JSON.parse(localStorage.getItem('shelves'));
     
 
     // saves the initial search result in local storage
@@ -21,12 +27,18 @@ const BookModel = function(){
       search = []
     };
 
+    this.getSearchResults = function() {
+      console.log(JSON.parse(localStorage.getItem('search')));
+      return JSON.parse(localStorage.getItem('search'));
+    }
+
 
     this.setFilter = function(q) {
       // the API does not allow empty queries
       // so if the search bar is emptied, we will hold on to the latest non-empty search value
       if (!(Object.is(q, ''))){
-        filter = q;
+        //filter = q;
+        localStorage.setItem('filter', q);
         notifyObservers();
       }
     }
@@ -61,6 +73,8 @@ const BookModel = function(){
 
     // API call returning a maximum of 40 books, with the filter set by the user
     this.getAllBooks = function() {
+        let filter = localStorage.getItem('filter');
+        console.log(filter);
         const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
         return fetch(url)
             .then(processResponse)

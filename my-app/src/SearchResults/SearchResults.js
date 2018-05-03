@@ -14,6 +14,7 @@ class SearchResults extends Component {
 
     this.state = {
 			status: 'INITIAL',
+			books: this.props.model.getSearchResults()
 		}
 		this.update();
 	}

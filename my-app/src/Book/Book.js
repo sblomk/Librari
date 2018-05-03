@@ -71,7 +71,7 @@ class Book extends Component {
         if (chosenBook.volumeInfo.imageLinks == null) {
             chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
         }
-        console.log(this.state.activeShelf)
+        //console.log(this.state.activeShelf)
 
         return(
             // displaying information about the book, as well as the option of shelves
