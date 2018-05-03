@@ -11,7 +11,7 @@ class Book extends Component {
     constructor(props){
         super(props);
 
-        this.props.model.addObserver(this);
+        //this.props.model.addObserver(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
         this.getShelfId = this.getShelfId.bind(this)
@@ -22,6 +22,10 @@ class Book extends Component {
             shelves: this.props.model.getShelves()
         }
     }
+    componentDidMount() {
+        this.props.model.addObserver(this)
+      }
+
     update() {
       this.setState({
         shelves: this.props.model.getShelves()

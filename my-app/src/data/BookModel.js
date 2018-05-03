@@ -6,9 +6,7 @@ const BookModel = function(){
 
     // saves the chosen book in local storage
     let book = JSON.parse(localStorage.getItem('chosen'));
-    //if (book == null){
-    //  book = {id: 'hej'};
-    //}
+
     if (localStorage.getItem('shelves') === null){
       let initialshelves = [{id:1, name: 'Shelf 1', books: []}, {id:2, name: 'Shelf 2', books: []}];
       localStorage.setItem('shelves', JSON.stringify(initialshelves));
@@ -19,7 +17,7 @@ const BookModel = function(){
 
     // saves the initial search result in local storage
     let search = JSON.parse(localStorage.getItem('search'));
-    if (search == null) {
+    if (search === null) {
       search = []
     };
 
@@ -63,7 +61,7 @@ const BookModel = function(){
 
     // API call returning a maximum of 40 books, with the filter set by the user
     this.getAllBooks = function() {
-        const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40' + '&key=' + apiKey;
+        const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
         return fetch(url)
             .then(processResponse)
             .catch(handleError)
@@ -85,7 +83,7 @@ const BookModel = function(){
         if (shelves[i].id === shelfId) {
           for(var j = 0; j < shelves[i].books.length; j++){
             // if the chosen book is already in the chosen shelf, return
-            if(shelves[i].books[j].id == bookId){
+            if(shelves[i].books[j].id === bookId){
               return
             }
           }
@@ -96,12 +94,31 @@ const BookModel = function(){
       }
     }
 
+
+    this.removeBookFromShelf = function(shelfId, bookId) {
+      console.log('shelf ' + shelfId);
+      console.log('book ' + bookId);
+      var shelves = JSON.parse(localStorage.getItem('shelves'));
+      for (var i = 0; i < shelves.length; i++) {
+        if (shelves[i].id === shelfId) {
+          for(var j = 0; j < shelves[i].books.length; j++){
+            if(shelves[i].books[j].id === bookId){
+              console.log("tar bort " + shelves[i].books[j].id)
+              shelves[i].books.splice(j,1);
+              notifyObservers();
+            }
+          }
+          localStorage.setItem('shelves', JSON.stringify(shelves));
+        }
+      }
+    }
+
     // checks the number of shelves and assigns the next unused integer as the id to the new shelf
     this.createShelfId = function() {
       var shelves = JSON.parse(localStorage.getItem('shelves'));
       let counter = 1
       for(var i = 0; i < shelves.length; i++) {
-        if(shelves[i].id == counter){
+        if(shelves[i].id === counter){
           counter += 1;
         } else {
           return counter

@@ -8,7 +8,8 @@ class MyLibrari extends Component {
     constructor(props){
         super(props);
 
-        this.props.model.addObserver(this);
+        //this.props.model.addObserver(this);
+        this.handleRemove = this.handleRemove.bind(this)
 
         this.state = {
             status: 'INITIAL',
@@ -16,19 +17,37 @@ class MyLibrari extends Component {
         }
     }
 
+    componentDidMount() {
+      this.props.model.addObserver(this)
+    }
+
+    handleRemove = (sID, bID) => {
+      console.log("försöker ta bort en bok" + sID + ' ' + bID)
+      this.props.model.removeBookFromShelf(sID, bID);
+    }
 
     update(){
-      console.log('före forceupdate yo')
-      this.forceUpdate();
+      this.setState({
+        shelves: this.props.model.getShelves()
+      })
+      //console.log('före forceupdate yo')
+      //this.forceUpdate();
     }
 
     render(){
       let shelfList = null;
       shelfList = this.state.shelves.map((shelf) => {
-        var bookList = shelf.books.map((book) =>
-          <div className="collectionBook">
+        var bookList = shelf.books.map((book, i) => 
+          <div className="collectionBook" key={i}>
             <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
-            <div className="booktitle">{book.volumeInfo.title}></div>
+            <div className="booktitle">
+              <div className="col-md-1">
+                <span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
+              </div>
+              <div className="col-md-12">
+                {book.volumeInfo.title}
+              </div>
+            </div>
           </div>);
 
         return(

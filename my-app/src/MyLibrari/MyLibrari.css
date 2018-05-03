@@ -57,7 +57,13 @@ transition: opacity .5s, visibility .5s;
 white-space: normal;
 }
 
-.book:hover .booktitle {
+.collectionBook:hover .booktitle{
+margin-left:1%;
 visibility: visible;
 opacity: 1;
+}
+
+.removebtn{
+    margin-bottom:3%;
+    margin-left:10%;
 }

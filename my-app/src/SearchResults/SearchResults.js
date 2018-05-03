@@ -11,7 +11,7 @@ class SearchResults extends Component {
 	constructor(props) {
     super(props);
 
-		this.props.model.addObserver(this)
+		//this.props.model.addObserver(this)
 		this.handleClick = this.handleClick.bind(this);
 
     this.state = {
@@ -19,6 +19,10 @@ class SearchResults extends Component {
 		}
 		this.update();
 	}
+
+	componentDidMount() {
+    this.props.model.addObserver(this)
+  }
 
 	// handleClick will save the book object chosen by the user
 	handleClick = (event) => {
@@ -63,7 +67,7 @@ class SearchResults extends Component {
 				// Each book item gets a link to a more detailed view (the book view)
 				bookList = this.state.books.items.map((book) =>
 						<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
-							<div className="bookfound" >
+							<div className="bookfound col-md-1" >
 								<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
 								<div className="booktitle">{book.volumeInfo.title}</div>
 							</div>
@@ -75,7 +79,7 @@ class SearchResults extends Component {
         break;
     }
 		return (
-				<div className="searchResults">
+				<div className="searchResults col-md-12">
 					{bookList}
 				</div>
 	     );

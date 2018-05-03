@@ -25,6 +25,7 @@ class Shelf extends Component {
       shelfList = this.state.shelves.map((shelf) =>
       var books = shelf.map((books) =>
       <div className="bookfound">
+        <span className="glyphicon glyphicon-remove-circle"></span>
         <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail}/>
         <div id="hej" className="booktitle">{book.volumeInfo.title}></div>
       </div>);

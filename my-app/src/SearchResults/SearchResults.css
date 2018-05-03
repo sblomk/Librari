@@ -1,12 +1,9 @@
 .searchResults{
 background: #FFF;
-overflow-x: scroll;
-overflow-y: hidden;
+overflow: auto;
 position: relative;
 white-space: nowrap;
 height: auto;
-max-height: 300px;
-display: block;
 width: 100%;
 padding: 10px;
 border: 0px;
@@ -14,8 +11,10 @@ border-radius: 5px;
 }
 
 .bookfound{
-display: inline-block;
-margin-right: 1%;
+margin-top:2%;
+margin-bottom:0%;
+margin-right:3%;
+margin-left:1%;
 }
 
 .bookimg {
