@@ -58,6 +58,7 @@ class Book extends Component {
 
 
     render(){
+        console.log("i book");
         let chosenBook = this.props.model.getSearch(this.state.id);
         //let shelves = this.props.model.getShelves();
         // for each shelf, display the value of shelf.name as the option in the dropdown menu
