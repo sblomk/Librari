@@ -9,6 +9,8 @@ import Book from './Book/Book';
 import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
+import SignUp from './SignUp/SignUp';
+
 
 
 class App extends Component {
@@ -35,6 +37,7 @@ class App extends Component {
         <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
         <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
         <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+        <Route path="/signup" render={()=> <SignUp model={modelInstance}/>}/>
       </div>
     );
   }

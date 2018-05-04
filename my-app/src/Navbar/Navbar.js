@@ -14,6 +14,9 @@ class Navbar extends Component {
 	          <Link to="/">
 	          	<span className="glyphicon glyphicon-search"></span> Search
 	          </Link>
+	          <Link to="/signup">
+	          	<span className="glyphicon glyphicon-cog"></span> Search
+	          </Link>
 	        </div> 
 	     );
 	}
