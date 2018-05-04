@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './SignUp.css';
+import './SignIn.css';
 import firebase from '../firebase.js';
 
 // This view contains the header of our website
 
-class SignUp extends Component {
+class SignIn extends Component {
 
 	constructor(props) {
 		super(props);
@@ -28,24 +28,29 @@ class SignUp extends Component {
 
 	handleSubmit() {
 		//event.preventDefault();
-		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
-		  // Handle Errors here.
-		  var errorCode = error.code;
-		  var errorMessage = error.message;
-		  // ...
-		  if (errorCode === 'auth/weak-password') {
-		  	alert('The password is too weak.');
-		  }
-		  else {
-		  	alert(errorMessage);
-		  }
-		  console.log(error);
-	    }
-		);
+		console.log(1);
+		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
+			// Handle Errors here
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			// [START_EXCLUDE]
+			if (errorCode === 'auth/wrong-password') {
+			alert('Wrong password.');
+			} else {
+			alert(errorMessage);
+			}
+			console.log(error);
+			// [END_EXCLUDE]
+        });
+	}
+
+	signOut() {
+		firebase.auth().signOut();
 	}
 
 		
 	render() {
+		
 		return (
 			<div>
 				<label>
@@ -59,12 +64,16 @@ class SignUp extends Component {
 				</label>
 
 				<button onClick={this.handleSubmit}>
-				  Activate Lasers
+				Sign in
+				</button>
+				<button onClick={this.signOut}>
+				Sign out
 				</button>
 			</div>
+
 	     );
 	}
 }
 
 
-export default SignUp;
+export default SignIn;

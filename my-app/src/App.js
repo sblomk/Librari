@@ -10,6 +10,7 @@ import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 import SignUp from './SignUp/SignUp';
+import SignIn from './SignIn/SignIn';
 
 
 
@@ -20,6 +21,7 @@ class App extends Component {
       title: 'Librari'
     }
   }
+  
   render() {
 
     //LÅT STÅ!!!!1
@@ -38,6 +40,7 @@ class App extends Component {
         <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
         <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
         <Route path="/signup" render={()=> <SignUp model={modelInstance}/>}/>
+        <Route path="/signin" render={()=> <SignIn model={modelInstance}/>}/>
       </div>
     );
   }
