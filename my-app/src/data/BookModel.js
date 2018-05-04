@@ -74,7 +74,7 @@ const BookModel = function(){
     // API call returning a maximum of 40 books, with the filter set by the user
     this.getAllBooks = function() {
         let filter = localStorage.getItem('filter');
-        console.log(filter);
+        console.log(filter + "filter i model")
         const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
         return fetch(url)
             .then(processResponse)
