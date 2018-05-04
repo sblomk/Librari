@@ -4,6 +4,8 @@ const BookModel = function() {
 
 	let userId = null;
 
+  // en observer för som hämtar inloggningsuppgifter om någon är inne
+  // sätter userId till den inloggades id
   this.addListener = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -125,6 +127,8 @@ const BookModel = function() {
         }
         // if not, add the book to the shelf
         shelves[i].books.push(this.getSearch(bookId));
+
+        // pushar till databasen
         firebase.database().ref('users/' + this.userId).set({
           shelves: shelves
         });

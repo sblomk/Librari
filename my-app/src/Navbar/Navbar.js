@@ -16,6 +16,7 @@ class Navbar extends Component {
 		this.addListener();
 	}
 
+	// observer som lyssnar efter data från den som är inloggad
 	addListener() {
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {

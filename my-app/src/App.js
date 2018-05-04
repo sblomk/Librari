@@ -23,15 +23,6 @@ class App extends Component {
   }
   
   render() {
-
-    //LÅT STÅ!!!!1
-    //firebase.database().ref('items') hämtar det innehåll som finns under "items" i databasen.
-    //Just nu är databasen inte implementerad
-    // https://console.firebase.google.com/project/librari-41dab/database/librari-41dab/data
-    //Här kan en se hur databasen ser ut (I alla fall David)
-    //Exempel på push av object till firebase
-    //itemsRef.push(item);
-
     return (
       <div className='App'>
         <Route path="/" component={Navbar}/> 
