@@ -26,6 +26,10 @@ class MyLibrari extends Component {
       this.props.model.removeBookFromShelf(sID, bID);
     }
 
+    handleEdit = () => {
+      // ??
+    }
+
     update(){
       this.setState({
         shelves: this.props.model.getShelves()
@@ -52,7 +56,9 @@ class MyLibrari extends Component {
 
         return(
           <div className="personalShelf" id={shelf.id} key={shelf.id}>
-            <div className="shelfname">{shelf.name}</div>
+            <div className="shelfname">{shelf.name}
+              <span className="editbtn glyphicon glyphicon-pencil" onClick = {this.handleEdit}></span>
+            </div> 
             <div className="collection">
               {bookList}
             </div>
