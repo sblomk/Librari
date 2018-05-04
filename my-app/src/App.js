@@ -6,7 +6,7 @@ import Header from './Header/Header';
 import { modelInstance } from './data/BookModel'
 import Shelf from './Shelf/Shelf';
 import Book from './Book/Book';
-import Landing from './Landing/Landing';
+import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 
@@ -32,7 +32,7 @@ class App extends Component {
       <div className='App'>
         <Route path="/" component={Navbar}/> 
         <Route exact path="/(|profile)" component={Header}/>
-        <Route exact path="/" render={()=> <Landing model={modelInstance}/>}/>
+        <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
         <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
         <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
         <Route path="/edit/:value" render={()=> <Shelf model={modelInstance}/>}/>
