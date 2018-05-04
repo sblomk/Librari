@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 //import SearchResults from './SearchResults/SearchResults';
 import Header from './Header/Header';
 import { modelInstance } from './data/BookModel'
-//import Search from './Search/Search';
+import Shelf from './Shelf/Shelf';
 import Book from './Book/Book';
 import Landing from './Landing/Landing';
 import MyLibrari from './MyLibrari/MyLibrari';
@@ -35,6 +35,7 @@ class App extends Component {
         <Route exact path="/" render={()=> <Landing model={modelInstance}/>}/>
         <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
         <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+        <Route path="/edit/:value" render={()=> <Shelf model={modelInstance}/>}/>
       </div>
     );
   }
