@@ -74,6 +74,7 @@ const BookModel = function() {
   // getSearch is called with the id of the book that has been clicked
   // it returns the corresponding book object
   this.getSearch = function(id){
+
     for (var i = 0; i < search.length; i++){
       if (search[i].id === id){
         this.setChosen(search[i]);
@@ -95,15 +96,6 @@ const BookModel = function() {
 
   // API call returning a maximum of 40 books, with the filter set by the user
   this.getAllBooks = function() {
-
-
-
-    firebase.database().ref('users/' + this.userId).set({
-      test: 123
-    });
-    
-    
-
     let filter = localStorage.getItem('filter');
     const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
     return fetch(url)
@@ -133,6 +125,9 @@ const BookModel = function() {
         }
         // if not, add the book to the shelf
         shelves[i].books.push(this.getSearch(bookId));
+        firebase.database().ref('users/' + this.userId).set({
+          shelves: shelves
+        });
         localStorage.setItem('shelves', JSON.stringify(shelves));
       }
     }
