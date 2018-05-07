@@ -18,13 +18,20 @@ class Book extends Component {
         this.state = {
             status: 'INITIAL',
             id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
-            shelves: this.props.model.getShelves()
+            //shelves: this.props.model.getShelves()
         }
     }
     componentDidMount() {
         this.props.model.addObserver(this)
       }
 
+    getShelves() {
+        this.props.model.getShelves().then(data => {
+            this.setState({
+                shelves: data
+            })
+        })
+    }
     update() {
       this.setState({
         shelves: this.props.model.getShelves()
@@ -48,7 +55,7 @@ class Book extends Component {
     getShelfId(){
         if(this.state.activeShelf!=null){
             // 8 är radix, blev ett error utan, inte helt hundra på användningen
-            return parseInt(this.state.activeShelf, 8)
+            return parseInt(this.state.activeShelf)//, 8)
         } else {
             let shelfId = this.props.model.createShelfId()
             this.props.model.createShelf(shelfId, this.state.newShelfName)
@@ -62,6 +69,7 @@ class Book extends Component {
         let chosenBook = this.props.model.getSearch(this.state.id);
         //let shelves = this.props.model.getShelves();
         // for each shelf, display the value of shelf.name as the option in the dropdown menu
+        //console.log(this.state.shelves[0].name)
         let shelfList = this.state.shelves.map((shelf) =>
             <option value={shelf.id} key={shelf.id}>
                 {shelf.name}

@@ -1,8 +1,8 @@
 import firebase from "../firebase.js"
 
 const BookModel = function() {
-
-	let userId = null;
+  
+	this.userId = 'qmVIhq13DcWFfReelwmxjGj5rt83';
 
   // en observer för som hämtar inloggningsuppgifter om någon är inne
   // sätter userId till den inloggades id
@@ -10,6 +10,7 @@ const BookModel = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         this.userId = user.uid;
+        console.log("user id är: "+this.userId);
         /*
         var mail = user.email;
         var displayName = user.displayName;
@@ -27,7 +28,7 @@ const BookModel = function() {
   }
   this.addListener();
 
-  let apiKey = 'AIzaSyBnc2ubpX3pUGpAfNpxFsjO3RfWK-r1nzg';
+  let apiKey = 'AIzaSyCdfNCyUlSSV9AkebmZhTW_Rfw2yjzJHK4';//'AIzaSyBnc2ubpX3pUGpAfNpxFsjO3RfWK-r1nzg';
   let observers = [];
 
   // saves the chosen book in local storage
@@ -84,7 +85,7 @@ const BookModel = function() {
       }
     }
     // if there is no matching id, return the first object
-    return search[0];
+    //return search[0];
   }
 
   // saving the chosen book object to local storage
@@ -184,8 +185,29 @@ const BookModel = function() {
   }
 
   this.getShelves = function() {
-    console.log("i getShelf" + JSON.parse(localStorage.getItem('shelves')));
-    return JSON.parse(localStorage.getItem('shelves'));
+    var shelfArray = [];
+    console.log('getshelves före firebase');
+    var shelves = firebase.database().ref('/users/' + this.userId + '/shelves');
+    console.log("hallihallå" + shelves)
+    shelves.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+        var childData = childSnapshot.val();
+        shelfArray.push(childData);
+        console.log(childData.books[0].volumeInfo.title);
+        console.log('shelves från firebase: ' + childData.name);
+        });
+      // ...
+      //console.log("++++++" + shelfArray[0].books.volumeInfo.title)
+          });    /*var shelves = firebase.database().ref('users/' + userId + '/shelves');
+      starCountRef.on('value', function(snapshot) {
+    updateStarCount(postElement, snapshot.val());
+    });*/
+
+    //console.log("i getShelf" + JSON.parse(localStorage.getItem('shelves')));
+  
+    //return JSON.parse(localStorage.getItem('shelves'));
+    
+    return shelfArray;
   }
 
   // API Helper methods
