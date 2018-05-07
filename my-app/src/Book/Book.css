@@ -7,19 +7,21 @@ color: #000;
 border: 0px;
 border-radius: 5px;
 background-color: #F2F2F2;
+display: none;
 }
 
 .windowHeader{
 margin-bottom: 20px;
 width: 100%;
 text-align: left;
+display: none;
 }
 
 .left, .right{
 width: 50%;
 min-width: 200px;
-display: inline-block;
 vertical-align: middle;
+display: none;
 }
 
 h1, h2, h3{

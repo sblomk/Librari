@@ -33,7 +33,7 @@ class App extends Component {
         <Route path="/" component={Navbar}/> 
         <Route exact path="/(|profile)" component={Header}/>
         <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
-        <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
+        <Route path="/book/:value" component={Book}/>
         <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
       </div>
     );

@@ -17,13 +17,13 @@ class Book extends Component {
 
         this.state = {
             status: 'INITIAL',
-            id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
+            //id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
             shelves: this.props.model.getShelves()
         }
     }
     componentDidMount() {
         this.props.model.addObserver(this)
-      }
+    }
 
     update() {
       this.setState({
@@ -58,7 +58,7 @@ class Book extends Component {
 
 
     render(){
-        let chosenBook = this.props.model.getSearch(this.state.id);
+        let chosenBook = this.props.model.getSearch(this.props.activeBookId);
         //let shelves = this.props.model.getShelves();
         // for each shelf, display the value of shelf.name as the option in the dropdown menu
         let shelfList = this.state.shelves.map((shelf) =>
@@ -75,28 +75,32 @@ class Book extends Component {
 
         return(
             // displaying information about the book, as well as the option of shelves
-            <div className="bookWindow">
+            <div id="bookWindow">
+
                 <div className="windowHeader">
-                    <Link to="/">
+                    <div onClick={this.props.handleClose}>
                         <span className="glyphicon glyphicon-remove-circle"></span>
-                    </Link>
+                    </div>
                 </div>
-                <div className="left">
+
+                <div id="left">
                     <img src={chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
                 </div>
-                <div className="right">
+
+                <div id="right">
                     <h1>{chosenBook.volumeInfo.title}</h1>
                     <h2>{chosenBook.volumeInfo.subtitle}</h2>
                     <h3>{chosenBook.volumeInfo.authors[0]}</h3>
                     <select onChange={this.handleDropdownChange} id="choiceOfLibrary">
                         <option value="">Select a shelf</option>
                         {shelfList}
-                        </select>
-                        <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
-                    <button onClick={() => this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
+                    </select>
+                    <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
+                    <button onClick={this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
                 </div>
+
             </div>
-            );
+        );
     }
 }
 export default Book;
