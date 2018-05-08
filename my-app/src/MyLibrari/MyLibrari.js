@@ -19,11 +19,7 @@ class MyLibrari extends Component {
     }
     getShelves() {
       this.props.model.getShelves((shelves) => {
-        console.log(shelves + '!!!!!!!!!!!!!!!!!!')
-        var a = shelves;
-        for (var i=0; i < a.length; i++){
-          console.log(a[i].name)
-        }
+        //console.log(shelves + '!!!!!!!!!!!!!!!!!!')
         this.setState({
           shelves: shelves,
           status: 'LOADED'
@@ -35,7 +31,7 @@ class MyLibrari extends Component {
     
     componentDidMount() {
       this.props.model.addObserver(this)
-      this.getShelves();
+      //this.getShelves();
     }
 
     handleRemove = (sID, bID) => {
@@ -57,12 +53,17 @@ class MyLibrari extends Component {
     }
 
     render(){
-      console.log('i render på mylibrari')
+      //console.log('i render på mylibrari')
       if(this.state.status === 'LOADED'){
+        
 
-      console.log('i mylibrari, shelves är: '+ this.state.shelves);
+      //console.log('i mylibrari, shelves är: '+ this.state.shelves);
       let shelfList = null;
       shelfList = this.state.shelves.map((shelf) => {
+        if (!(shelf.books)){
+          return('tom hylla');
+        }
+        else{
          console.log("Books are",shelf)
         var bookList = shelf.books.map((book, i) => 
           <div className="collectionBook" key={i}>
@@ -75,7 +76,7 @@ class MyLibrari extends Component {
                 {book.volumeInfo.title}
               </div>
             </div>
-          </div>);
+          </div>);}
 
         return(
           <div className="personalShelf" id={shelf.id} key={shelf.id}>

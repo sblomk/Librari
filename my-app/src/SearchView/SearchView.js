@@ -84,7 +84,7 @@ class SearchView extends Component {
 	        break;
 	    }
 
-	    console.log(bookList + "booklist i render")
+	    //console.log(bookList + "booklist i render")
 
 	    return (
 	      <div className="SearchView">

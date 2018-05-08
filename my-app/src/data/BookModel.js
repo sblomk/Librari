@@ -2,7 +2,7 @@ import firebase from "../firebase.js"
 
 const BookModel = function() {
   
-  this.userId = 'jlvZokc9JmT5ABQEq21ydMwtWNJ3';
+  this.userId;
   
 
   // en observer för som hämtar inloggningsuppgifter om någon är inne
@@ -121,34 +121,70 @@ const BookModel = function() {
   }
 
   // adding the chosen book to the chosen shelf
-  this.addToShelf = function(shelfId, bookId) {
+  this.addToShelf = function(shelfName, shelfId, bookId) {
     //var shelves = JSON.parse(localStorage.getItem('shelves'));
     //var shelves = this.getShelves();
+    console.log('i add to shelf')
+    var shelves;
 
     var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
     ref.on("value", function(snapshot) {
-      var shelves = snapshot.val();
+      shelves = snapshot.val();
+ 
+    if (Number.isInteger(shelfId)){
+      //shelfId = parseInt(shelfId)
+      console.log("hyllans id är " +shelfId)
+      for (var i = 0; i < shelves.length; i++) {
+        if (shelves[i].id === shelfId) {
+          /*
+          for(var j = 0; j < shelves[i].books.length; j++){
+            // if the chosen book is already in the chosen shelf, return
+            if(shelves[i].books[j].id === bookId){
+              return
+            }
+          }*/
+          // if not, add the book to the shelf
+          shelves[i].books.push(this.getSearch(bookId));
+          console.log('shelves are: '+ shelves)
 
-
-    for (var i = 0; i < shelves.length; i++) {
-      if (shelves[i].id === shelfId) {
-        for(var j = 0; j < shelves[i].books.length; j++){
-          // if the chosen book is already in the chosen shelf, return
-          if(shelves[i].books[j].id === bookId){
-            return
-          }
+          //localStorage.setItem('shelves', JSON.stringify(shelves));
         }
-        // if not, add the book to the shelf
-        shelves[i].books.push(this.getSearch(bookId));
-
-        // pushar till databasen
-        firebase.database().ref('users/' + this.userId).set({
-          shelves: shelves
-        });
-        localStorage.setItem('shelves', JSON.stringify(shelves));
       }
     }
+    
+    else{
+        shelves = this.createShelf(shelves, shelfName, shelfId);
+        shelves[shelves.length-1].books.push(this.getSearch(bookId));
+        console.log('books are: '+ shelves[shelves.length-1].books)
+ 
+    }
+
+
   }.bind(this))
+      // pushar till databasen
+      firebase.database().ref('users/' + this.userId).set({
+        shelves: shelves
+      })
+
+  notifyObservers();
+
+  }
+
+  this.deleteShelf = function(id){
+    var shelves;
+    var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
+    ref.on("value", function(snapshot) {
+      shelves = snapshot.val();
+      for (var i=0; i < shelves.length; i++){
+        if (shelves[i].id === id){
+          shelves.splice(i,1)
+        }
+      }
+    }.bind(this))
+      // pushar till databasen
+      firebase.database().ref('users/' + this.userId).set({
+        shelves: shelves
+      });
   }
 
 
@@ -195,13 +231,29 @@ const BookModel = function() {
 
   }
 
-  this.createShelf = function(id, name){
-    var id = this.userId;
-    var shelves;
+  this.createShelf = function(shelves, name, ID){
+    console.log('i create shelf ' + ID + ' ' + name)
+  
     //var shelves = JSON.parse(localStorage.getItem('shelves'));
-    var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
-    ref.on("value", function(snapshot) {
-      shelves = snapshot.val();
+    //var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
+    //ref.on("value", function(snapshot) {
+      //var shelves = snapshot.val();
+      var id;
+      //if (ID === null){
+        let counter = 1
+        for(var i = 0; i < shelves.length; i++) {
+          if(shelves[i].id === counter){
+            counter += 1;
+          } else {
+            id = counter;
+            break;
+          }
+        }
+      //}
+      //else {
+       // id = ID;
+      //}
+      console.log("hyllans id är " + id)
     //var shelves = this.getShelves();
     let shelf = {
       id: id,
@@ -209,7 +261,7 @@ const BookModel = function() {
       books: []
     }
     shelves.push(shelf)
-    }.bind(this))
+    //}.bind(this))
     
     //firebase.database().ref('users/' + this.userId).set({
       //shelves: shelves
@@ -218,100 +270,30 @@ const BookModel = function() {
 
     //localStorage.setItem('shelves',JSON.stringify(shelves));
     //console.log("i createShelf" + shelves);
-    notifyObservers();
+    //notifyObservers();
+    return shelves;
   }
 
   this.getShelves = function(callback, errorcallback) {
-    // Import Admin SDK
-//var admin = require("firebase-admin");
 
-// Get a database reference to our posts
-//var db = admin.database();
-var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
+    var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
 
-// Attach an asynchronous callback to read the data at our posts reference
-ref.on("value", function(snapshot) {
-    var childData = snapshot.val();
-    //var shelfArray = []
-    console.log('shelves från firebase: ' + childData.name);
-    //shelfArray.push(childData);
-    console.log('precis före CB')
-    callback(childData);
-  }
-  
-  //console.log('........................' + snapshot.val());
-  //return snapshot.val();
-, function (errorObject) {
-  errorcallback(errorObject);
-  console.log("The read failed: " + errorObject.code);
-});
+    // Attach an asynchronous callback to read the data at our posts reference
+    ref.on("value", function(snapshot) {
+        var childData = snapshot.val();
+        //var shelfArray = []
+        console.log('shelves från firebase: ' + childData);
+        //shelfArray.push(childData);
+        //console.log('precis före CB')
+        callback(childData);
+      },
+      function (errorObject) {
+      errorcallback(errorObject);
+      console.log("The read failed: " + errorObject.code);
+    });
+    }
 
 
-// ------------------------------------------------------------------------------
-/*
-    var shelfArray = [];
-    var article;
-    var articleRef = firebase.database().ref('/users/' + this.userId + '/shelves');
-    articleRef.once('value').then(function(snapshot) {
-      // The first promise succeeded. Save snapshot for later.
-      article = snapshot.val();
-      snapshot.forEach(function(childSnapshot){
-        var childData = childSnapshot.val();
-        console.log('shelves från firebase: ' + childData.name);
-        shelfArray.push(childData);
-      })
-      for (var i=0; i < shelfArray.length; i++){
-        console.log('******** '+ shelfArray[i].name)
-      }
-      return shelfArray;
-
-      // ------------------------------------------------------------------------------
-
-      // By returning a Promise, we know the function passed to "then" below
-      // will execute after the transaction finishes.
-      //return articleRef.child('readCount').transaction(function(current) {
-        // Increment readCount by 1, or set to 1 if it was undefined before.
-        //return (current || 0) + 1;
-      //});
-    })/*.then(function(readCountTxn) {
-      snapshot.forEach(function(childSnapshot){
-        var childData = childSnapshot.val();
-        shelfArray.push(childData);
-      })
-      return shelfArray;
-    });*/
-      // All promises succeeded.
-      //renderBlog({
-        //article: article,
-        //readCount: readCountTxn.snapshot.val()
-      //});
-    }//, function(error) {
-      // Something went wrong.
-      //console.error(error);
-    //});
-    /*var shelfArray = [];
-    console.log('getshelves före firebase');
-    var shelves = firebase.database().ref('/users/' + this.userId + '/shelves');
-    console.log("hallihallå" + shelves)
-    shelves.on('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot){
-      var childData = childSnapshot.val();
-      shelfArray.push(childData);
-      console.log(childData.books[0].volumeInfo.title);
-      console.log('shelves från firebase: ' + childData.name);
-        });
-      // ...
-      //console.log("++++++" + shelfArray[0].books.volumeInfo.title)
-          });    /*var shelves = firebase.database().ref('users/' + userId + '/shelves');
-      starCountRef.on('value', function(snapshot) {
-    updateStarCount(postElement, snapshot.val());
-    });*/
-
-    //console.log("i getShelf" + JSON.parse(localStorage.getItem('shelves')));
-  
-    //return JSON.parse(localStorage.getItem('shelves'));
-    
-    //return shelfArray;
   
 
   // API Helper methods

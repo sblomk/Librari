@@ -13,7 +13,6 @@ class Book extends Component {
         //this.props.model.addObserver(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
-        this.getShelfId = this.getShelfId.bind(this)
 
         this.state = {
             status: 'INITIAL',
@@ -28,9 +27,12 @@ class Book extends Component {
     getShelves() {
     this.props.model.getShelves((shelves) => {
         console.log(shelves + '!!!!!!!!!!!!!!!!!!')
+        //for (var i=0; shelves.length; i++){
+        //    console.log("hylla är " + shelves[i])
+        //}
         this.setState({
-        shelves: shelves,
-        status: 'LOADED'
+            shelves: shelves,
+            status: 'LOADED'
         })
     }, (errordata) => {
         console.log("The read failed: ");}
@@ -39,6 +41,18 @@ class Book extends Component {
     update() {
        this.getShelves()
     }
+
+    handleClick = () => {
+        var shelfId = null;
+        if(this.state.activeShelf!=null){
+            // 8 är radix, blev ett error utan, inte helt hundra på användningen
+            shelfId = parseInt(this.state.activeShelf)//, 8)
+        }
+        console.log('i book handle click, shelfid är: ' + shelfId + ' name är borttaget lägg till vid behov' + ' bookid är '+ this.state.id)
+        this.props.model.addToShelf(this.state.newShelfName, shelfId, this.state.id);
+    }
+    // returns a shelf id, and creates an id in the case that there is none
+
     // handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
         this.setState({
@@ -48,24 +62,15 @@ class Book extends Component {
 
     // handler for creating new shelves
     handleInputChange(e) {
-        newShelf = e.target.value;
-        /*this.setState({
+        //newShelfName = e.target.value;
+        console.log('i handle input före set state')
+        this.setState({
             newShelfName: e.target.value
-        }, this.update)*/
+        })
+        console.log('i handle input efter set state')
     }
 
-    // returns a shelf id, and creates an id in the case that there is none
-    getShelfId(){
-        if(this.state.activeShelf!=null){
-            // 8 är radix, blev ett error utan, inte helt hundra på användningen
-            return parseInt(this.state.activeShelf)//, 8)
-        } else {
-            // ändra createSHelf så att den creatar ID också, gör bara ett anrop, skriv en callback eller ändra status här
-            let shelfId = this.props.model.createShelfId()
-            this.props.model.createShelf(shelfId, newShelf)
-            return shelfId
-        }
-    }
+
 
 
     render(){
@@ -87,7 +92,7 @@ class Book extends Component {
                     chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
                 }
                 //console.log(this.state.activeShelf)
-        
+
                 return(
                     // displaying information about the book, as well as the option of shelves
                     <div className="bookWindow">
@@ -108,10 +113,14 @@ class Book extends Component {
                                 {shelfList}
                                 </select>
                                 <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
-                            <button onClick={() => this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
+                            <button onClick={this.handleClick}>Add to shelf</button>
                         </div>
                     </div>
                     );
+                    this.setState({
+                        status: 'INITIAL'
+                    })
+
 
                 default: return 'hej'
 
