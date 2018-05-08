@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 //import './App.css';
 //import SearchResults from './SearchResults/SearchResults';
-import Welcome from './Welcome/Welcome';
 import Header from './Header/Header';
 import { modelInstance } from './data/BookModel';
 //import Search from './Search/Search';

@@ -13,7 +13,7 @@ class SignIn extends Component {
 				<br/>
 				<input placeholder="password" type="text" onChange={this.props.handlePwdChange}/>
 				<br/>
-				<button onClick={this.props.signIn}>Go!</button>
+				<button onClick={this.props.signIn}>Go</button>
 			</div>
 
 	     );
