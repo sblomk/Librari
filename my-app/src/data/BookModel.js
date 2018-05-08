@@ -27,7 +27,7 @@ const BookModel = function() {
   }
   this.addListener();
 
-  let apiKey = 'AIzaSyBnc2ubpX3pUGpAfNpxFsjO3RfWK-r1nzg';
+  let apiKey = 'AIzaSyCdfNCyUlSSV9AkebmZhTW_Rfw2yjzJHK4';
   let observers = [];
 
   // saves the chosen book in local storage

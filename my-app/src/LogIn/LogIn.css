@@ -1,0 +1,40 @@
+#Login{
+margin-top: 30px;
+position: relative;
+left: 50%;
+margin-left: -200px;
+background: #FFF;
+border-radius: 5px;
+width: 400px;
+padding: 20px;
+font-family: Futura;
+text-align: center;
+}
+
+#loginHeader{
+font-size: 20px;
+margin-bottom: 20px;
+}
+
+input, button{
+text-align: center;
+padding: 5px;
+width: auto;
+border: none;
+background: #F2F2F2;
+color: #446083;
+margin-bottom: 10px;
+font-size: 14px;
+width: 80%;
+border-radius: 2px;
+}
+
+button{
+background: #446083;
+color: #FFF;
+}
+
+.linkDiv{
+color: #446083;
+cursor: pointer;
+}
