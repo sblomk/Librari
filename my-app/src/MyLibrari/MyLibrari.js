@@ -10,15 +10,32 @@ class MyLibrari extends Component {
 
         //this.props.model.addObserver(this);
         this.handleRemove = this.handleRemove.bind(this)
+        this.getShelves = this.getShelves.bind(this)
 
         this.state = {
             status: 'INITIAL',
-            shelves: this.props.model.getShelves()
+            shelves: this.getShelves()
         }
     }
-
+    getShelves() {
+      this.props.model.getShelves((shelves) => {
+        console.log(shelves + '!!!!!!!!!!!!!!!!!!')
+        var a = shelves;
+        for (var i=0; i < a.length; i++){
+          console.log(a[i].name)
+        }
+        this.setState({
+          shelves: shelves,
+          status: 'LOADED'
+        })
+      }, (errordata) => {
+        console.log("The read failed: ");}
+      )
+      }
+    
     componentDidMount() {
       this.props.model.addObserver(this)
+      this.getShelves();
     }
 
     handleRemove = (sID, bID) => {
@@ -31,16 +48,22 @@ class MyLibrari extends Component {
     }
 
     update(){
-      this.setState({
-        shelves: this.props.model.getShelves()
-      })
+      this.getShelves();
+      //this.setState({
+        //shelves: this.getShelves()
+      //})
       //console.log('före forceupdate yo')
       //this.forceUpdate();
     }
 
     render(){
+      console.log('i render på mylibrari')
+      if(this.state.status === 'LOADED'){
+
+      console.log('i mylibrari, shelves är: '+ this.state.shelves);
       let shelfList = null;
       shelfList = this.state.shelves.map((shelf) => {
+         console.log("Books are",shelf)
         var bookList = shelf.books.map((book, i) => 
           <div className="collectionBook" key={i}>
             <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
@@ -72,5 +95,10 @@ class MyLibrari extends Component {
 
       );
 }
+else {
+  return 'hej';
 }
+}
+}
+
 export default MyLibrari;
