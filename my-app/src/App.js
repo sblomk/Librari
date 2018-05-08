@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-//import './App.css';
+import './App.css';
 //import SearchResults from './SearchResults/SearchResults';
 import Header from './Header/Header';
 import { modelInstance } from './data/BookModel';
@@ -10,6 +10,8 @@ import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 import LogIn from './LogIn/LogIn';
+import SignIn from './SignIn/SignIn';
+import SignUp from './SignUp/SignUp';
 
 
 
@@ -24,13 +26,16 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Route path="/" component={Navbar} /> 
-        <Route exact path="/(|profile|login)" component={Header}/>
-        <Route path="/login" render={() => <LogIn />} />
-        <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
-        <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
-        <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
-
+        <div className="Content">
+          <Route path="/" component={Header}/>
+          <Route path="/login" render={() => <LogIn model={modelInstance} />} />
+          <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
+          <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
+          <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+        </div>
+        <div className="Navbar">
+          <Route path="/" component={Navbar} /> 
+        </div>
       </div>
     );
   }

@@ -72,7 +72,7 @@ class SearchView extends Component {
 				// Each book item gets a link to a more detailed view (the book view)
 				bookList = this.state.searchResults.items.map((book) =>
 					<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
-						<div className="bookfound col-md-1" >
+						<div className="bookfound" >
 							<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 							<div className="booktitle">{book.volumeInfo.title}</div>
 						</div>
