@@ -92,6 +92,7 @@ class Book extends Component {
                     </Link>
                 </div>
                 <div className="left">
+
                     <img src={this.state.chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
                 </div>
                 <div className="right">

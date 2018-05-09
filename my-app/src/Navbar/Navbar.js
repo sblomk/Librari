@@ -51,11 +51,8 @@ class Navbar extends Component {
 				<Link to="/">
 				<span className="glyphicon glyphicon-search"></span> Search
 				</Link>
-				<Link to="/signup">
-				<span className="glyphicon glyphicon-cog"></span> Sign up
-				</Link>
-				<Link to="/signin">
-				<span className="glyphicon glyphicon-cog"></span> Sign in
+				<Link to="/login">
+				<span className="glyphicon glyphicon-cog"></span> Log in
 				</Link>
 				<span>{this.state.email}</span>
 			</div> 
