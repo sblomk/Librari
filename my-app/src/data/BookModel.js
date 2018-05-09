@@ -51,10 +51,11 @@ const BookModel = function() {
       console.log(snapshot.val());
       console.log("user id " + this.userId)
 
+
       if (Array.isArray(snapshot.val())) {
         callback(snapshot.val());
-      } else {
-        callback([snapshot.val()]);
+      } else if (!(snapshot.val())) {
+        callback(snapshot.val());
       }
 
       
@@ -78,7 +79,14 @@ const BookModel = function() {
   this.getChosen = () => { return chosenBook; }
 
   // get a shelf by id
-  this.getShelfByID = (manyShelves, id) => { return manyShelves.filter((s) => { return s.id === id})[0]; }
+  this.getShelfByID = (manyShelves, id) => {
+
+    return manyShelves.filter((s) => { 
+
+      console.log(s.id);
+      return s.id === id})[0]; 
+
+  }
 
   // adding the chosen book to the chosen shelf
   this.addToShelf = (shelfId, book) => {
@@ -90,13 +98,8 @@ const BookModel = function() {
       let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
 
       if (!exists) {
-        var s = this.getShelfByID(shelves, shelfId);
-        var q = s.books;
-        q.push(book);
-        s.books = q;
+        this.getShelfByID(shelves, shelfId).books.push(book);
         this.setDatabase(shelves);
-        //this.setDatabase(this.getShelfByID(shelves, shelfId).books.push(book))
-
       }
     })
   }
@@ -105,7 +108,12 @@ const BookModel = function() {
 
   // remove book from chosen shelf
   this.removeBookFromShelf = (shelfId, bookId) => {
-    this.getShelfByID(shelfId).books.filter((b) => { return b.id !== bookId });
+
+    this.getDatabase((shelves) => {
+        var updatedBooks = this.getShelfByID(shelves, shelfId).books.filter((b) => { return b.id !== bookId; });
+        this.getShelfByID(shelves, shelfId).books = updatedBooks;
+        this.setDatabase(shelves);
+      })
   }
 
   // create a new shelf
@@ -115,14 +123,16 @@ const BookModel = function() {
       
       let counter = 1;
 
-      if (shelves[0] !== null){
+      if (shelves !== null){
         shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
       }
       
       let emptyShelf = { id: counter, name: name, books: [] }
 
       emptyShelf.books.push(book);
-
+      if ( shelves === null){
+        var shelves = [];
+      }
       shelves.push(emptyShelf)
 
       this.setDatabase(shelves);

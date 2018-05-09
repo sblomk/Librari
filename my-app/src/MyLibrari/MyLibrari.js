@@ -51,11 +51,21 @@ class MyLibrari extends Component {
 	        	break;
 
 	        case "LOADED":
-
+		        console.log((this.state.shelves))
+   				if (!(this.state.shelves)){
+            		console.log('inga hyllor')
+           		shelfList = 'Finns inga hyllor';
+       			}
+       			else{
 	        	console.log(this.state.shelves)
 				shelfList = this.state.shelves.map((shelf) => {
 
-
+					//console.log(shelf);
+					//console.log(shelf[0].books);
+					if (shelf.books === undefined){
+						var booklist = "There are no books in this shelf";
+					}
+					else{
 					var bookList = shelf.books.map((book, i) => 
 						<div className="collectionBook" key={i}>
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
@@ -66,7 +76,7 @@ class MyLibrari extends Component {
 						<div className="col-md-12"> {book.volumeInfo.title} </div>
 						</div>
 						</div>);
-
+					}
 					return(
 
 						<div className="personalShelf" id={shelf.id} key={shelf.id}>
@@ -77,6 +87,7 @@ class MyLibrari extends Component {
 						</div>
 					);
 				});
+			}
 				break;
 		};
 

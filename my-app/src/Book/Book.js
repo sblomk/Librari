@@ -89,7 +89,7 @@ class Book extends Component {
 
             case "LOADED":
                 console.log(this.state.shelves);
-                if( this.state.shelves[0] === null ){
+                if(!(this.state.shelves)){
                     shelfList = <option value="error" key="error">You need to create a new shelf</option>
                 }
                 else{
