@@ -4,7 +4,7 @@ import './SignIn.css';
 import firebase from '../firebase.js';
 
 class SignIn extends Component {
-		
+
 	render() {
 		
 		return (
