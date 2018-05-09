@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-//import './App.css';
+import './App.css';
 //import SearchResults from './SearchResults/SearchResults';
 import Header from './Header/Header';
-import { modelInstance } from './data/BookModel'
-import Shelf from './Shelf/Shelf';
+import { modelInstance } from './data/BookModel';
+//import Search from './Search/Search';
 import Book from './Book/Book';
 import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
+import LogIn from './LogIn/LogIn';
+import SignIn from './SignIn/SignIn';
+import SignUp from './SignUp/SignUp';
+
 
 
 class App extends Component {
@@ -18,24 +22,20 @@ class App extends Component {
       title: 'Librari'
     }
   }
+  
   render() {
-
-    //LÅT STÅ!!!!1
-    //firebase.database().ref('items') hämtar det innehåll som finns under "items" i databasen.
-    //Just nu är databasen inte implementerad
-    // https://console.firebase.google.com/project/librari-41dab/database/librari-41dab/data
-    //Här kan en se hur databasen ser ut (I alla fall David)
-    //Exempel på push av object till firebase
-    //itemsRef.push(item);
-
     return (
       <div className='App'>
-        <Route path="/" component={Navbar}/> 
-        <Route exact path="/(|profile)" component={Header}/>
-        <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
-        <Route path="/book/:value" component={Book}/>
-        <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
-        <Route path="/edit/:value" render={()=> <Shelf model={modelInstance}/>}/>
+        <div className="Content">
+          <Route path="/" component={Header}/>
+          <Route path="/login" render={() => <LogIn model={modelInstance} />} />
+          <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
+          <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
+          <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+        </div>
+        <div className="Navbar">
+          <Route path="/" component={Navbar} /> 
+        </div>
       </div>
     );
   }

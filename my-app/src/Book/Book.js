@@ -13,18 +13,28 @@ class Book extends Component {
         //this.props.model.addObserver(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
-        this.getShelfId = this.getShelfId.bind(this)
+        this.submitBook = this.submitBook.bind(this)
 
         this.state = {
             status: 'INITIAL',
-            //id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
-            shelves: this.props.model.getShelves()
+            id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
+            shelves: this.props.model.getShelves(),
+            chosenBook: this.props.model.getBookFromSearchResults(
+                window.location.href.toString().split("book/")[1])
         }
     }
-    componentDidMount() {
-        this.props.model.addObserver(this)
-    }
 
+    componentDidMount() {
+        //this.props.model.addObserver(this)
+      }
+
+    getShelves() {
+        this.props.model.getShelves().then(data => {
+            this.setState({
+                shelves: data
+            })
+        })
+    }
     update() {
       this.setState({
         shelves: this.props.model.getShelves()
@@ -45,22 +55,21 @@ class Book extends Component {
     }
 
     // returns a shelf id, and creates an id in the case that there is none
-    getShelfId(){
-        if(this.state.activeShelf!=null){
-            // 8 är radix, blev ett error utan, inte helt hundra på användningen
-            return parseInt(this.state.activeShelf, 8)
+    submitBook(){
+        if (this.state.activeShelf != null){
+            this.props.model.addToShelf(
+                parseInt(this.state.activeShelf),
+                this.state.chosenBook); 
+
         } else {
-            let shelfId = this.props.model.createShelfId()
-            this.props.model.createShelf(shelfId, this.state.newShelfName)
-            return shelfId
+            this.props.model.createNewShelfAndAddBook(
+                this.state.newShelfName,
+                this.state.chosenBook);
         }
     }
 
 
     render(){
-        let chosenBook = this.props.model.getSearch(this.props.activeBookId);
-        //let shelves = this.props.model.getShelves();
-        // for each shelf, display the value of shelf.name as the option in the dropdown menu
         let shelfList = this.state.shelves.map((shelf) =>
             <option value={shelf.id} key={shelf.id}>
                 {shelf.name}
@@ -68,8 +77,8 @@ class Book extends Component {
 
         )
         // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
-        if (chosenBook.volumeInfo.imageLinks == null) {
-            chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+        if (this.state.chosenBook.volumeInfo.imageLinks == null) {
+            this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
         }
         //console.log(this.state.activeShelf)
 
@@ -82,21 +91,20 @@ class Book extends Component {
                         <span className="glyphicon glyphicon-remove-circle"></span>
                     </div>
                 </div>
+                <div className="left">
 
-                <div id="left">
-                    <img src={chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
+                    <img src={this.state.chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
                 </div>
-
-                <div id="right">
-                    <h1>{chosenBook.volumeInfo.title}</h1>
-                    <h2>{chosenBook.volumeInfo.subtitle}</h2>
-                    <h3>{chosenBook.volumeInfo.authors[0]}</h3>
+                <div className="right">
+                    <h1>{this.state.chosenBook.volumeInfo.title}</h1>
+                    <h2>{this.state.chosenBook.volumeInfo.subtitle}</h2>
+                    <h3>{this.state.chosenBook.volumeInfo.authors[0]}</h3>
                     <select onChange={this.handleDropdownChange} id="choiceOfLibrary">
                         <option value="">Select a shelf</option>
                         {shelfList}
-                    </select>
-                    <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
-                    <button onClick={this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
+                        </select>
+                        <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
+                    <button onClick={this.submitBook}>Add to shelf</button>
                 </div>
 
             </div>

@@ -14,23 +14,20 @@ class SearchView extends Component {
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleClick = this.handleClick.bind(this)
-		this.handleClose = this.handleClose.bind(this)
 
 		this.state = ({
-			searchResults: this.props.model.getSearchResults(),
+			filter: "Tolkien",
 			status: 'INITIAL'
 		})
 	}
 
 	componentDidMount() {
-    	this.props.model.addObserver(this)
     	this.getBooks()
  	}
 
  	// on change, this handler will update the search string set by the user
   	handleChange(event) {
-  	    let filter = event.target.value;
-  	    this.props.model.setFilter(filter);
+  		this.newSearch(event.target.value);
   	}
 
   	//When clicking on book
@@ -45,31 +42,24 @@ class SearchView extends Component {
 		console.log(document.getElementById('bookWindow').style.display + "display efter")
 	}
 
-	handleClose(event) {
-		this.setState({
-			activeBookId: ''
-		})
-		document.getElementById('bookWindow').style.display = "none";
-		document.getElementById('bajs').style.display ="none"
-		document.getElementById('bajs2').style.display ="none"
+	newSearch(newFilter) {
+		this.setState({ status: "INITIAL",
+			filter: newFilter !== "" ? newFilter : "Tolkien"
+		}, () => this.getBooks());		
 	}
- 
+
 	getBooks() {
-	    this.props.model.getAllBooks().then(books => {
-			this.props.model.setSearch(books.items);
+		this.props.model.getAllBooks(this.state.filter).then(books => {
+			this.props.model.setSearchResults(books.items);
 	      	this.setState({
 	        	status: 'LOADED',
-	        	searchResults: books
+	        	searchResults: books,
 	     	})
 	    }).catch(() => {
 	      	this.setState({
 	        	status: 'ERROR'
 	      })
-	    })
-	}
-
-	update(){
-		this.getBooks()
+	    });
 	}
 
  	render() {
@@ -88,13 +78,13 @@ class SearchView extends Component {
 					}
 				}
 				// Each book item gets a link to a more detailed view (the book view)
-				bookList = this.state.searchResults.items.map((book, i) =>
-
-					<div className="bookfound" key={i}>
-						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
-						<div className="booktitle" id={book.id} onClick={this.handleClick}>{book.volumeInfo.title}</div>
-					</div>
-
+				bookList = this.state.searchResults.items.map((book) =>
+					<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
+						<div className="bookfound" >
+							<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
+							<div className="booktitle">{book.volumeInfo.title}</div>
+						</div>
+					</Link>
 	        	)
 	        	break;
 	      	default:
@@ -104,13 +94,11 @@ class SearchView extends Component {
 
 	    return (
 	      <div className="SearchView">
-	        <Search model={this.props.model} handleChange={this.handleChange} filter={this.state.filter}/>
-	        <Book model={this.props.model} activeBookId={this.state.activeBookId} handleClose={this.handleClose}/>
+	        <Search handleChange={this.handleChange}/>
 	        <SearchResults results={bookList}/>
 	   
 	      </div>
-
-	    );
+	      );
   	}
 }
 

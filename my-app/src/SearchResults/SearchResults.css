@@ -1,20 +1,18 @@
 .searchResults{
 background: #FFF;
 overflow: auto;
-position: relative;
-white-space: nowrap;
+display: block;
 height: auto;
 width: 100%;
 padding: 10px;
 border: 0px;
 border-radius: 5px;
+text-align: center;
 }
 
 .bookfound{
-margin-top:2%;
-margin-bottom:0%;
-margin-right:3%;
-margin-left:1%;
+display: inline-block;
+margin: 10px;
 }
 
 .bookimg {
@@ -23,13 +21,12 @@ width: 128px;
 }
 
 .booktitle {
-font-family: Futura;
 font-size: 14px;
 display: block;
 position: absolute;
 height: 204px;
 width: 128px;
-padding: 15px;
+padding: 10px;
 margin-top: -204px;
 background: rgba(29, 106, 154, 0.72);
 color: #fff;

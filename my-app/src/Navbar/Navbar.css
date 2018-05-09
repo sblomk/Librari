@@ -1,10 +1,13 @@
 .navbar{
-background: none;
+position: fixed;
+background: #000;
 padding: 20px;
 border-radius: 0px;
 font-family: Futura;
 font-size: 15px;
-margin-bottom: 0px;
+margin-bottom: 20px;
+width: 100%;
+opacity: 0.9;
 }
 
 
