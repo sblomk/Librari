@@ -52,12 +52,13 @@ class MyLibrari extends Component {
       //console.log('i render på mylibrari')
 
       if(this.state.status === 'LOADED'){
-        
+        let shelfList = null;
       if (!(this.state.shelves)){
-        return('finns inga hyllor');
+        shelfList ='finns inga hyllor';
       }
+      else{
       console.log('i mylibrari, shelves är: '+ this.state.shelves);
-      let shelfList = null;
+      
       shelfList = this.state.shelves.map((shelf) => {
         if (!(shelf.books)){ 
           return('tom hylla');
@@ -76,6 +77,7 @@ class MyLibrari extends Component {
               </div>
             </div>
           </div>);}
+      
 
         return(
           <div className="personalShelf" id={shelf.id} key={shelf.id}>
@@ -87,7 +89,7 @@ class MyLibrari extends Component {
             </div>
           </div>
         );
-      })
+      })}
       return (
         <div className="myLibrari">
           {shelfList}

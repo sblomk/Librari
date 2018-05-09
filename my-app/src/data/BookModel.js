@@ -146,6 +146,7 @@ const BookModel = function() {
           // if not, add the book to the shelf
           shelves[i].books.push(this.getSearch(bookId));
           console.log('shelves are: '+ shelves)
+          this.writeToFB(shelves);
 
           //localStorage.setItem('shelves', JSON.stringify(shelves));
         }
@@ -153,21 +154,32 @@ const BookModel = function() {
     }
     
     else{
+      console.log('försöker skapa en ny shelf med namn: '+shelfName+ ' och id: '+shelfId)
         shelves = this.createShelf(shelves, shelfName, shelfId);
-        shelves[shelves.length-1].books.push(this.getSearch(bookId));
-        console.log('books are: '+ shelves[shelves.length-1].books)
- 
+        
+        for(var i=0; i < shelves.length; i++){
+          if(shelves[i].id == shelfId) {
+            console.log(shelves[i].books + '***********')
+            shelves[i].books.push(this.getSearch(bookId));
+          }
+        }
+
+        //shelves[shelves.length-1].books.push(this.getSearch(bookId));
+        //console.log('books are: '+ shelves[shelves.length-1].books)
+        this.writeToFB(shelves);
     }
 
 
   }.bind(this))
       // pushar till databasen
-      firebase.database().ref('users/' + this.userId).set({
-        shelves: shelves
-      })
 
   notifyObservers();
 
+  }
+  this.writeToFB = function(shelves){
+    firebase.database().ref('users/' + this.userId).set({
+      shelves: shelves
+    })
   }
 
   this.deleteShelf = function(id){
@@ -241,15 +253,21 @@ const BookModel = function() {
       var id;
       //if (ID === null){
         let counter = 1
-        for(var i = 0; i < shelves.length; i++) {
-          if(shelves[i].id === counter){
-            counter += 1;
-          } else {
-            id = counter;
-            break;
+        if (!(shelves)){
+          id = 1;
+        }
+        else{
+          for(var i = 0; i < shelves.length; i++) {
+            console.log(i)
+            if(shelves[i].id === counter){
+              counter += 1;
+            } else {
+              id = counter;
+              console.log('nytt id är ' + id)
+              break;
+            }
           }
         }
-      //}
       //else {
        // id = ID;
       //}
@@ -260,7 +278,12 @@ const BookModel = function() {
       name: name,
       books: []
     }
-    shelves.push(shelf)
+    if (!(shelves)){
+      shelves = shelf
+    }
+    else{
+      shelves.push(shelf)
+    }
     //}.bind(this))
     
     //firebase.database().ref('users/' + this.userId).set({
@@ -271,6 +294,7 @@ const BookModel = function() {
     //localStorage.setItem('shelves',JSON.stringify(shelves));
     //console.log("i createShelf" + shelves);
     //notifyObservers();
+    console.log('nya shelves är: ' + shelves)
     return shelves;
   }
 
