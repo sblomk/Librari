@@ -34,25 +34,26 @@ const BookModel = function() {
   }  
 
   // update database
-  this.setDatabase = () => {
+  this.setDatabase = (s) => {
+    console.log(s)
     firebase.database().ref('users/' + this.userId).set(
-      { allShelves: shelves }
+      { allShelves: s }
     );
   }
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
 
-    var ref = firebase.database().ref('users/' + this.serId + "/allShelves");
+    var ref = firebase.database().ref('users/' + this.userId + "/allShelves");
     ref.on('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-      for(var i=0; i<snapshot.val().length; i++){
-        console.log(snapshot.val()[i].name)
-      }
-      callback(snapshot.val());
+      console.log(snapshot.val());
+      console.log("user id " + this.userId)
 
-    });
+      callback([snapshot.val()]);
+
+    }.bind(this));
 
   }
 
@@ -78,30 +79,24 @@ const BookModel = function() {
 
     this.getDatabase((shelves) => {
 
+      console.log(shelves)
+
       let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
+
       if (!exists) {
+        var s = this.getShelfByID(shelves, shelfId);
+        var q = s.books;
+        //console.log(q);
+        q.push(book);
+        s.books = q;
+        //console.log(q);
+        this.setDatabase(s);
 
-        this.getShelfByID(shelves, shelfId).books.push(book);
-        this.setDatabase();
       }
-
-
     })
-
   }
 
 
-
-    /*
-    console.log(a);
-    let exists = this.getShelfByID(shelfId).books.find((b) => { return b.id === book.id; });
-    if (!exists) {
-      this.getShelfByID(shelfId).books.push(book);
-      this.setDatabase();
-    }
-    
-  }
-  */
 
   // remove book from chosen shelf
   this.removeBookFromShelf = (shelfId, bookId) => {
@@ -110,20 +105,34 @@ const BookModel = function() {
 
   // create a new shelf
   this.createShelf = (name) => {
-    shelves.push({ id: this.createShelfId(), name: name, books: [] })
+
+    return { id: this.createShelfId(), name: name, books: [] }
+
   }
 
   // generate new id for shelf
   this.createShelfId = () => {
-    let counter = 1;
-    shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
-    return counter;
+
+    this.getDatabase((shelves) => {
+
+      let counter = 1;
+
+      shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
+
+      return counter;
+
+
+    });
+
+    
   }
 
   // create new shelf and add a book to it
   this.createNewShelfAndAddBook = (name, book) => {
-    this.createShelf(name);
-    this.addToShelf(this.getShelfId(name), book);
+    let sh = this.createShelf(name);
+    sh.books.push(book);
+    this.setDatabase(sh);
+
   }
 
   // get id of shelf

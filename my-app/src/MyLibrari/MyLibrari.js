@@ -52,6 +52,7 @@ class MyLibrari extends Component {
 	        	break;
 
 	        case "LOADED":
+	        	console.log(this.state.shelves)
 				shelfList = this.state.shelves.map((shelf) => {
 					var bookList = shelf.books.map((book, i) => 
 						<div className="collectionBook" key={i}>
