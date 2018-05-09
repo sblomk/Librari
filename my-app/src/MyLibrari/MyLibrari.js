@@ -5,72 +5,78 @@ import './MyLibrari.css';
 //var shelves;
 
 class MyLibrari extends Component {
-    constructor(props){
-        super(props);
 
-        //this.props.model.addObserver(this);
-        this.handleRemove = this.handleRemove.bind(this)
+	constructor(props){
+		super(props);
+		this.handleRemove = this.handleRemove.bind(this)
+		this.getAllShelves = this.getAllShelves.bind(this);
+		this.state = {
+			status: 'INITIAL'
+		}
+	}
 
-        this.state = {
-            status: 'INITIAL',
-            shelves: this.props.model.getShelves()
-        }
-    }
+	componentDidMount() {
+    	this.getAllShelves()
+ 	}
 
-    componentDidMount() {
-      this.props.model.addObserver(this)
-    }
+ 	getAllShelves() {
+ 		this.props.model.getShelves((shelves) => {
+ 			this.setState({
+ 				shelves: shelves,
+ 				status: 'LOADED'
+ 			})
+ 		}, (errordata) => {
+ 			console.log("The read failed: ")
+ 			;})
+ 	}
 
-    handleRemove = (sID, bID) => {
-      //console.log("försöker ta bort en bok " + sID + ' ' + bID)
-      this.props.model.removeBookFromShelf(sID, bID);
-    }
 
-    handleEdit = () => {
-      // ??
-    }
+	handleRemove = (sID, bID) => {
+		this.props.model.removeBookFromShelf(sID, bID);
+	}
 
-    update(){
-      this.setState({
-        shelves: this.props.model.getShelves()
-      })
-      //console.log('före forceupdate yo')
-      //this.forceUpdate();
-    }
+	handleEdit = () => {
+	// ??
+	}
 
-    render(){
-      let shelfList = null;
-      shelfList = this.state.shelves.map((shelf) => {
-        var bookList = shelf.books.map((book, i) => 
-          <div className="collectionBook" key={i}>
-            <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
-            <div className="booktitle">
-              <div className="col-md-1">
-                <span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
-              </div>
-              <div className="col-md-12">
-                {book.volumeInfo.title}
-              </div>
-            </div>
-          </div>);
+	render(){
 
-        return(
-          <div className="personalShelf" id={shelf.id} key={shelf.id}>
-            <div className="shelfname">{shelf.name}
-              <span className="editbtn glyphicon glyphicon-pencil" onClick = {this.handleEdit}></span>
-            </div> 
-            <div className="collection">
-              {bookList}
-            </div>
-          </div>
-        );
-      })
-      return (
-        <div className="myLibrari">
-          {shelfList}
-        </div>
+		let shelfList = null;
 
-      );
-}
+		switch (this.state.status) {
+
+			case "INITIAL":
+				shelfList = <em><p className="loading">Loading...</p></em>
+	        	break;
+
+	        case "LOADED":
+	        	console.log(this.state.shelves.shelves)
+				shelfList = this.state.shelves.map((shelf) => {
+					var bookList = shelf.books.map((book, i) => 
+						<div className="collectionBook" key={i}>
+						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
+						<div className="booktitle">
+						<div className="col-md-1">
+							<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this. handleRemove(shelf.id, book.id)}></span>
+						</div>
+						<div className="col-md-12"> {book.volumeInfo.title} </div>
+						</div>
+						</div>);
+
+					return(
+
+						<div className="personalShelf" id={shelf.id} key={shelf.id}>
+						<div className="shelfname">{shelf.name}
+						<span className="editbtn glyphicon glyphicon-pencil" onClick = {this.handleEdit}></span>
+						</div> 
+						<div className="collection"> {bookList} </div>
+						</div>
+					);
+				});
+				break;
+		};
+
+		return ( <div className="myLibrari"> {shelfList} </div> );
+	}
 }
 export default MyLibrari;

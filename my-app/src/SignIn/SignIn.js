@@ -27,8 +27,6 @@ class SignIn extends Component {
 	}
 
 	handleSubmit() {
-		//event.preventDefault();
-		console.log(1);
 		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
 			// Handle Errors here
 			var errorCode = error.code;

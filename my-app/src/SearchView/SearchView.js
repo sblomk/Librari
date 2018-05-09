@@ -15,20 +15,18 @@ class SearchView extends Component {
 		this.handleClick = this.handleClick.bind(this);
 
 		this.state = ({
-			searchResults: this.props.model.getSearchResults(),
+			filter: "Tolkien",
 			status: 'INITIAL'
 		})
 	}
 
 	componentDidMount() {
-    	this.props.model.addObserver(this)
     	this.getBooks()
  	}
 
  	// on change, this handler will update the search string set by the user
   	handleChange(event) {
-  	    let filter = event.target.value;
-  	    this.props.model.setFilter(filter);
+  		this.newSearch(event.target.value);
   	}
 
   	//When clicking on book
@@ -36,22 +34,24 @@ class SearchView extends Component {
 		this.props.model.setChosen(event.target);
 	}
 
+	newSearch(newFilter) {
+		this.setState({ status: "INITIAL",
+			filter: newFilter !== "" ? newFilter : "Tolkien"
+		}, () => this.getBooks());		
+	}
+
 	getBooks() {
-	    this.props.model.getAllBooks().then(books => {
-			this.props.model.setSearch(books.items);
+		this.props.model.getAllBooks(this.state.filter).then(books => {
+			this.props.model.setSearchResults(books.items);
 	      	this.setState({
 	        	status: 'LOADED',
-	        	searchResults: books
+	        	searchResults: books,
 	     	})
 	    }).catch(() => {
 	      	this.setState({
 	        	status: 'ERROR'
 	      })
-	    })
-	}
-
-	update(){
-		this.getBooks()
+	    });
 	}
 
  	render() {
@@ -84,15 +84,12 @@ class SearchView extends Component {
 	        break;
 	    }
 
-	    console.log(bookList + "booklist i render")
-
 	    return (
 	      <div className="SearchView">
-	        <Search model={this.props.model} handleChange={this.handleChange} filter={this.state.filter}/>
+	        <Search handleChange={this.handleChange}/>
 	        <SearchResults results={bookList}/>
 	      </div>
-
-	    );
+	      );
   	}
 }
 
