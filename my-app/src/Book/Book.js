@@ -37,7 +37,7 @@ class Book extends Component {
                 shelves: shelves,
                 status: 'LOADED'
             })
-            console.log(this.state.shelves + "hyllor i Book.js");
+
         }, (errordata) => {
             console.log("The read failed: ")
             ;})
@@ -87,7 +87,13 @@ class Book extends Component {
                 break;
 
             case "LOADED":
+                console.log(this.state.shelves);
+                if( this.state.shelves === undefined ){
+                    shelfList = <option value="error" key="error">You need to create a new shelf</option>
+                }
+                else{
                 console.log('***'+this.state.shelves)
+                console.log(this.state.shelves)
                 shelfList = this.state.shelves.map((shelf) => 
                     //arr.push(shelf);
                     <option value={shelf.id} key={shelf.id}>
@@ -97,8 +103,9 @@ class Book extends Component {
         // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
                 if (this.state.chosenBook.volumeInfo.imageLinks == null) {
                     this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
-                }
+                    }
                 break;
+                }
             };
         //console.log(this.state.activeShelf)
 
