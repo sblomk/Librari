@@ -4,7 +4,9 @@ const BookModel = function() {
   
   this.addListener = function() {
     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) { this.userId = user.uid; }
+      if (user) { 
+        this.userId = user.uid;
+      }
       else { }
     }.bind(this));
   }
@@ -39,13 +41,18 @@ const BookModel = function() {
   }
 
   // get books from db
-  this.getDatabase = () => {
+  this.getDatabase = (callback, errorcallback) => {
 
-  var ref = firebase.database().ref('/users/' + this.userId + '/shelves');
+    var ref = firebase.database().ref('users/' + this.serId + "/allShelves");
+    ref.on('value', function(snapshot) {
 
-  ref.then(function(snapshot) {
-    shelves = snapshot.val();
-  }); 
+      console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
+      for(var i=0; i<snapshot.val().length; i++){
+        console.log(snapshot.val()[i].name)
+      }
+      callback(snapshot.val());
+
+    });
 
   }
 
@@ -56,6 +63,7 @@ const BookModel = function() {
   // get book from search results by id
   this.getBookFromSearchResults = (id) => {
     return this.getSearchResults().filter((b) => { return b.id === id; })[0];
+    console.log('vald bok är ' + id)
   }
 
   // get and set chosen book
@@ -63,16 +71,37 @@ const BookModel = function() {
   this.getChosen = () => { return chosenBook; }
 
   // get a shelf by id
-  this.getShelfByID = (id) => { return shelves.filter((s) => { return s.id === id})[0]; }
+  this.getShelfByID = (manyShelves, id) => { return manyShelves.filter((s) => { return s.id === id})[0]; }
 
   // adding the chosen book to the chosen shelf
   this.addToShelf = (shelfId, book) => {
+
+    this.getDatabase((shelves) => {
+
+      let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
+      if (!exists) {
+
+        this.getShelfByID(shelves, shelfId).books.push(book);
+        this.setDatabase();
+      }
+
+
+    })
+
+  }
+
+
+
+    /*
+    console.log(a);
     let exists = this.getShelfByID(shelfId).books.find((b) => { return b.id === book.id; });
     if (!exists) {
       this.getShelfByID(shelfId).books.push(book);
       this.setDatabase();
     }
+    
   }
+  */
 
   // remove book from chosen shelf
   this.removeBookFromShelf = (shelfId, bookId) => {
