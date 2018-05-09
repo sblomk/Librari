@@ -74,6 +74,7 @@ class Book extends Component {
 
 
     render(){
+        let shelfList = null;
         console.log("i book");
         switch (this.state.status){
             case 'LOADED':
@@ -81,12 +82,16 @@ class Book extends Component {
                 //let shelves = this.props.model.getShelves();
                 // for each shelf, display the value of shelf.name as the option in the dropdown menu
                 //console.log(this.state.shelves[0].name)
-                let shelfList = this.state.shelves.map((shelf) =>
+                if (!(this.state.shelves)){
+                    shelfList = null;
+                }
+                else{
+                    shelfList = this.state.shelves.map((shelf) =>
                     <option value={shelf.id} key={shelf.id}>
                         {shelf.name}
                     </option>
-        
-                )
+                    )
+                }
                 // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
                 if (chosenBook.volumeInfo.imageLinks == null) {
                     chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};

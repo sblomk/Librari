@@ -45,22 +45,21 @@ class MyLibrari extends Component {
 
     update(){
       this.getShelves();
-      //this.setState({
-        //shelves: this.getShelves()
-      //})
-      //console.log('före forceupdate yo')
-      //this.forceUpdate();
+
     }
 
     render(){
       //console.log('i render på mylibrari')
+
       if(this.state.status === 'LOADED'){
         
-
-      //console.log('i mylibrari, shelves är: '+ this.state.shelves);
+      if (!(this.state.shelves)){
+        return('finns inga hyllor');
+      }
+      console.log('i mylibrari, shelves är: '+ this.state.shelves);
       let shelfList = null;
       shelfList = this.state.shelves.map((shelf) => {
-        if (!(shelf.books)){
+        if (!(shelf.books)){ 
           return('tom hylla');
         }
         else{
