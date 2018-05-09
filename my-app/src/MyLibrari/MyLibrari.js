@@ -26,6 +26,7 @@ class MyLibrari extends Component {
  				shelves: shelves,
  				status: 'LOADED'
  			})
+ 			console.log(this.state.shelves + "hyllor i MyLibrari.js");
  		}, (errordata) => {
  			console.log("The read failed: ")
  			;})
@@ -51,7 +52,6 @@ class MyLibrari extends Component {
 	        	break;
 
 	        case "LOADED":
-	        	console.log(this.state.shelves.shelves)
 				shelfList = this.state.shelves.map((shelf) => {
 					var bookList = shelf.books.map((book, i) => 
 						<div className="collectionBook" key={i}>
