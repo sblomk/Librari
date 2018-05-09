@@ -54,6 +54,7 @@ const BookModel = function() {
       callback([snapshot.val()]);
 
     }.bind(this));
+    break;
 
   }
 
@@ -104,36 +105,23 @@ const BookModel = function() {
   }
 
   // create a new shelf
-  this.createShelf = (name) => {
-
-    return { id: this.createShelfId(), name: name, books: [] }
-
-  }
-
-  // generate new id for shelf
-  this.createShelfId = () => {
-
+  this.createNewShelfAndAddBook = (name, book) => {
+    console.log("OOOOOOOOOUUUUUUUUUUUUUUUU")
     this.getDatabase((shelves) => {
-
+      
       let counter = 1;
-
       shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
 
-      return counter;
+      let emptyShelf = { id: counter, name: name, books: [] }
 
+      emptyShelf.books.push(book);
 
-    });
+      this.setDatabase(emptyShelf);
 
-    
-  }
-
-  // create new shelf and add a book to it
-  this.createNewShelfAndAddBook = (name, book) => {
-    let sh = this.createShelf(name);
-    sh.books.push(book);
-    this.setDatabase(sh);
+    })
 
   }
+
 
   // get id of shelf
   this.getShelfId = (name) => {

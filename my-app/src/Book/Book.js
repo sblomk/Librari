@@ -72,6 +72,7 @@ class Book extends Component {
             this.props.model.createNewShelfAndAddBook(
                 this.state.newShelfName,
                 this.state.chosenBook);
+            
         }
     }
 
