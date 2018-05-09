@@ -6,6 +6,7 @@ const BookModel = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) { 
         this.userId = user.uid;
+        console.log('user id '+this.userId);
       }
       else { }
     }.bind(this));
@@ -54,7 +55,6 @@ const BookModel = function() {
       callback([snapshot.val()]);
 
     }.bind(this));
-    break;
 
   }
 
@@ -64,8 +64,8 @@ const BookModel = function() {
 
   // get book from search results by id
   this.getBookFromSearchResults = (id) => {
-    return this.getSearchResults().filter((b) => { return b.id === id; })[0];
     console.log('vald bok är ' + id)
+    return this.getSearchResults().filter((b) => { return b.id === id; })[0];
   }
 
   // get and set chosen book

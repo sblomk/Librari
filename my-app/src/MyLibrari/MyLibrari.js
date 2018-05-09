@@ -51,30 +51,41 @@ class MyLibrari extends Component {
 				shelfList = <em><p className="loading">Loading...</p></em>
 	        	break;
 
-	        case "LOADED":
-	        	
-				shelfList = this.state.shelves.map((shelf) => {
-					var bookList = shelf.books.map((book, i) => 
-						<div className="collectionBook" key={i}>
-						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
-						<div className="booktitle">
-						<div className="col-md-1">
-							<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this. handleRemove(shelf.id, book.id)}></span>
-						</div>
-						<div className="col-md-12"> {book.volumeInfo.title} </div>
-						</div>
-						</div>);
+      case "LOADED":
+          console.log('loaded');
+          console.log(this.state.shelves)
+          if (!(this.state.shelves[0])){
+            console.log('inga hyllor')
+            shelfList = 'Finns inga hyllor';
+          }
+          else{
+            shelfList = this.state.shelves.map((shelf) => {
+              if (!(shelf.books)){
+                var bookList = 'Tom hylla';
+              }
+              else{
+                var bookList = shelf.books.map((book, i) => 
+                  <div className="collectionBook" key={i}>
+                  <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
+                  <div className="booktitle">
+                  <div className="col-md-1">
+                    <span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
+                  </div>
+                  <div className="col-md-12"> {book.volumeInfo.title} </div>
+                  </div>
+                  </div>);
 
-					return(
-
-						<div className="personalShelf" id={shelf.id} key={shelf.id}>
-						<div className="shelfname">{shelf.name}
-						<span className="editbtn glyphicon glyphicon-pencil" onClick = {this.handleEdit}></span>
-						</div> 
-						<div className="collection"> {bookList} </div>
-						</div>
-					);
-				});
+                return(
+                  <div className="personalShelf" id={shelf.id} key={shelf.id}>
+                  <div className="shelfname">{shelf.name}
+                  <span className="editbtn glyphicon glyphicon-pencil" onClick = {this.handleEdit}></span>
+                  </div> 
+                  <div className="collection"> {bookList} </div>
+                  </div>
+                );
+            }
+          })
+        };
 				break;
 		};
 

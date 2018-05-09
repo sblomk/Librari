@@ -21,13 +21,17 @@ class Book extends Component {
             status: 'INITIAL',
             id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
             //shelves: this.getAllShelves(),
-            chosenBook: this.props.model.getBookFromSearchResults(
-                window.location.href.toString().split("book/")[1])
+            //chosenBook: this.props.model.getBookFromSearchResults(
+                //window.location.href.toString().split("book/")[1])
         }
     }
 
     componentDidMount() {
         //this.props.model.addObserver(this)
+        this.setState({
+            chosenBook: this.props.model.getBookFromSearchResults(this.state.id),
+            status: 'LOADED'
+        })
         this.getAllShelves()
       }
 
@@ -35,7 +39,7 @@ class Book extends Component {
         this.props.model.getShelves((shelves) => {
             this.setState({
                 shelves: shelves,
-                status: 'LOADED'
+                //status: 'LOADED'
             })
 
         }, (errordata) => {
@@ -80,7 +84,6 @@ class Book extends Component {
     render(){
         let shelfList = null;
 
-
         switch (this.state.status) {
 
             case "INITIAL":
@@ -88,7 +91,7 @@ class Book extends Component {
                 break;
 
             case "LOADED":
-                console.log(this.state.shelves);
+                console.log('loaded i book '+this.state.shelves);
                 if( this.state.shelves === undefined ){
                     shelfList = <option value="error" key="error">You need to create a new shelf</option>
                 }
@@ -96,7 +99,6 @@ class Book extends Component {
                 console.log('***'+this.state.shelves)
                 console.log(this.state.shelves)
                 shelfList = this.state.shelves.map((shelf) => 
-                    //arr.push(shelf);
                     <option value={shelf.id} key={shelf.id}>
                         {shelf.name}
                     </option>
@@ -107,6 +109,7 @@ class Book extends Component {
                     }
                 break;
                 }
+
             };
         //console.log(this.state.activeShelf)
 
@@ -119,7 +122,6 @@ class Book extends Component {
                             </Link>
                         </div>
                         <div className="left">
-
                             <img src={this.state.chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
                         </div>
                         <div className="right">
