@@ -72,7 +72,7 @@ class Book extends Component {
             this.props.model.createNewShelfAndAddBook(
                 this.state.newShelfName,
                 this.state.chosenBook);
-            
+
         }
     }
 
@@ -89,7 +89,7 @@ class Book extends Component {
 
             case "LOADED":
                 console.log(this.state.shelves);
-                if( this.state.shelves === undefined ){
+                if( this.state.shelves[0] === null ){
                     shelfList = <option value="error" key="error">You need to create a new shelf</option>
                 }
                 else{

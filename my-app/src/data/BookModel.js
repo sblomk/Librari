@@ -34,10 +34,10 @@ const BookModel = function() {
   }  
 
   // update database
-  this.setDatabase = (s) => {
-    console.log(s)
+  this.setDatabase = (shelves) => {
+    console.log(shelves)
     firebase.database().ref('users/' + this.userId).set(
-      { allShelves: s }
+      { allShelves: shelves }
     );
   }
 
@@ -45,16 +45,21 @@ const BookModel = function() {
   this.getDatabase = (callback, errorcallback) => {
 
     var ref = firebase.database().ref('users/' + this.userId + "/allShelves");
-    ref.on('value', function(snapshot) {
+    ref.once('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
       console.log(snapshot.val());
       console.log("user id " + this.userId)
 
-      callback([snapshot.val()]);
+      if (Array.isArray(snapshot.val())) {
+        callback(snapshot.val());
+      } else {
+        callback([snapshot.val()]);
+      }
+
+      
 
     }.bind(this));
-    break;
 
   }
 
@@ -87,11 +92,10 @@ const BookModel = function() {
       if (!exists) {
         var s = this.getShelfByID(shelves, shelfId);
         var q = s.books;
-        //console.log(q);
         q.push(book);
         s.books = q;
-        //console.log(q);
-        this.setDatabase(s);
+        this.setDatabase(shelves);
+        //this.setDatabase(this.getShelfByID(shelves, shelfId).books.push(book))
 
       }
     })
@@ -106,17 +110,22 @@ const BookModel = function() {
 
   // create a new shelf
   this.createNewShelfAndAddBook = (name, book) => {
-    console.log("OOOOOOOOOUUUUUUUUUUUUUUUU")
+
     this.getDatabase((shelves) => {
       
       let counter = 1;
-      shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
 
+      if (shelves[0] !== null){
+        shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
+      }
+      
       let emptyShelf = { id: counter, name: name, books: [] }
 
       emptyShelf.books.push(book);
 
-      this.setDatabase(emptyShelf);
+      shelves.push(emptyShelf)
+
+      this.setDatabase(shelves);
 
     })
 
