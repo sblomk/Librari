@@ -1,28 +1,22 @@
 .bookWindow{
-margin: 5% 25%;
-padding: 30px;
-width: 50%;
+position: relative;
+max-width: 800px;
 text-align: center;
 color: #000;
 border: 0px;
 border-radius: 5px;
-background-color: #F2F2F2;
-}
-
-.windowHeader{
-margin-bottom: 20px;
-width: 100%;
-text-align: left;
+background-color: #FFF;
 }
 
 .left, .right{
-width: 50%;
-min-width: 200px;
+width: 300px;
 display: inline-block;
 vertical-align: middle;
+text-align: center;
+padding: 20px;
 }
 
-h1, h2, h3{
+h2, h3, h4{
 font-family: Futura;
 }
 
@@ -44,18 +38,22 @@ opacity: 0.9;
 }
 
 .bookWindow input, .bookWindow select {
+margin-top: 10px;
 border: 0px;
 border-radius: 5px;
-background: #FFF;
-width: 50%;
-padding: 5px;
-margin: 10px 50px ;
+width: 220px;
+padding: 10px;
 font-family: Futura;
 font-size: 14px;
 color: #000;
+background: #FFF;
 text-align: center;
 }
 
 .bookWindow input:focus {
 outline: none;
+}
+
+.addToShelf{
+background: #f2f2f2;
 }

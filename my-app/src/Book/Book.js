@@ -84,16 +84,17 @@ class Book extends Component {
                 </div>
                 <div className="left">
                     <img src={chosenBook.volumeInfo.imageLinks.thumbnail} alt=''/>
+                    <h2>{chosenBook.volumeInfo.title}</h2>
+                    <h3>{chosenBook.volumeInfo.subtitle}</h3>
+                    <h4>{chosenBook.volumeInfo.authors[0]}</h4>
                 </div>
-                <div className="right">
-                    <h1>{chosenBook.volumeInfo.title}</h1>
-                    <h2>{chosenBook.volumeInfo.subtitle}</h2>
-                    <h3>{chosenBook.volumeInfo.authors[0]}</h3>
+                <div className="right addToShelf">
+                    <h4>Save this book to your personal library!</h4>
                     <select onChange={this.handleDropdownChange} id="choiceOfLibrary">
                         <option value="">Select a shelf</option>
                         {shelfList}
-                        </select>
-                        <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
+                    </select>
+                    <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
                     <button onClick={() => this.props.model.addToShelf(this.getShelfId(), chosenBook.id)}>Add to shelf</button>
                 </div>
             </div>

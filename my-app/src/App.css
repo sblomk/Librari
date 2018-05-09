@@ -8,4 +8,6 @@ position: absolute;
 margin-top: 30px;
 display: block;
 overflow: scroll;
+width: 100%;
+text-align: center;
 }
