@@ -35,10 +35,10 @@ const BookModel = function() {
   }  
 
   // update database
-  this.setDatabase = (s) => {
-    console.log(s)
+  this.setDatabase = (shelves) => {
+    console.log(shelves)
     firebase.database().ref('users/' + this.userId).set(
-      { allShelves: s }
+      { allShelves: shelves }
     );
   }
 
@@ -46,13 +46,20 @@ const BookModel = function() {
   this.getDatabase = (callback, errorcallback) => {
 
     var ref = firebase.database().ref('users/' + this.userId + "/allShelves");
-    ref.on('value', function(snapshot) {
+    ref.once('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
       console.log(snapshot.val());
       console.log("user id " + this.userId)
 
-      callback([snapshot.val()]);
+
+      if (Array.isArray(snapshot.val())) {
+        callback(snapshot.val());
+      } else if (!(snapshot.val())) {
+        callback(snapshot.val());
+      }
+
+      
 
     }.bind(this));
 
@@ -73,7 +80,14 @@ const BookModel = function() {
   this.getChosen = () => { return chosenBook; }
 
   // get a shelf by id
-  this.getShelfByID = (manyShelves, id) => { return manyShelves.filter((s) => { return s.id === id})[0]; }
+  this.getShelfByID = (manyShelves, id) => {
+
+    return manyShelves.filter((s) => { 
+
+      console.log(s.id);
+      return s.id === id})[0]; 
+
+  }
 
   // adding the chosen book to the chosen shelf
   this.addToShelf = (shelfId, book) => {
@@ -85,14 +99,8 @@ const BookModel = function() {
       let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
 
       if (!exists) {
-        var s = this.getShelfByID(shelves, shelfId);
-        var q = s.books;
-        //console.log(q);
-        q.push(book);
-        s.books = q;
-        //console.log(q);
-        this.setDatabase(s);
-
+        this.getShelfByID(shelves, shelfId).books.push(book);
+        this.setDatabase(shelves);
       }
     })
   }
@@ -101,22 +109,34 @@ const BookModel = function() {
 
   // remove book from chosen shelf
   this.removeBookFromShelf = (shelfId, bookId) => {
-    this.getShelfByID(shelfId).books.filter((b) => { return b.id !== bookId });
+
+    this.getDatabase((shelves) => {
+        var updatedBooks = this.getShelfByID(shelves, shelfId).books.filter((b) => { return b.id !== bookId; });
+        this.getShelfByID(shelves, shelfId).books = updatedBooks;
+        this.setDatabase(shelves);
+      })
   }
 
   // create a new shelf
   this.createNewShelfAndAddBook = (name, book) => {
-    console.log("OOOOOOOOOUUUUUUUUUUUUUUUU")
+
     this.getDatabase((shelves) => {
       
       let counter = 1;
-      shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
 
+      if (shelves !== null){
+        shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
+      }
+      
       let emptyShelf = { id: counter, name: name, books: [] }
 
       emptyShelf.books.push(book);
+      if ( shelves === null){
+        var shelves = [];
+      }
+      shelves.push(emptyShelf)
 
-      this.setDatabase(emptyShelf);
+      this.setDatabase(shelves);
 
     })
 
