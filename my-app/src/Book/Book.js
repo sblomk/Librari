@@ -20,37 +20,33 @@ class Book extends Component {
         this.state = {
             status: 'INITIAL',
             id: window.location.href.toString().split("book/")[1],  // Fetching the id from the URL
+            
             //shelves: this.getAllShelves(),
-            //chosenBook: this.props.model.getBookFromSearchResults(
-                //window.location.href.toString().split("book/")[1])
+            chosenBook: this.props.model.getBookFromSearchResults(
+                window.location.href.toString().split("book/")[1])
         }
     }
 
     componentDidMount() {
         //this.props.model.addObserver(this)
-        this.setState({
-            chosenBook: this.props.model.getBookFromSearchResults(this.state.id),
-            status: 'LOADED'
-        })
+        //this.props.model.getBookFromSearchResults(this.state.id);
         this.getAllShelves()
+        
       }
 
     getAllShelves() {
         this.props.model.getShelves((shelves) => {
             this.setState({
                 shelves: shelves,
-                //status: 'LOADED'
+                status: 'LOADED'
             })
+            console.log(this.state.shelves + "shelves i getAllShelves i boook.js");
 
         }, (errordata) => {
             console.log("The read failed: ")
             ;})
     }
-    update() {
-      this.setState({
-        shelves: this.getAllShelves()
-      })
-    }
+
     // handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
         this.setState({
@@ -91,7 +87,7 @@ class Book extends Component {
                 break;
 
             case "LOADED":
-                console.log(this.state.shelves);
+                console.log('i book loaded, shelves är '+this.state.shelves);
                 if(!(this.state.shelves)){
                     shelfList = <option value="error" key="error">You need to create a new shelf</option>
                 }

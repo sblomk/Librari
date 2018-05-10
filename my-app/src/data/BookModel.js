@@ -1,11 +1,13 @@
 import firebase from "../firebase.js"
 
 const BookModel = function() {
+
   
   this.addListener = function() {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function(user){
       if (user) { 
         this.userId = user.uid;
+        localStorage.setItem("userId",this.userId);
         console.log('user id '+this.userId);
       }
       else { }
@@ -18,16 +20,16 @@ const BookModel = function() {
 
   let apiKey = "AIzaSyCH6Rel4hni_csxJ_S258w-yEU8Dl7Wupg"; // 'AIzaSyCdfNCyUlSSV9AkebmZhTW_Rfw2yjzJHK4';
   let shelves = [];
-  let searchResults = [];
   let observers = [];
   let chosenBook = null;
 
 
+
   
-  var shelveRef = firebase.database().ref('users/' + this.userId);
+  /*var shelveRef = firebase.database().ref('users/' + this.userId);
   shelveRef.on('value', function(snapshot) {
     shelves = snapshot.val();
-  });
+  });*/
 
   // get all shelves
   this.getShelves = (callback, errorcallback) => { 
@@ -44,35 +46,40 @@ const BookModel = function() {
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
-
-    var ref = firebase.database().ref('users/' + this.userId + "/allShelves");
+    console.log(localStorage.getItem("userId") + "halloiahllå");
+    var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
     ref.once('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
       console.log(snapshot.val());
       console.log("user id " + this.userId)
 
-
       if (Array.isArray(snapshot.val())) {
         callback(snapshot.val());
       } else if (!(snapshot.val())) {
         callback(snapshot.val());
+      } else {
+        callback([snapshot.val()])
       }
-
-      
-
     }.bind(this));
 
   }
 
   // get and set searchresults
-  this.setSearchResults = (results) => { searchResults = results; }
-  this.getSearchResults = () => { return searchResults; }
+  this.setSearchResults = (results) => {localStorage.setItem('search', JSON.stringify(results))}
+  this.getSearchResults = () => {return localStorage.getItem('search');}
 
   // get book from search results by id
   this.getBookFromSearchResults = (id) => {
-    console.log('vald bok är ' + id)
-    return this.getSearchResults().filter((b) => { return b.id === id; })[0];
+    var search = JSON.parse(localStorage.getItem('search'))
+    console.log(search[0].id)
+    for (var i=0; i < search.length; i++){
+      console.log('search på plats i är ' + search[i].id)
+      if (search[i].id === id){
+        return search[i];
+      }
+    }
+    //return this.getSearchResults().filter((b) => { console.log(b.id); return b.id === id; })[0];
   }
 
   // get and set chosen book
@@ -95,6 +102,17 @@ const BookModel = function() {
     this.getDatabase((shelves) => {
 
       console.log(shelves)
+      for ( var i=0; i < shelves.length; i++){
+        console.log(i + "iteration i for");
+        if(shelves[i].id === shelfId){
+          console.log(shelves[i].id + "id för rätt hylla ");
+          if (shelves[i].books === undefined){
+            shelves[i].books = [];
+            console.log(shelves[i].books)
+            break;
+          }
+        }
+      }
 
       let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
 
@@ -112,6 +130,7 @@ const BookModel = function() {
 
     this.getDatabase((shelves) => {
         var updatedBooks = this.getShelfByID(shelves, shelfId).books.filter((b) => { return b.id !== bookId; });
+
         this.getShelfByID(shelves, shelfId).books = updatedBooks;
         this.setDatabase(shelves);
       })

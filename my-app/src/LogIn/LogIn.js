@@ -96,7 +96,7 @@ class LogIn extends Component {
 		if (this.state.feature === "SignIn"){
 			feature = 	<SignIn handleEmailChange={this.handleEmailChange} handlePwdChange={this.handlePwdChange} signIn={this.signIn} />
 			redirect =  <div>Not registered?
-							<div class="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
+							<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
 						</div>
 			header = "Sign in";
 			
@@ -104,7 +104,7 @@ class LogIn extends Component {
 		else if (this.state.feature === "SignUp"){
 			feature = 	<SignUp handleEmailChange={this.handleEmailChange} handlePwdChange={this.handlePwdChange} signUp={this.signUp} />
 			redirect = 	<div>Already a user?
-							<div class="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
+							<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
 						</div>
 			header = "Register"
 						

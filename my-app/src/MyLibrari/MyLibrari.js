@@ -34,7 +34,11 @@ class MyLibrari extends Component {
 
 
 	handleRemove = (sID, bID) => {
-		this.props.model.removeBookFromShelf(sID, bID);
+		var shelves = this.props.model.removeBookFromShelf(sID, bID);
+		this.setState({
+			shelves: shelves
+		})
+		this.getAllShelves()
 	}
 
 	handleEdit = () => {
@@ -72,7 +76,7 @@ class MyLibrari extends Component {
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 						<div className="booktitle">
 						<div className="col-md-1">
-							<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this. handleRemove(shelf.id, book.id)}></span>
+							<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
 						</div>
 						<div className="col-md-12"> {book.volumeInfo.title} </div>
 						</div>

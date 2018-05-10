@@ -43,8 +43,9 @@ class SearchView extends Component {
 	}
 
 	newSearch(newFilter) {
+		var search = this.state.filter
 		this.setState({ status: "INITIAL",
-			filter: newFilter !== "" ? newFilter : "Tolkien"
+			filter: newFilter !== "" ? newFilter : search
 		}, () => this.getBooks());		
 	}
 
