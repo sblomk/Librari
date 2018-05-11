@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {debounce} from 'throttle-debounce';
 
 class SmallBook extends Component {
 	constructor(props) {
