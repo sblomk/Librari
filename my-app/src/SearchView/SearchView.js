@@ -6,6 +6,7 @@ import Search from '../Search/Search';
 import SearchResults from '../SearchResults/SearchResults';
 import Book from '../Book/Book'
 import { Link } from 'react-router-dom';
+import {debounce} from 'throttle-debounce';
 
 class SearchView extends Component {
 
@@ -14,6 +15,7 @@ class SearchView extends Component {
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleClick = this.handleClick.bind(this)
+		this.newSearch = debounce(800, this.newSearch);
 
 		this.state = ({
 			filter: "Tolkien",
@@ -43,6 +45,7 @@ class SearchView extends Component {
 	}
 
 	newSearch(newFilter) {
+		console.log("s")
 		var search = this.state.filter
 		this.setState({ status: "INITIAL",
 			filter: newFilter !== "" ? newFilter : search
