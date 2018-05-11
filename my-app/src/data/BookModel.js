@@ -26,18 +26,13 @@ const BookModel = function() {
 
   this.setUserStatus = function (status){
     userStatus = status
-    notifyObservers()
-
+    console.log("Ny status i BookModel: " + userStatus)
+    notifyObservers('user')
   }
 
   this.getUserStatus= function(){ 
     return userStatus
   }
-  
-  /*var shelveRef = firebase.database().ref('users/' + this.userId);
-  shelveRef.on('value', function(snapshot) {
-    shelves = snapshot.val();
-  });*/
 
   // get all shelves
   this.getShelves = (callback, errorcallback) => { 
@@ -57,8 +52,8 @@ const BookModel = function() {
     ref.once('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-      console.log(snapshot.val());
-      console.log("user id " + this.userId)
+      //console.log(snapshot.val());
+      //console.log("user id " + this.userId)
 
       if (Array.isArray(snapshot.val())) {
         callback(snapshot.val());
@@ -78,14 +73,21 @@ const BookModel = function() {
   // get book from search results by id
   this.getBookFromSearchResults = (id) => {
     var search = JSON.parse(localStorage.getItem('search'))
-    console.log(search[0].id)
     for (var i=0; i < search.length; i++){
-      console.log('search på plats i är ' + search[i].id)
       if (search[i].id === id){
         return search[i];
       }
     }
     //return this.getSearchResults().filter((b) => { console.log(b.id); return b.id === id; })[0];
+  }
+
+  this.setQuery = (query) => {localStorage.setItem('query', query)}
+  this.getQuery = () => {
+    var query = localStorage.getItem('query')
+    if (!query){
+      query = 'Tolkien'
+    }
+    return query;
   }
 
   // get and set chosen book
@@ -97,7 +99,7 @@ const BookModel = function() {
 
     return manyShelves.filter((s) => { 
 
-      console.log(s.id);
+      //console.log(s.id);
       return s.id === id})[0]; 
 
   }
@@ -107,14 +109,11 @@ const BookModel = function() {
 
     this.getDatabase((shelves) => {
 
-      console.log(shelves)
+      //console.log(shelves)
       for ( var i=0; i < shelves.length; i++){
-        console.log(i + "iteration i for");
         if(shelves[i].id === shelfId){
-          console.log(shelves[i].id + "id för rätt hylla ");
           if (shelves[i].books === undefined){
             shelves[i].books = [];
-            console.log(shelves[i].books)
             break;
           }
         }
@@ -139,7 +138,34 @@ const BookModel = function() {
 
         this.getShelfByID(shelves, shelfId).books = updatedBooks;
         this.setDatabase(shelves);
+        notifyObservers();
+        
       })
+  }
+
+  this.changeShelfName = (shelfId, newName) => {
+    this.getDatabase((shelves) => {
+      var updatedShelves = shelves.filter((s) => { 
+        if (s.id === shelfId){
+          if(newName){
+            s.name = newName
+          }
+        }
+        return s
+      });      
+      
+      this.setDatabase(updatedShelves);
+      notifyObservers();
+    })
+  }
+
+  this.removeShelf = (shelfId) => {
+    console.log('tar bort hylla med id: ' + shelfId)
+    this.getDatabase((shelves) => {
+      var updatedShelves = shelves.filter((s) => { return s.id !== shelfId; });
+      this.setDatabase(updatedShelves);
+      notifyObservers();
+    })
   }
 
   // create a new shelf
@@ -175,7 +201,7 @@ const BookModel = function() {
 
   // API call returning a maximum of 40 books, with the filter set by the user
   this.getAllBooks = function(filter) {
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
+    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40' + '&key=' + apiKey;
     return fetch(url)
         .then(processResponse)
         .catch(handleError)
@@ -209,8 +235,8 @@ const BookModel = function() {
     observers = observers.filter(o => o !== observer);
   };
 
-  const notifyObservers = function () {
-    observers.forEach(o => o.update());
+  const notifyObservers = function (details) {
+    observers.forEach(o => o.update(details));
   };
 
 };
