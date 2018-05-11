@@ -34,7 +34,7 @@ class App extends Component {
           <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
         </div>
         <div className="Navbar">
-          <Route path="/" component={Navbar} /> 
+          <Route path="/" render={() => <Navbar model={modelInstance}/>} /> 
         </div>
       </div>
     );

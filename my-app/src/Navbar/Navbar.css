@@ -11,13 +11,14 @@ opacity: 0.9;
 }
 
 
-.navbar a{
+.navbar a, .logout{
 color: #fff;
 text-decoration: none;
 margin-right: 30px;
 }
 
-.navbar a:hover{
+.navbar a:hover, .logout{
 text-decoration: none;
-opacity: 0.9
+opacity: 0.9;
+cursor: pointer;
 }

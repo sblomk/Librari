@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './LogIn.css';
 import firebase from '../firebase.js';
 import SignIn from '../SignIn/SignIn';
@@ -12,13 +11,18 @@ class LogIn extends Component {
 		this.state = {
 			email: "", 
 			pwd: "", 
-			feature: "SignIn"
+			feature: "SignIn", 
+			status: this.props.model.getUserStatus()
 		}
+
+		this.props.model.addObserver(this)
+
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePwdChange = this.handlePwdChange.bind(this);
 		this.handleFeatureChange = this.handleFeatureChange.bind(this);
 		this.signIn = this.signIn.bind(this);
 		this.signUp = this.signUp.bind(this);
+		this.update = this.update.bind(this)
 	}
 
 	handleEmailChange(event) {
@@ -48,7 +52,6 @@ class LogIn extends Component {
 
 	signIn() {
 		//event.preventDefault();
-		console.log(1);
 		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
 			// Handle Errors here
 			var errorCode = error.code;
@@ -59,13 +62,8 @@ class LogIn extends Component {
 			} else {
 			alert(errorMessage);
 			}
-			console.log(error);
 			// [END_EXCLUDE]
-        });
-	}
-
-	signOut() {
-		firebase.auth().signOut();
+		})
 	}
 
 	signUp() {
@@ -81,38 +79,60 @@ class LogIn extends Component {
 		  else {
 		  	alert(errorMessage);
 		  }
-		  console.log(error);
-	    }
-		);
+		})
+	}
+
+	update(){
+		this.setState({
+			status: this.props.model.getUserStatus()
+		})
 	}
 
 		
 	render() {
 
+		let currentStatus = this.props.model.getUserStatus()
+
 		let feature;
 		let header;
 		let redirect;
 
-		if (this.state.feature === "SignIn"){
-			feature = 	<SignIn handleEmailChange={this.handleEmailChange} handlePwdChange={this.handlePwdChange} signIn={this.signIn} />
+		if (currentStatus === "LoggedIn"){
+			feature = <h1>Welcome to Librari!</h1>
+		}
+
+		else if (this.state.feature === "SignIn"){
+
+			header = "Sign in";
+
+			feature = 	<SignIn handleEmailChange={this.handleEmailChange} 
+								handlePwdChange={this.handlePwdChange} 
+								signIn={this.signIn} 
+								
+								/>
 			redirect =  <div>Not registered?
 							<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
 						</div>
-			header = "Sign in";
 			
 		}
-		else if (this.state.feature === "SignUp"){
-			feature = 	<SignUp handleEmailChange={this.handleEmailChange} handlePwdChange={this.handlePwdChange} signUp={this.signUp} />
-			redirect = 	<div>Already a user?
-							<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
-						</div>
+		else if (this.state.feature === "SignUp"){	
+			
 			header = "Register"
+
+			feature = 	<SignUp handleEmailChange={this.handleEmailChange} 
+								handlePwdChange={this.handlePwdChange} 
+								signUp={this.signUp} 
+								
+								/>
+			redirect = 	<div>Already a user?
+							<div class="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
+						</div>
 						
 		}
 
-		else(
-			feature = "Something went terribly wrong. Try and reload the page."
-		)
+		else{
+			feature = "Something went terribly wrong"
+		}
 		
 		return (
 			<div id="Login">

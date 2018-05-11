@@ -22,9 +22,18 @@ const BookModel = function() {
   let shelves = [];
   let observers = [];
   let chosenBook = null;
+  let userStatus = "LoggedOut"
 
+  this.setUserStatus = function (status){
+    userStatus = status
+    console.log("Ny status i BookModel: " + userStatus)
+    notifyObservers()
 
+  }
 
+  this.getUserStatus= function(){ 
+    return userStatus
+  }
   
   /*var shelveRef = firebase.database().ref('users/' + this.userId);
   shelveRef.on('value', function(snapshot) {
@@ -194,6 +203,18 @@ const BookModel = function() {
   }
 
   //this.getShelves();
+
+  this.addObserver = function (observer) {
+    observers.push(observer);
+  };
+
+  this.removeObserver = function (observer) {
+    observers = observers.filter(o => o !== observer);
+  };
+
+  const notifyObservers = function () {
+    observers.forEach(o => o.update());
+  };
 
 };
 
