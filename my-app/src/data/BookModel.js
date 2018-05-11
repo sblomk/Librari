@@ -26,7 +26,6 @@ const BookModel = function() {
 
   this.setUserStatus = function (status){
     userStatus = status
-    console.log("Ny status i BookModel: " + userStatus)
     notifyObservers()
 
   }
@@ -47,7 +46,6 @@ const BookModel = function() {
 
   // update database
   this.setDatabase = (shelves) => {
-    console.log(shelves)
     firebase.database().ref('users/' + this.userId).set(
       { allShelves: shelves }
     );
@@ -55,7 +53,6 @@ const BookModel = function() {
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
-    console.log(localStorage.getItem("userId") + "halloiahllå");
     var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
     ref.once('value', function(snapshot) {
 

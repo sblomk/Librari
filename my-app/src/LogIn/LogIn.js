@@ -95,7 +95,7 @@ class LogIn extends Component {
 
 		let feature;
 		let header;
-		let redirect;
+		let changeFeature;
 
 		if (currentStatus === "LoggedIn"){
 			feature = <h1>Welcome to Librari!</h1>
@@ -110,9 +110,9 @@ class LogIn extends Component {
 								signIn={this.signIn} 
 								
 								/>
-			redirect =  <div>Not registered?
-							<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
-						</div>
+			changeFeature = <div>Not registered?
+								<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
+							</div>
 			
 		}
 		else if (this.state.feature === "SignUp"){	
@@ -124,9 +124,9 @@ class LogIn extends Component {
 								signUp={this.signUp} 
 								
 								/>
-			redirect = 	<div>Already a user?
-							<div class="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
-						</div>
+			changeFeature  = 	<div>Already a user?
+									<div class="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
+								</div>
 						
 		}
 
@@ -138,7 +138,7 @@ class LogIn extends Component {
 			<div id="Login">
 				<div id="loginHeader">{header}</div>
 				{feature}
-				{redirect}
+				{changeFeature}
 			</div>
 	    )
 	}
