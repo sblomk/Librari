@@ -84,6 +84,22 @@ class Book extends Component {
 
             case "INITIAL":
                 shelfList = <option value="loading"key="loading">Loading...</option>
+
+                let volInfo = this.state.chosenBook.volumeInfo;
+        
+                if (volInfo.imageLinks === undefined) {
+                    this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'}
+                }
+                if (volInfo.title === undefined) {
+                    this.state.chosenBook.volumeInfo.title = "Could not find a title for this book"
+                }
+                if (volInfo.subtitle === undefined) {
+                    this.state.chosenBook.volumeInfo.subtitle = "Could not find a subtitle for this book"
+                }
+                if (volInfo.authors === undefined) {
+                    this.state.chosenBook.volumeInfo.authors = ["Could not find a author for this book"]
+                }
+
                 break;
 
             case "LOADED":
@@ -99,11 +115,9 @@ class Book extends Component {
                         {shelf.name}
                     </option>
                 );
-        // checking if the chosen book is missing the thumbnail, and in that case adding a placeholder image
-                if (this.state.chosenBook.volumeInfo.imageLinks == null) {
-                    this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
-                    }
+
                 break;
+                
                 }
 
             };
