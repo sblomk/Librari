@@ -28,8 +28,6 @@ class Book extends Component {
     }
 
     componentDidMount() {
-        //this.props.model.addObserver(this)
-        //this.props.model.getBookFromSearchResults(this.state.id);
         this.getAllShelves()
         
       }
@@ -143,7 +141,9 @@ class Book extends Component {
                                 {shelfList}
                                 </select>
                                 <input onChange={this.handleInputChange} placeholder="Create new shelf"/>
-                            <button onClick={this.submitBook}>Add to shelf</button>
+                            <Link to="/">
+                                <button onClick={this.submitBook}>Add to shelf</button>
+                            </Link>
                         </div>
                     </div>
                     );

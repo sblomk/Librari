@@ -29,7 +29,10 @@ class MyLibrari extends Component {
  				status: 'LOADED'
  			})
  		}, (errordata) => {
- 			console.log("The read failed")
+			 console.log("The read failed")
+			 this.setState({
+					status: 'ERROR'
+			})
  			;})
  	}
 
@@ -76,7 +79,8 @@ class MyLibrari extends Component {
 
 			case 'EDIT':
 				var shelf = this.props.model.getShelfByID(this.state.shelves, parseInt(this.state.editShelf));
-				var bookList = shelf.books.map((book, i) => 
+				if (shelf.books){
+					var bookList = shelf.books.map((book, i) => 
 					<div className="collectionBook" key={i}>
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 						<div className="booktitle" id="booktitle" ref="title">
@@ -88,15 +92,22 @@ class MyLibrari extends Component {
 								</div>
 						</div>
 					</div>)
+				}
+				else{
+					var bookList = <p className="noBooks">There are no books in this shelf</p>;
+				}
+
 
 				return(
 					<div className="personalShelf" id={shelf.id} key={shelf.id}>
-						<input id="inputChange" onChange={this.handleInput} type="text" placeholder={shelf.name}/>
-						<button onClick={this.handleSave}>Save</button>
-						<button onClick = { () => this.handleRemoveShelf(shelf.id)}>Delete shelf</button>
+						<div className="input">
+							<input id="inputChange" onChange={this.handleInput} type="text" placeholder={shelf.name}/>
+							<button className='savebtn' onClick={this.handleSave}><span className="glyphicon glyphicon-ok"></span> Save</button>
+						</div>
 						<div className="collection">
 							{bookList}
 						</div>
+						<button className='trashbtn' onClick = { () => this.handleRemoveShelf(shelf.id)}><span className="glyphicon glyphicon-trash"></span> Delete shelf</button>
 					</div>
 				);
 			break;
@@ -109,7 +120,7 @@ class MyLibrari extends Component {
 					shelfList = this.state.shelves.map((shelf) => {
 
 						if (shelf.books === undefined){
-							var booklist = "There are no books in this shelf";
+							var bookList = <p className="noBooks">There are no books in this shelf</p>;
 						}
 						else{
 							var bookList = shelf.books.map((book, i) => 
@@ -135,6 +146,9 @@ class MyLibrari extends Component {
 						);
 					});
 				}
+			break;
+			default:
+				shelfList = <b>Failed to load data, please try again</b>
 			break;
 		};
 		return ( <div className="myLibrari"> {shelfList} </div> );

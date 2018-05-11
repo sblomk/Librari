@@ -72,7 +72,7 @@ class SearchView extends Component {
 		// For different cases, we display either a message or the returned books
 	    switch (this.state.status) {
 	      	case 'INITIAL':
-				bookList = <em><p className="loading">Loading...</p></em>
+				bookList = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
 	        	break;
 			case 'LOADED':
 				for (let i = 0; i < this.state.searchResults.items.length; i++){
