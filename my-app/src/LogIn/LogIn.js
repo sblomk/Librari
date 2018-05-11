@@ -82,10 +82,12 @@ class LogIn extends Component {
 		})
 	}
 
-	update(){
-		this.setState({
-			status: this.props.model.getUserStatus()
-		})
+	update(details){
+		if(details === 'user'){
+			this.setState({
+				status: this.props.model.getUserStatus()
+			})
+		}
 	}
 
 		

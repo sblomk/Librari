@@ -27,18 +27,13 @@ const BookModel = function() {
   this.setUserStatus = function (status){
     userStatus = status
     console.log("Ny status i BookModel: " + userStatus)
-    notifyObservers()
+    notifyObservers('user')
 
   }
 
   this.getUserStatus= function(){ 
     return userStatus
   }
-  
-  /*var shelveRef = firebase.database().ref('users/' + this.userId);
-  shelveRef.on('value', function(snapshot) {
-    shelves = snapshot.val();
-  });*/
 
   // get all shelves
   this.getShelves = (callback, errorcallback) => { 
@@ -55,13 +50,12 @@ const BookModel = function() {
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
-    console.log(localStorage.getItem("userId") + "halloiahllå");
     var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
     ref.once('value', function(snapshot) {
 
       console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-      console.log(snapshot.val());
-      console.log("user id " + this.userId)
+      //console.log(snapshot.val());
+      //console.log("user id " + this.userId)
 
       if (Array.isArray(snapshot.val())) {
         callback(snapshot.val());
@@ -81,9 +75,7 @@ const BookModel = function() {
   // get book from search results by id
   this.getBookFromSearchResults = (id) => {
     var search = JSON.parse(localStorage.getItem('search'))
-    console.log(search[0].id)
     for (var i=0; i < search.length; i++){
-      console.log('search på plats i är ' + search[i].id)
       if (search[i].id === id){
         return search[i];
       }
@@ -100,7 +92,7 @@ const BookModel = function() {
 
     return manyShelves.filter((s) => { 
 
-      console.log(s.id);
+      //console.log(s.id);
       return s.id === id})[0]; 
 
   }
@@ -110,14 +102,11 @@ const BookModel = function() {
 
     this.getDatabase((shelves) => {
 
-      console.log(shelves)
+      //console.log(shelves)
       for ( var i=0; i < shelves.length; i++){
-        console.log(i + "iteration i for");
         if(shelves[i].id === shelfId){
-          console.log(shelves[i].id + "id för rätt hylla ");
           if (shelves[i].books === undefined){
             shelves[i].books = [];
-            console.log(shelves[i].books)
             break;
           }
         }
@@ -142,7 +131,34 @@ const BookModel = function() {
 
         this.getShelfByID(shelves, shelfId).books = updatedBooks;
         this.setDatabase(shelves);
+        notifyObservers();
+        
       })
+  }
+
+  this.changeShelfName = (shelfId, newName) => {
+    this.getDatabase((shelves) => {
+      var updatedShelves = shelves.filter((s) => { 
+        if (s.id === shelfId){
+          if(newName){
+            s.name = newName
+          }
+        }
+        return s
+      });      
+      
+      this.setDatabase(updatedShelves);
+      notifyObservers();
+    })
+  }
+
+  this.removeShelf = (shelfId) => {
+    console.log('tar bort hylla med id: ' + shelfId)
+    this.getDatabase((shelves) => {
+      var updatedShelves = shelves.filter((s) => { return s.id !== shelfId; });
+      this.setDatabase(updatedShelves);
+      notifyObservers();
+    })
   }
 
   // create a new shelf
@@ -212,8 +228,8 @@ const BookModel = function() {
     observers = observers.filter(o => o !== observer);
   };
 
-  const notifyObservers = function () {
-    observers.forEach(o => o.update());
+  const notifyObservers = function (details) {
+    observers.forEach(o => o.update(details));
   };
 
 };
