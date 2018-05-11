@@ -7,6 +7,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import Book from '../Book/Book'
 import { Link } from 'react-router-dom';
 import {debounce} from 'throttle-debounce';
+import SmallBook from './SmallBook/SmallBook';
 
 class SearchView extends Component {
 
@@ -75,21 +76,14 @@ class SearchView extends Component {
 				bookList = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
 	        	break;
 			case 'LOADED':
-				for (let i = 0; i < this.state.searchResults.items.length; i++){
-					// Checking if there are any books that are missing an image, adding a placeholder img in those cases
-					if (this.state.searchResults.items[i].volumeInfo.imageLinks == null) {
-							this.state.searchResults.items[i].volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
-					}
+
+				if (this.state.searchResults.items !== undefined) {
+					bookList = this.state.searchResults.items.map((book) =>
+						<SmallBook key={book.id} book={book} handleClick={this.handleCLick} />)
+				} else {
+					bookList = "Seems like there are no books matching your search. Try another one!"
 				}
-				// Each book item gets a link to a more detailed view (the book view)
-				bookList = this.state.searchResults.items.map((book) =>
-					<Link to={'/book/' + book.id} key={book.id} onClick={this.handleClick}>
-						<div className="bookfound" >
-							<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
-							<div className="booktitle">{book.volumeInfo.title}</div>
-						</div>
-					</Link>
-	        	)
+
 	        	break;
 	      	default:
 	        	bookList = <b>Failed to load data, please try again</b>
@@ -105,5 +99,6 @@ class SearchView extends Component {
 	      );
   	}
 }
+
 
 export default SearchView;

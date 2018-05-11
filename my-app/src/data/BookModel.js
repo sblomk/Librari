@@ -41,7 +41,6 @@ const BookModel = function() {
 
   // update database
   this.setDatabase = (shelves) => {
-    console.log(shelves)
     firebase.database().ref('users/' + this.userId).set(
       { allShelves: shelves }
     );
@@ -49,21 +48,30 @@ const BookModel = function() {
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
-    var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
-    ref.once('value', function(snapshot) {
-
-      console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-      //console.log(snapshot.val());
-      //console.log("user id " + this.userId)
-
-      if (Array.isArray(snapshot.val())) {
-        callback(snapshot.val());
-      } else if (!(snapshot.val())) {
-        callback(snapshot.val());
-      } else {
-        callback([snapshot.val()])
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+      console.log('connection e ' + snap.val())
+      if (snap.val() === true) {
+        var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
+        ref.once('value', function(snapshot) {
+    
+          console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
+          //console.log(snapshot.val());
+          //console.log("user id " + this.userId)
+    
+          if (Array.isArray(snapshot.val())) {
+            callback(snapshot.val());
+          } else if (!(snapshot.val())) {
+            callback(snapshot.val());
+          } else {
+            callback([snapshot.val()])
+          }
+        }.bind(this));
       }
-    }.bind(this));
+      else{
+        errorcallback();
+      }
+    })
 
   }
 

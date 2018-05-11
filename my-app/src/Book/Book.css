@@ -1,11 +1,11 @@
 .bookWindow{
-position: relative;
-max-width: 800px;
-text-align: center;
-color: #000;
-border: 0px;
+margin-top: 20px;
+background: #FFF;
+margin-left: 10px;
+margin-right: 10px;
+width: 50%;
+min-width: 300px;
 border-radius: 5px;
-background-color: #FFF;
 }
 
 .left, .right{

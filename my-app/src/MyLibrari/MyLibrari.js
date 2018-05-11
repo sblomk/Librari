@@ -19,9 +19,9 @@ class MyLibrari extends Component {
 	}
 
 	componentDidMount() {
-    	this.getAllShelves()
- 	}
-
+			this.getAllShelves()
+	 }
+	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
  			this.setState({
@@ -29,7 +29,7 @@ class MyLibrari extends Component {
  				status: 'LOADED'
  			})
  		}, (errordata) => {
-			 console.log("The read failed")
+			 console.log("The read failed "+ errordata)
 			 this.setState({
 					status: 'ERROR'
 			})
