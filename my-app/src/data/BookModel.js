@@ -28,7 +28,6 @@ const BookModel = function() {
     userStatus = status
     console.log("Ny status i BookModel: " + userStatus)
     notifyObservers('user')
-
   }
 
   this.getUserStatus= function(){ 
@@ -81,6 +80,15 @@ const BookModel = function() {
       }
     }
     //return this.getSearchResults().filter((b) => { console.log(b.id); return b.id === id; })[0];
+  }
+
+  this.setQuery = (query) => {localStorage.setItem('query', query)}
+  this.getQuery = () => {
+    var query = localStorage.getItem('query')
+    if (!query){
+      query = 'Tolkien'
+    }
+    return query;
   }
 
   // get and set chosen book
@@ -194,7 +202,7 @@ const BookModel = function() {
 
   // API call returning a maximum of 40 books, with the filter set by the user
   this.getAllBooks = function(filter) {
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=32' + '&key=' + apiKey;
+    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40' + '&key=' + apiKey;
     return fetch(url)
         .then(processResponse)
         .catch(handleError)

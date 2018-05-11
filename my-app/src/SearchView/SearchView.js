@@ -18,8 +18,8 @@ class SearchView extends Component {
 		this.newSearch = debounce(800, this.newSearch);
 
 		this.state = ({
-			filter: "Tolkien",
-			status: 'INITIAL'
+			status: 'INITIAL',
+			filter: this.props.model.getQuery()
 		})
 	}
 
@@ -29,7 +29,8 @@ class SearchView extends Component {
 
  	// on change, this handler will update the search string set by the user
   	handleChange(event) {
-  		this.newSearch(event.target.value);
+		this.newSearch(event.target.value);
+		this.props.model.setQuery(event.target.value);
   	}
 
   	//When clicking on book
