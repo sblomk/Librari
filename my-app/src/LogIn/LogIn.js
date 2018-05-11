@@ -127,7 +127,7 @@ class LogIn extends Component {
 								
 								/>
 			changeFeature  = 	<div>Already a user?
-									<div class="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
+									<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
 								</div>
 						
 		}
