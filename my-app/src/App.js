@@ -27,11 +27,13 @@ class App extends Component {
     return (
       <div className='App'>
         <div className="Content">
-          <Route path="/" component={Header}/>
-          <Route path="/login" render={() => <LogIn model={modelInstance} />} />
-          <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
-          <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
-          <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+          <center>
+            <Route path="/" component={Header}/>
+            <Route path="/login" render={() => <LogIn model={modelInstance} />} />
+            <Route exact path="/" render={()=> <SearchView model={modelInstance}/>}/>
+            <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
+            <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
+          </center>
         </div>
         <div className="Navbar">
           <Route path="/" render={() => <Navbar model={modelInstance}/>} /> 

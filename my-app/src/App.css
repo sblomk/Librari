@@ -1,3 +1,12 @@
+.App{
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+overflow: auto;
+}
+
 .Navbar{
 display: block;
 position: fixed;
@@ -10,4 +19,5 @@ display: block;
 overflow: scroll;
 width: 100%;
 text-align: center;
+justify-content: center;
 }
