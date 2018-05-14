@@ -49,9 +49,9 @@ const BookModel = function() {
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
     var connectedRef = firebase.database().ref(".info/connected");
-    connectedRef.on("value", function(snap) {
-      console.log('connection e ' + snap.val())
-      if (snap.val() === true) {
+    //connectedRef.on("value", function(snap) {
+      //console.log('connection e ' + snap.val())
+      //if (snap.val() === true) {
         var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
         ref.once('value', function(snapshot) {
     
@@ -67,11 +67,11 @@ const BookModel = function() {
             callback([snapshot.val()])
           }
         }.bind(this));
-      }
+      /*}
       else{
         errorcallback();
       }
-    })
+    })*/
 
   }
 
@@ -105,12 +105,10 @@ const BookModel = function() {
 
   // get a shelf by id
   this.getShelfByID = (manyShelves, id) => {
-
-    return manyShelves.filter((s) => { 
-
-      //console.log(s.id);
-      return s.id === id})[0]; 
-
+    if (manyShelves){
+      return manyShelves.filter((s) => { 
+        return s.id === id})[0]; 
+    }
   }
 
   // adding the chosen book to the chosen shelf
@@ -153,16 +151,16 @@ const BookModel = function() {
   }
 
   this.changeShelfName = (shelfId, newName) => {
+    //console.log('byter namn på hylla '+shelfId + ' till ' + newName)
     this.getDatabase((shelves) => {
       var updatedShelves = shelves.filter((s) => { 
-        if (s.id === shelfId){
+        if (parseInt(s.id) === parseInt(shelfId)){
           if(newName){
             s.name = newName
           }
         }
         return s
       });      
-      
       this.setDatabase(updatedShelves);
       notifyObservers();
     })

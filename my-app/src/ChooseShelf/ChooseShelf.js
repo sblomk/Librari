@@ -15,7 +15,7 @@ class ChooseShelf extends Component {
                 </option>
         )}
         else{
-            shelfList = <p>You dont have any shelves</p>
+            shelfList = <option value="">You don't have any shelves</option>
         }
 
         return(
