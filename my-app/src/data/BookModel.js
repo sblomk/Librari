@@ -116,22 +116,25 @@ const BookModel = function() {
 
     this.getDatabase((shelves) => {
 
-      //console.log(shelves)
-      for ( var i=0; i < shelves.length; i++){
-        if(shelves[i].id === shelfId){
-          if (shelves[i].books === undefined){
-            shelves[i].books = [];
-            break;
+      if (shelves){
+        for ( var i=0; i < shelves.length; i++){
+          if(shelves[i].id === shelfId){
+            if (shelves[i].books === undefined){
+              shelves[i].books = [];
+              break;
+            }
           }
         }
+
+        let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
+
+        if (!exists) {
+          this.getShelfByID(shelves, shelfId).books.push(book);
+          this.setDatabase(shelves);
+        }
+
       }
 
-      let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
-
-      if (!exists) {
-        this.getShelfByID(shelves, shelfId).books.push(book);
-        this.setDatabase(shelves);
-      }
     })
   }
 

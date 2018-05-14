@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "../BookHandle.css";
 import { Link } from 'react-router-dom';
 
 
@@ -20,11 +21,13 @@ class ChooseShelf extends Component {
 
         return(
             <div className="ChooseShelf">
-                <select onChange={this.props.handleChange} id="choiceOfLibrary">
+                <select onChange={this.props.handleChange} id="choiceOfLibrary" title="Select an existing shelf to add book to">
                     <option value="">Select a shelf</option>
                     {shelfList}
                 </select>
-                <button onClick={this.props.submit}>Add</button>
+                <Link to="/">
+                    <button className="addbtn" onClick={this.props.submit} title="Add book to shelf">Add</button>
+                </Link>
                 <div>Do you want to create a new shelf?</div>
             </div>
         );
