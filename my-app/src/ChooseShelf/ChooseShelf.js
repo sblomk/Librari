@@ -24,7 +24,7 @@ class ChooseShelf extends Component {
                     <option value="">Select a shelf</option>
                     {shelfList}
                 </select>
-                <button onClick={this.props.submit}>Add</button>
+                <Link to="/"><button onClick={this.props.submit}>Add</button></Link>
                 <div>Do you want to create a new shelf?</div>
             </div>
         );
