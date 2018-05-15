@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CreateShelf from '../CreateShelf/CreateShelf';
-import ChooseShelf from '../ChooseShelf/ChooseShelf';
+import CreateShelf from '../BookHandle/CreateShelf/CreateShelf';
+import ChooseShelf from '../BookHandle/ChooseShelf/ChooseShelf';
 
 // This view displays the chosen book, after clicking on it in the Landing view.
 // Here, the book can be added to one of the shelves.
@@ -12,8 +12,7 @@ class AddBook extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            feature: "ChooseShelf", 
+        this.state = { 
             newShelfName: "", 
             activeShelf: null
         }
@@ -32,9 +31,17 @@ class AddBook extends Component {
 
     getAllShelves() {
         this.props.model.getShelves((shelves) => {
-            this.setState({
-                shelves: shelves
-            })
+            if (shelves){
+                this.setState({
+                    shelves: shelves,
+                    feature: "ChooseShelf"
+                })
+            }
+            else{
+                this.setState({
+                    feature: "CreateShelf"
+                })
+            }
         }, (errordata) => {
             console.log("The read failed: ")
             ;})

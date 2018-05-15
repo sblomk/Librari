@@ -89,11 +89,11 @@ class Navbar extends Component {
 							</Link>
 		}
 		else{
-			profile = 		<Link to="/profile">
+			profile = 		<Link to="/profile" title="Go to MyLibrari">
 								<span className="glyphicon glyphicon-user"></span> MyLibrari
 							</Link>
 
-			loginFeature = 	<span className="logout" onClick={this.logOut}>
+			loginFeature = 	<span className="logout" onClick={this.logOut} title="Goodbye!">
 								<span className="glyphicon glyphicon-cog"></span> Log out
 							</span>
 
@@ -101,7 +101,7 @@ class Navbar extends Component {
 		return (
 			<div className="navbar">
 				{profile}
-				<Link to="/">
+				<Link to="/" title="Search for books">
 					<span className="glyphicon glyphicon-search"></span> Search
 				</Link>
 				{loginFeature}
