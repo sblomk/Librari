@@ -19,3 +19,17 @@ padding: 20px;
 h2, h3, h4{
 font-family: Futura;
 }
+
+
+.bookWindow input, .bookWindow select {
+color: #000;
+background: #FFF;
+}
+
+.windowHeader{
+    padding:10px;
+    text-align:left;  
+}
+#exitbtn {
+    font-size:20px;
+}

@@ -72,7 +72,7 @@ class MyLibrari extends Component {
 								<div className="collectionBook" key={i}>
 									<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 									<div className="booktitle">
-										<div className="col-md-1">
+										<div id="removediv">
 											<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
 										</div>
 										<div className="col-md-12"> {book.volumeInfo.title} 

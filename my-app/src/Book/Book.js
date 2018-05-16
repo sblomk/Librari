@@ -40,7 +40,7 @@ class Book extends Component {
             <div className="bookWindow">
                 <div className="windowHeader">
                     <Link to="/">
-                        <span className="glyphicon glyphicon-remove-circle"></span>
+                        <span id="exitbtn" className="glyphicon glyphicon-remove-circle"></span>
                     </Link>
                  </div>
                 <div className="left">

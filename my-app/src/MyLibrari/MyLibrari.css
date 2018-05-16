@@ -43,6 +43,7 @@ position: absolute;
 height: 204px;
 width: 128px;
 padding: 15px;
+padding-top:10px;
 margin-top: -204px;
 background: #446083;
 color: #fff;
@@ -81,4 +82,9 @@ border-color: #C0C0C0;
 color: #C0C0C0;
 padding: 10px;
 margin-bottom: 0px;
+}
+#removediv{
+    padding-top:0px;
+    text-align:left;
+    height:15px;
 }

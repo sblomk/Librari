@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CreateShelf from '../BookHandle/CreateShelf/CreateShelf';
 import ChooseShelf from '../BookHandle/ChooseShelf/ChooseShelf';
+import './AddBook.css';
 
 // This view displays the chosen book, after clicking on it in the Landing view.
 // Here, the book can be added to one of the shelves.
@@ -14,7 +15,8 @@ class AddBook extends Component {
 
         this.state = { 
             newShelfName: "", 
-            activeShelf: null
+            activeShelf: null,
+            status: 'INITIAL'
         }
 
         //this.props.model.addObserver(this);
@@ -34,12 +36,14 @@ class AddBook extends Component {
             if (shelves){
                 this.setState({
                     shelves: shelves,
-                    feature: "ChooseShelf"
+                    feature: "ChooseShelf",
+                    status: 'LOADED'
                 })
             }
             else{
                 this.setState({
-                    feature: "CreateShelf"
+                    feature: "CreateShelf",
+                    
                 })
             }
         }, (errordata) => {
@@ -65,9 +69,17 @@ class AddBook extends Component {
     // returns a shelf id, and creates an id in the case that there is none
     submitBook(){  
         if (this.state.feature ==="ChooseShelf"){
-            this.props.model.addToShelf(
-                parseInt(this.state.activeShelf),
-                this.props.book); 
+            if (!(this.state.activeShelf)){
+                this.setState({
+                    status: 'noShelf'
+                })
+            }
+            else {
+                this.props.model.addToShelf(
+                    parseInt(this.state.activeShelf),
+                    this.props.book); 
+            }
+
 
         } 
         else if(this.state.feature ==="CreateShelf"){
@@ -95,28 +107,50 @@ class AddBook extends Component {
 
     render(){
         let feature = this.state.feature
+        
         console.log("Feature" +  feature)
-
-        if(feature === "CreateShelf"){
-
-            feature = <CreateShelf 
-                        handleChange={this.handleInputChange} 
-                        submit={this.submitBook}/>
-
+        if (this.props.model.getUserStatus() === 'LoggedOut'){
+            feature = <p className='loginmsg'>Please log in to use the full features of Librari!</p>
         }
-        else if(feature === "ChooseShelf")
+        else{
+            switch (this.state.status) {  
+                case "INITIAL":
+                    feature = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
+                break;
+                case 'LOADED':
+                    if(feature === "CreateShelf"){
+                        feature = <CreateShelf 
+                                    handleChange={this.handleInputChange} 
+                                    submit={this.submitBook}/>
+                    }
+                    else if(feature === "ChooseShelf"){
+                        feature = <ChooseShelf 
+                                    shelves={this.state.shelves} 
+                                    activeShelf={this.state.activeShelf}
+                                    handleChange={this.handleDropdownChange} 
+                                    submit={this.submitBook} />
+                    }
+                    return(
+                        // displaying information about the book, as well as the option of shelves
+                            <div className="AddBook">
+                                {feature}
+                                <div className="linkDiv" onClick={this.handleFeatureChange}>Click here.</div>
+                            </div>
+                            );
 
-            feature = <ChooseShelf 
-                        shelves={this.state.shelves} 
-                        handleChange={this.handleDropdownChange} 
-                        submit={this.submitBook} />
-        return(
-        // displaying information about the book, as well as the option of shelves
-        <div className="AddBook">
-            {feature}
-            <div className="linkDiv" onClick={this.handleFeatureChange}>Click here.</div>
-        </div>
-        );
+                default:
+                //return 'hej';
+            }
+        }
+                return(
+                // displaying information about the book, as well as the option of shelves
+                    <div className="AddBook">
+                        {feature}
+                    </div>
+                    );
+
+
     }
+
 }
 export default AddBook;
