@@ -50,8 +50,8 @@ class LogIn extends Component {
 		}
 	}
 
-	signIn() {
-		//event.preventDefault();
+	signIn(event) {
+		event.preventDefault()
 		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
 			// Handle Errors here
 			var errorCode = error.code;

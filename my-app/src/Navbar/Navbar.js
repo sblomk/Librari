@@ -98,7 +98,6 @@ class Navbar extends Component {
 									<span className="glyphicon glyphicon-cog"></span> Log out
 								</span>
 							</Link>
-
 		}
 		return (
 			<div className="navbar">
