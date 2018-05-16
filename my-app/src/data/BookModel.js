@@ -28,7 +28,10 @@ const BookModel = function() {
     userStatus = status
     console.log("Ny status i BookModel: " + userStatus)
 
-    if (status === "LoggedOut") { localStorage.setItem("userId", ""); }
+    if (status === "LoggedOut") { 
+      localStorage.setItem("userId", ""); 
+      localStorage.setItem("query", ""); 
+    }
     
     notifyObservers('user')
   }
@@ -52,15 +55,11 @@ const BookModel = function() {
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
     var connectedRef = firebase.database().ref(".info/connected");
-    //connectedRef.on("value", function(snap) {
-      //console.log('connection e ' + snap.val())
-      //if (snap.val() === true) {
         var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
         ref.once('value', function(snapshot) {
     
           console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-          //console.log(snapshot.val());
-          //console.log("user id " + this.userId)
+
     
           if (Array.isArray(snapshot.val())) {
             callback(snapshot.val());
