@@ -93,10 +93,11 @@ class Navbar extends Component {
 								<span className="glyphicon glyphicon-user"></span> MyLibrari
 							</Link>
 
-			loginFeature = 	<span className="logout" onClick={this.logOut} title="Goodbye!">
-								<span className="glyphicon glyphicon-cog"></span> Log out
-							</span>
-
+			loginFeature = 	<Link to="/">
+								<span className="logout" onClick={this.logOut} title="Goodbye!">
+									<span className="glyphicon glyphicon-cog"></span> Log out
+								</span>
+							</Link>
 		}
 		return (
 			<div className="navbar">
