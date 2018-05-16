@@ -1,15 +1,12 @@
-.myLibrari{
+.editShelf{
 padding: 20px;
 }
 
-.shelfname{
-font-family: Futura;
-font-size: 18px;
-color: #FFF;
-margin-bottom: 5px;
+.personalShelf{
+margin-left:20px;
+margin-right:20px;
 }
-
-.collection{
+.shelf{
 background: #FFF;
 overflow-x: scroll;
 overflow-y: hidden;
@@ -63,16 +60,31 @@ margin-left: 0%;
 margin-bottom: 25%;
 }
 
-.editbtn{
+#inputChange{
+border: 1px solid #fff;
+}
+input:focus::-webkit-input-placeholder
+{
+color: #C0C0C0;
+}
+input:focus
+{
+color: black;
+}
+.trashbtn, .savebtn{
 color: #fff;
-margin-left:10px;
+margin-left: 0px;
+margin-top:10px;
+margin-bottom: 10px;
+border: 1px solid #fff;
+width: 200px;
 }
 
-.editbtn:active {
+.trashbtn:active, .savebtn:active {
 transform: translateY(2px);
 }
 
-.editbtn:hover, .removebtn:hover{
+.removebtn:hover, .trashbtn:hover, .savebtn:hover{
 color: #C0C0C0;
 border-color: #C0C0C0;
 }
