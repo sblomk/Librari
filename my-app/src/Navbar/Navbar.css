@@ -1,3 +1,7 @@
+.Navbar{
+background: #000;
+}
+
 .navbar{
 position: fixed;
 background: #000;
@@ -11,14 +15,59 @@ opacity: 0.9;
 }
 
 
-.navbar a, .logout{
+.navbar a{
 color: #fff;
 text-decoration: none;
 margin-right: 30px;
 }
 
-.navbar a:hover, .logout{
+
+.navbar a:hover{
 text-decoration: none;
 opacity: 0.9;
 cursor: pointer;
+}
+
+
+.navbar .icon {
+display: none;
+}
+  
+@media screen and (max-width: 600px) {
+.navbar a {
+    display: none;
+}
+.navbar a.icon {
+    float: right;
+    display: block;
+    color: #FFF;
+    margin-right: 0px;
+
+}
+}
+  
+@media screen and (max-width: 600px) {
+.navbar.responsive {
+    position: relative;
+    width: 100vw;
+    margin-bottom: 0px;
+}
+.navbar.responsive .icon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+}
+}
+
+.user{
+display: inline-block;
+margin-right: 30px;
+color: #333;
+
 }

@@ -21,6 +21,8 @@ class Navbar extends Component {
 
 		this.logOut = this.logOut.bind(this)
 		this.update = this.update.bind(this)
+		this.showResponsiveBar = this.showResponsiveBar.bind(this)
+		this.hideResponsiveBar = this.hideResponsiveBar.bind(this)
 
 
 	}
@@ -72,6 +74,25 @@ class Navbar extends Component {
 		})
 	}
 
+	showResponsiveBar() {
+		var x = document.getElementById("myNavbar");
+		if (x.className === "navbar") {
+			x.className += " responsive";
+		} else {
+			x.className = "navbar";
+		}
+	}
+
+	hideResponsiveBar(){
+		var x = document.getElementById("myNavbar");
+		if (x.className === "navbar responsive") {
+			x.className = "navbar";
+		} else {
+			x.className = "navbar responsive";
+		}
+
+	}
+
 
 	render() {
 
@@ -79,33 +100,46 @@ class Navbar extends Component {
 
 		let profile;
 		let loginFeature;
+		let library;
 
 		if(currentStatus === "LoggedOut"){
 
-			profile = ""
+			library = ""
 
-			loginFeature = 	<Link to="/login">
-								<span className="glyphicon glyphicon-cog"></span> Log in
+			loginFeature = 	<Link to="/login" onClick={this.hideResponsiveBar}>
+								<span className="glyphicon glyphicon-log-in"></span> Log in
 							</Link>
+
+			profile = ""
+			
 		}
 		else{
-			profile = 		<Link to="/profile" title="Go to MyLibrari">
-								<span className="glyphicon glyphicon-user"></span> MyLibrari
+			library = 		<Link to="/profile" title="Go to MyLibrari" onClick={this.hideResponsiveBar}>
+								<span className="glyphicon glyphicon-book"></span> MyLibrari
 							</Link>
 
-			loginFeature = 	<span className="logout" onClick={this.logOut} title="Goodbye!">
-								<span className="glyphicon glyphicon-cog"></span> Log out
-							</span>
+			loginFeature = 	<Link to="/login" title="Go to MyLibrari" onClick={this.hideResponsiveBar}>
+								<span onClick={this.logOut} title="Goodbye!">
+									<span className="glyphicon glyphicon-log-out"></span> Log out
+								</span>
+							</Link>
+			profile =		<div className="user">
+								<span className="glyphicon glyphicon-user"></span> {this.state.email}
+							</div>
 
 		}
 		return (
-			<div className="navbar">
-				{profile}
+			<div className="navbar" id="myNavbar">
+				{library}
 				<Link to="/" title="Search for books">
 					<span className="glyphicon glyphicon-search"></span> Search
 				</Link>
 				{loginFeature}
-				<span>{this.state.email}</span>
+				{profile}
+				<a href="javascript:void(0);" className="icon" onClick={this.showResponsiveBar}>
+    				<span className="glyphicon glyphicon-menu-hamburger"></span>
+  				</a>
+			
 			</div> 
 		);
 	}
