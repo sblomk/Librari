@@ -21,3 +21,43 @@ width: 100%;
 text-align: center;
 justify-content: center;
 }
+
+input, button, select {
+text-align: center;
+padding: 10px;
+width: auto;
+border: none;
+background: #F2F2F2;
+color: #446083;
+margin-bottom: 10px;
+font-size: 14px;
+width: 220px;
+border-radius: 5px;
+font-family: Futura;
+}
+
+button {
+background: #446083;
+color: #FFF;
+}
+
+button:hover{
+opacity: 0.9;
+}
+
+input, select:focus{
+outline: none;
+}
+
+button:active{
+transform: translateY(3px);
+}
+
+
+
+
+
+
+
+
+
