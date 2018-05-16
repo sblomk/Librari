@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-//import './MyLibrari.css';
+import './EditShelf.css';
 
 var newShelfname;
 
@@ -99,7 +99,7 @@ class EditShelf extends Component {
 								<button className='savebtn' onClick={this.handleSave}><span className="glyphicon glyphicon-ok"></span> Save</button>
 							</Link>
 						</div>
-						<div className="collection">
+						<div className="shelf">
 							{bookList}
 						</div>
 						<Link to="/profile">
