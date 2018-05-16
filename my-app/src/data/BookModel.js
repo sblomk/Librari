@@ -125,16 +125,15 @@ const BookModel = function() {
             }
           }
         }
+        if (shelfId) {
+          let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
 
-        let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
-
-        if (!exists) {
-          this.getShelfByID(shelves, shelfId).books.push(book);
-          this.setDatabase(shelves);
+          if (!exists) {
+            this.getShelfByID(shelves, shelfId).books.push(book);
+            this.setDatabase(shelves);
+          }
         }
-
       }
-
     })
   }
 
