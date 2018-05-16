@@ -20,40 +20,16 @@ h2, h3, h4{
 font-family: Futura;
 }
 
-.bookWindow button{
-padding: 10px;
-border-radius: 5px;
-border: 0px;
-margin: 20px;
-font-family: Futura;
-background: #446083;
-}
-
-.bookWindow button:focus{
-outline: none;
-}
-
-.bookWindow button:hover{
-opacity: 0.9;
-}
 
 .bookWindow input, .bookWindow select {
-margin-top: 10px;
-border: 0px;
-border-radius: 5px;
-width: 220px;
-padding: 10px;
-font-family: Futura;
-font-size: 14px;
 color: #000;
 background: #FFF;
-text-align: center;
 }
 
-.bookWindow input:focus {
-outline: none;
+.windowHeader{
+    padding:10px;
+    text-align:left;  
 }
-
-.addToShelf{
-background: #f2f2f2;
+#exitbtn {
+    font-size:20px;
 }

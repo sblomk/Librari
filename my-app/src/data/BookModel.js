@@ -27,6 +27,12 @@ const BookModel = function() {
   this.setUserStatus = function (status){
     userStatus = status
     console.log("Ny status i BookModel: " + userStatus)
+
+    if (status === "LoggedOut") { 
+      localStorage.setItem("userId", ""); 
+      localStorage.setItem("query", ""); 
+    }
+    
     notifyObservers('user')
   }
 
@@ -49,15 +55,11 @@ const BookModel = function() {
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
     var connectedRef = firebase.database().ref(".info/connected");
-    //connectedRef.on("value", function(snap) {
-      //console.log('connection e ' + snap.val())
-      //if (snap.val() === true) {
         var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
         ref.once('value', function(snapshot) {
     
           console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-          //console.log(snapshot.val());
-          //console.log("user id " + this.userId)
+
     
           if (Array.isArray(snapshot.val())) {
             callback(snapshot.val());
@@ -125,16 +127,15 @@ const BookModel = function() {
             }
           }
         }
+        if (shelfId) {
+          let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
 
-        let exists = this.getShelfByID(shelves, shelfId).books.find((b) => { return b.id === book.id; });
-
-        if (!exists) {
-          this.getShelfByID(shelves, shelfId).books.push(book);
-          this.setDatabase(shelves);
+          if (!exists) {
+            this.getShelfByID(shelves, shelfId).books.push(book);
+            this.setDatabase(shelves);
+          }
         }
-
       }
-
     })
   }
 
