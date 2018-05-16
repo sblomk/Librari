@@ -27,7 +27,11 @@ const BookModel = function() {
   this.setUserStatus = function (status){
     userStatus = status
     console.log("Ny status i BookModel: " + userStatus)
-    notifyObservers('user')
+
+    if (status === "LoggedOut") {
+      localStorage.setItem("userId", "");
+    }
+
   }
 
   this.getUserStatus= function(){ 

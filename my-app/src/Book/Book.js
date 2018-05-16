@@ -18,50 +18,22 @@ class Book extends Component {
     }
 
     render(){
-        let shelfList = null;
+  
+        let volInfo = this.state.chosenBook.volumeInfo;
 
-        switch (this.state.status) {
+        if (volInfo.imageLinks === undefined) {
+            this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'}
+        }
+        if (volInfo.title === undefined) {
+            this.state.chosenBook.volumeInfo.title = "Could not find a title for this book"
+        }
+        if (volInfo.subtitle === undefined) {
+            this.state.chosenBook.volumeInfo.subtitle = "Could not find a subtitle for this book"
+        }
+        if (volInfo.authors === undefined) {
+            this.state.chosenBook.volumeInfo.authors = ["Could not find a author for this book"]
+        }
 
-            case "INITIAL":
-                shelfList = <option value="loading"key="loading">Loading...</option>
-
-                let volInfo = this.state.chosenBook.volumeInfo;
-        
-                if (volInfo.imageLinks === undefined) {
-                    this.state.chosenBook.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'}
-                }
-                if (volInfo.title === undefined) {
-                    this.state.chosenBook.volumeInfo.title = "Could not find a title for this book"
-                }
-                if (volInfo.subtitle === undefined) {
-                    this.state.chosenBook.volumeInfo.subtitle = "Could not find a subtitle for this book"
-                }
-                if (volInfo.authors === undefined) {
-                    this.state.chosenBook.volumeInfo.authors = ["Could not find a author for this book"]
-                }
-
-                break;
-
-            case "LOADED":
-                console.log('i book loaded, shelves är '+this.state.shelves);
-                if(!(this.state.shelves)){
-                    shelfList = <option value="error" key="error">You need to create a new shelf</option>
-                }
-                else{
-                console.log('***'+this.state.shelves)
-                console.log(this.state.shelves)
-                shelfList = this.state.shelves.map((shelf) => 
-                    <option value={shelf.id} key={shelf.id}>
-                        {shelf.name}
-                    </option>
-                );
-
-                break;
-                
-                }
-
-            };
-        //console.log(this.state.activeShelf)
 
         return(
             // displaying information about the book, as well as the option of shelves
