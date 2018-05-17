@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import CreateShelf from '../BookHandle/CreateShelf/CreateShelf';
 import ChooseShelf from '../BookHandle/ChooseShelf/ChooseShelf';
 import './AddBook.css';
@@ -76,7 +75,7 @@ class AddBook extends Component {
             }
             else {
                 this.props.model.addToShelf(
-                    parseInt(this.state.activeShelf),
+                    parseInt(this.state.activeShelf, 10),
                     this.props.book); 
             }
 

@@ -25,7 +25,7 @@ class EditShelf extends Component {
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
-			var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id));
+			var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id, 10));
  			this.setState({
  				shelf: shelf,
  				status: 'LOADED'
@@ -73,8 +73,9 @@ class EditShelf extends Component {
 			break;
 
 			case 'LOADED':
+				var bookList;
 				if (this.state.shelf.books){
-					var bookList = this.state.shelf.books.map((book, i) => 
+					bookList = this.state.shelf.books.map((book, i) => 
 					<div className="collectionBook" key={i}>
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 						<div className="booktitle" id="booktitle" ref="title">
@@ -88,7 +89,7 @@ class EditShelf extends Component {
 					</div>)
 				}
 				else{
-					var bookList = <p className="noBooks">There are no books in this shelf</p>;
+					bookList = <p className="noBooks">There are no books in this shelf</p>;
 				}
 
 				return(
@@ -107,7 +108,6 @@ class EditShelf extends Component {
 						</Link>
 					</div>
 				);
-			break;
 
 			default:
 				shelf = <b>Failed to load data, please try again</b>

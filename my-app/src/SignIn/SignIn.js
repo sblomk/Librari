@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './SignIn.css';
-import firebase from '../firebase.js';
 
 class SignIn extends Component {
 

@@ -54,13 +54,9 @@ const BookModel = function() {
 
   // get books from db
   this.getDatabase = (callback, errorcallback) => {
-    var connectedRef = firebase.database().ref(".info/connected");
         var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
         ref.once('value', function(snapshot) {
-    
-          console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-
-    
+        console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
           if (Array.isArray(snapshot.val())) {
             callback(snapshot.val());
           } else if (!(snapshot.val())) {
@@ -68,7 +64,7 @@ const BookModel = function() {
           } else {
             callback([snapshot.val()])
           }
-        }.bind(this));
+        }); //.bind(this));
       /*}
       else{
         errorcallback();
@@ -158,7 +154,7 @@ const BookModel = function() {
     //console.log('byter namn på hylla '+shelfId + ' till ' + newName)
     this.getDatabase((shelves) => {
       var updatedShelves = shelves.filter((s) => { 
-        if (parseInt(s.id) === parseInt(shelfId)){
+        if (parseInt(s.id, 10) === parseInt(shelfId, 10)){
           if(newName){
             s.name = newName
           }
@@ -194,7 +190,7 @@ const BookModel = function() {
 
       emptyShelf.books.push(book);
       if ( shelves === null){
-        var shelves = [];
+        shelves = [];
       }
       shelves.push(emptyShelf)
 
@@ -212,7 +208,7 @@ const BookModel = function() {
 
   // API call returning a maximum of 40 books, with the filter set by the user
   this.getAllBooks = function(filter) {
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40' + '&key=' + apiKey;
+    const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40&key=' + apiKey;
     return fetch(url)
         .then(processResponse)
         .catch(handleError)

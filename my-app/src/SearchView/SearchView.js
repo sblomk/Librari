@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
 import './SearchView.css';
 import '../Book/Book.css'
 import Search from '../Search/Search';
 import SearchResults from '../SearchResults/SearchResults';
-import Book from '../Book/Book'
-import { Link } from 'react-router-dom';
 import {debounce} from 'throttle-debounce';
 import SmallBook from './SmallBook/SmallBook';
 
