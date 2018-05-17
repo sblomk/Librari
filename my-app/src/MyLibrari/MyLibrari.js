@@ -6,7 +6,6 @@ class MyLibrari extends Component {
 
 	constructor(props){
 		super(props);
-		this.props.model.addObserver(this);
 		this.handleRemove = this.handleRemove.bind(this)
 		this.getAllShelves = this.getAllShelves.bind(this);
 		this.state = {
@@ -15,8 +14,12 @@ class MyLibrari extends Component {
 	}
 
 	componentDidMount() {
-			this.getAllShelves()
-	 }
+		this.props.model.addObserver(this);
+		this.getAllShelves()
+	}
+	componentWillUnmount() {
+		this.props.model.removeObserver(this);
+	}
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {

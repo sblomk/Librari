@@ -3,10 +3,7 @@ import './SignIn.css';
 
 class SignIn extends Component {
 
-
-
 	render() {
-
 		return (
 			<div id="signIn">
 				<form className="commentForm" onSubmit={this.props.signIn}>
@@ -17,7 +14,6 @@ class SignIn extends Component {
 					<button type="submit">Go</button>
 				</form>
 			</div>
-
 	     );
 	}
 }

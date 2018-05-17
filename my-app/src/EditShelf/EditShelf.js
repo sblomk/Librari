@@ -8,7 +8,6 @@ class EditShelf extends Component {
 
 	constructor(props){
 		super(props);
-		this.props.model.addObserver(this);
 		this.handleRemove = this.handleRemove.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.getAllShelves = this.getAllShelves.bind(this);
@@ -19,9 +18,14 @@ class EditShelf extends Component {
 	}
 
 	componentDidMount() {
+		this.props.model.addObserver(this);
 		this.getAllShelves()
 		console.log(this.state.id + ' ********')
 	 }
+
+	componentWillUnmount() {
+		this.props.model.removeObserver(this)
+	  }
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {

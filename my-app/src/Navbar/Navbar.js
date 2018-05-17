@@ -17,14 +17,18 @@ class Navbar extends Component {
 		console.log(this.state.status + " status ya")
 		this.addListener();
 
-		this.props.model.addObserver(this)
-
 		this.logOut = this.logOut.bind(this)
 		this.update = this.update.bind(this)
 		this.showResponsiveBar = this.showResponsiveBar.bind(this)
 		this.hideResponsiveBar = this.hideResponsiveBar.bind(this)
+	}
 
+	componentDidMount(){
+		this.props.model.addObserver(this)
+	}
 
+	componentWillUnmount() {
+		this.props.model.removeObserver(this)
 	}
 
 	// observer som lyssnar efter data från den som är inloggad

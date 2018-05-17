@@ -232,8 +232,6 @@ const BookModel = function() {
     }
   }
 
-  //this.getShelves();
-
   this.addObserver = function (observer) {
     observers.push(observer);
   };
