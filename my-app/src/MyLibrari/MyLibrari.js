@@ -28,6 +28,7 @@ class MyLibrari extends Component {
 		clearTimeout(this.timer);
 	}
 	
+	// Getting all shelves from the database, setting the state to loaded if it is not an error
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
 			if (shelves === 'error'){
@@ -43,15 +44,15 @@ class MyLibrari extends Component {
 			}
  		})
 	 }
-	
+	 
 	enableMessage() {
 		this.setState({
 			displayMessage: true
 		});
 	}
 
-	handleRemove = (sID, bID) => {
-		this.props.model.removeBookFromShelf(sID, bID);
+	handleRemove = (shelfID, bookID) => {
+		this.props.model.removeBookFromShelf(shelfID, bookID);
 	}
 
 	update() {

@@ -47,12 +47,12 @@ class EditShelf extends Component {
  		})
 	}
 
-	handleRemove = (sID, bID) => {
-		this.props.model.removeBookFromShelf(sID, bID);
+	handleRemove = (shelfID, bookID) => {
+		this.props.model.removeBookFromShelf(shelfID, bookID);
 	}
 
-	handleRemoveShelf = (sID) => {
-		this.props.model.removeShelf(sID);
+	handleRemoveShelf = (shelfID) => {
+		this.props.model.removeShelf(shelfID);
 	}
 
 	handleInput = (event) => {
