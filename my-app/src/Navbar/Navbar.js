@@ -14,7 +14,7 @@ class Navbar extends Component {
 			email: null,
 			status: this.props.model.getUserStatus()
 		})
-		//console.log(this.state.status + " status ya")
+		
 		this.addListener();
 
 		this.logOut = this.logOut.bind(this)

@@ -5,6 +5,7 @@ import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 
 class LogIn extends Component {
+	
 
 	constructor(props) {
 		super(props);
@@ -20,7 +21,8 @@ class LogIn extends Component {
 		this.handleFeatureChange = this.handleFeatureChange.bind(this);
 		this.signIn = this.signIn.bind(this);
 		this.signUp = this.signUp.bind(this);
-		this.update = this.update.bind(this)
+		this.update = this.update.bind(this);
+		
 	}
 
 	componentDidMount() {
@@ -67,6 +69,9 @@ class LogIn extends Component {
 			} else {
 			alert(errorMessage);
 			}
+			this.setState({
+				background: "None"
+			})
 			// [END_EXCLUDE]
 		})
 	}
@@ -97,59 +102,63 @@ class LogIn extends Component {
 
 		
 	render() {
-
 		let currentStatus = this.props.model.getUserStatus()
 
 		let feature;
 		let header;
 		let changeFeature;
+		let welcome;
 
 		if (currentStatus === "LoggedIn"){
-			document.getElementById("Login").style.background = "None";
-			feature = 	<div id="welcomeText">
+			welcome = 	<div>
 							<h1>Welcome to Librari!</h1>
 							<p>Click on Search to get started.</p>
 						</div>
 		}
 
-		else if (this.state.feature === "SignIn"){
-
-			header = "Sign in";
-
-			feature = 	<SignIn handleEmailChange={this.handleEmailChange} 
-								handlePwdChange={this.handlePwdChange} 
-								signIn={this.signIn} 
-								
-								/>
-			changeFeature = <div>Not registered?
-								<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
-							</div>
-			
-		}
-		else if (this.state.feature === "SignUp"){	
-			
-			header = "Register"
-
-			feature = 	<SignUp handleEmailChange={this.handleEmailChange} 
-								handlePwdChange={this.handlePwdChange} 
-								signUp={this.signUp} 
-								
-								/>
-			changeFeature  = 	<div>Already a user?
-									<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
-								</div>
-						
-		}
-
 		else{
-			feature = "Something went terribly wrong"
+			if (this.state.feature === "SignIn"){
+				header = <div id="loginHeader">Sign in</div>
+	
+				feature = 	<SignIn handleEmailChange={this.handleEmailChange} 
+									handlePwdChange={this.handlePwdChange} 
+									signIn={this.signIn}
+									/>
+				changeFeature = <div className="changeFeature">Not registered?
+									<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
+								</div>
+				
+			}
+			else if (this.state.feature === "SignUp"){	
+				
+				header = 	<div id="loginHeader">Register</div>
+	
+				feature = 	<SignUp handleEmailChange={this.handleEmailChange} 
+									handlePwdChange={this.handlePwdChange} 
+									signUp={this.signUp} 	
+									/>
+				changeFeature  = 	<div className="changeFeature">Already a user?
+										<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
+									</div>			
+			}
+			else{
+				feature = "Something went terribly wrong"
+			}
+
 		}
+
+		
 		
 		return (
 			<div id="Login">
-				<div id="loginHeader">{header}</div>
-				{feature}
-				{changeFeature}
+				<div id="loginWindow">
+					{header}
+					{feature}
+					{changeFeature}
+				</div>
+				<div id="welcomeText">
+					{welcome}
+				</div>
 			</div>
 	    )
 	}
