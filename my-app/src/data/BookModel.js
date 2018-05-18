@@ -157,16 +157,18 @@ const BookModel = function() {
   this.changeShelfName = (shelfId, newName) => {
     //console.log('byter namn på hylla '+shelfId + ' till ' + newName)
     this.getDatabase((shelves) => {
-      var updatedShelves = shelves.filter((s) => { 
-        if (parseInt(s.id, 10) === parseInt(shelfId, 10)){
-          if(newName){
-            s.name = newName
+      if (shelves){
+        var updatedShelves = shelves.filter((s) => { 
+          if (parseInt(s.id, 10) === parseInt(shelfId, 10)){
+            if(newName){
+              s.name = newName
+            }
           }
-        }
-        return s
-      });      
-      this.setDatabase(updatedShelves);
-      notifyObservers();
+          return s
+        });      
+        this.setDatabase(updatedShelves);
+        notifyObservers();
+      }
     })
   }
 
