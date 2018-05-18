@@ -10,8 +10,6 @@ import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 import LogIn from './LogIn/LogIn';
-import SignIn from './SignIn/SignIn';
-import SignUp from './SignUp/SignUp';
 import EditShelf from './EditShelf/EditShelf';
 import About from './About/About';
 

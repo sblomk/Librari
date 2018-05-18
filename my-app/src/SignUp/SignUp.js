@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './SignUp.css';
-import firebase from '../firebase.js';
 
 // This view contains the header of our website
 

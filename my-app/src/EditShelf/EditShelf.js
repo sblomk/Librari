@@ -8,7 +8,6 @@ class EditShelf extends Component {
 
 	constructor(props){
 		super(props);
-		this.props.model.addObserver(this);
 		this.handleRemove = this.handleRemove.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.getAllShelves = this.getAllShelves.bind(this);
@@ -19,13 +18,18 @@ class EditShelf extends Component {
 	}
 
 	componentDidMount() {
+		this.props.model.addObserver(this);
 		this.getAllShelves()
 		console.log(this.state.id + ' ********')
 	 }
+
+	componentWillUnmount() {
+		this.props.model.removeObserver(this)
+	  }
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
-			var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id));
+			var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id, 10));
  			this.setState({
  				shelf: shelf,
  				status: 'LOADED'
@@ -73,8 +77,9 @@ class EditShelf extends Component {
 			break;
 
 			case 'LOADED':
+				var bookList;
 				if (this.state.shelf.books){
-					var bookList = this.state.shelf.books.map((book, i) => 
+					bookList = this.state.shelf.books.map((book, i) => 
 					<div className="collectionBook" key={i}>
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 						<div className="booktitle" id="booktitle" ref="title">
@@ -88,7 +93,7 @@ class EditShelf extends Component {
 					</div>)
 				}
 				else{
-					var bookList = <p className="noBooks">There are no books in this shelf</p>;
+					bookList = <p className="noBooks">There are no books in this shelf</p>;
 				}
 
 				return(
@@ -107,7 +112,6 @@ class EditShelf extends Component {
 						</Link>
 					</div>
 				);
-			break;
 
 			default:
 				shelf = <b>Failed to load data, please try again</b>

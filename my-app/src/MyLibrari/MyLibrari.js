@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './MyLibrari.css';
 
-//var shelves;
-var newShelfname;
-
 class MyLibrari extends Component {
 
 	constructor(props){
 		super(props);
-		this.props.model.addObserver(this);
 		this.handleRemove = this.handleRemove.bind(this)
 		this.getAllShelves = this.getAllShelves.bind(this);
 		this.state = {
@@ -18,8 +14,12 @@ class MyLibrari extends Component {
 	}
 
 	componentDidMount() {
-			this.getAllShelves()
-	 }
+		this.props.model.addObserver(this);
+		this.getAllShelves()
+	}
+	componentWillUnmount() {
+		this.props.model.removeObserver(this);
+	}
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
@@ -57,18 +57,19 @@ class MyLibrari extends Component {
 				shelfList = <em><p className="loading">Loading...</p></em>
 			break;
 
-	    case "LOADED":
+	    	case "LOADED":
 				if (!(this.state.shelves)){
-						shelfList = 'Finns inga hyllor';
+					shelfList = 'Finns inga hyllor';
 				}
 				else{
+					let bookList;
 					shelfList = this.state.shelves.map((shelf) => {
 
 						if (shelf.books === undefined){
-							var bookList = <p className="noBooks">There are no books in this shelf</p>;
+							bookList = <p className="noBooks">There are no books in this shelf</p>;
 						}
 						else{
-							var bookList = shelf.books.map((book, i) => 
+							bookList = shelf.books.map((book, i) => 
 								<div className="collectionBook" key={i}>
 									<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 									<div className="booktitle">
