@@ -22,7 +22,7 @@ class ChooseShelf extends Component {
             btn = <button id="addbtn" className="addbtn" title="Add to shelf" onClick={this.props.submit}>Add</button>
         }
         else{
-            btn = <button id="addbtn" className="addbtn" disabled title="Select a shelf!" onClick={this.props.submit}>Add</button>
+            btn = <button id="addbtn" className="addbtn" disabled title="You need to select a shelf!" onClick={this.props.submit}>Add</button>
         }
         
         return(

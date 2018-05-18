@@ -8,9 +8,9 @@ class CreateShelf extends Component {
 
         return(
             <div className="CreateShelf">
-                <input onChange={this.props.handleChange} placeholder="Create new shelf" title="Set name of new shelf"/>
+                <input onChange={this.props.handleChange} placeholder="Create a shelf name" title="Set name of new shelf"/>
                 <Link to="/">
-                    <button className="addbtn" onClick={this.props.submit} title="Add to new shelf">Create and add</button>
+                    <button className="addbtn" onClick={this.props.submit} title="Add to new shelf">Create shelf and add book</button>
                 </Link>
                 <div>Do you want to add the book to an existing shelf?</div>
             </div>
