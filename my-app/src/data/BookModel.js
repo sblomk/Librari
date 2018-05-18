@@ -217,8 +217,8 @@ const BookModel = function() {
     observers = observers.filter(o => o !== observer);
   };
 
-  const notifyObservers = function (details) {
-    observers.forEach(o => o.update(details));
+  const notifyObservers = function () {
+    observers.forEach(o => o.update());
   };
 
 };

@@ -3,7 +3,7 @@ import CreateShelf from '../AddBook/CreateShelf/CreateShelf';
 import ChooseShelf from '../AddBook/ChooseShelf/ChooseShelf';
 import './AddBook.css';
 
-//This compnent enables creating new shelves as well as adding books to shelves within
+//This component enables creating new shelves as well as adding books to shelves within
 //the parent component Book.js
 class AddBook extends Component {
    constructor(props){
@@ -33,10 +33,10 @@ class AddBook extends Component {
     }
 
     //Retrieves shelves from firebase db.
-    //Also sets type of feature component in accordance with has been retrieved
+    //Also sets type of "feature" component in accordance with what has been retrieved
     getAllShelves() {
         this.props.model.getShelves((shelves) => {
-            //If previously user made shelves has been retrieved from firebase db
+            //If the user has previously made shelves
             if (shelves){
 		//If the user is connected
                 if (shelves !== 'error'){
@@ -53,10 +53,10 @@ class AddBook extends Component {
                     })
                 }
             }
-	    //If the user has not previously made any shelves
+	    //If the user no previously made any shelves
             else{
                 this.setState({
-                    feature: "CreateShelf", //"CreateShelf" is set if the user has not made any shelves previously
+                    feature: "CreateShelf", //"CreateShelf" is set if the user does not have any previously made shelves
                     status: 'LOADED'
                 })
             }
@@ -84,19 +84,21 @@ class AddBook extends Component {
     }
 
     //Returns a shelf id, and creates an id in the case that there is none
-    submitBook(){  
+    submitBook(){
+	//If the user wants to add book to an existing shelf
         if (this.state.feature ==="ChooseShelf"){
             this.props.model.addToShelf(parseInt(this.state.activeShelf, 10), this.props.book, () => {
                 alert("This book is already in this shelf! If you want to store this book again, create or choose a new shelf.")}
             )
         }
+	//If the user wants to create a new shelf for the book
         else if(this.state.feature ==="CreateShelf"){
             this.props.model.createNewShelfAndAddBook(
                 this.state.newShelfName,
                 this.props.book);
         }
     }
-
+    //Enables the user to switch between features for either adding book to shelf or creating a new shelf
     handleFeatureChange(){
 		if(this.state.feature === "CreateShelf"){
 			this.setState({
@@ -117,24 +119,28 @@ class AddBook extends Component {
         let feature = this.state.feature;
         const {displayMessage} = this.state;
 
+	//If the parent component Book.js is used with no logged in user    
         if (this.props.model.getUserStatus() === 'LoggedOut'){
             if (!displayMessage){
                 return feature = <em><p className="loading">Loading...</p></em>
             }
             feature = <p className='recommendLogin'>Please log in to use the full features of Librari!</p>
         }
+	//If the parent component Book.js is used with by a logged in user  
         else{
             switch (this.state.status) {  
                 case "INITIAL":
                     feature = <em><p className="loading">Loading<span>.</span><span>.</span><span>.</span></p></em>
                 break;
                 case 'LOADED':
+		    //If the feature is "CreateShelf", pass the CreateShelf-component into AddBook.js
                     if(feature === "CreateShelf"){
                         feature = <CreateShelf 
                                     handleChange={this.handleInputChange} 
                                     submit={this.submitBook}
                                     />
                     }
+		    //If the feature is "ChooseShelf", pass the ChooseShelf-component into AddBook.js
                     else if(feature === "ChooseShelf"){
                         feature = <ChooseShelf 
                                     shelves={this.state.shelves} 
@@ -144,7 +150,7 @@ class AddBook extends Component {
                                     alreadyExist={this.state.exists}/>
                     }
                     return(
-                        // displaying information about the book, as well as the option of shelves
+                        // Displays information about the book, as well as the features
                             <div className="AddBook">
                                 {feature}
                                 <div className="linkDiv" onClick={this.handleFeatureChange}>Click here.</div>
@@ -152,6 +158,7 @@ class AddBook extends Component {
                             );
 
                 default:
+		    //If the user is disconnected
                     if (!displayMessage){
                         return feature = <em><p className="loading">Loading...</p></em>
                     }
