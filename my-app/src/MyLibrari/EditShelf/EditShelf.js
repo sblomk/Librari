@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EditShelf.css';
+import '../MyLibrari.css';
+
 
 var newShelfname;
 
@@ -85,11 +87,11 @@ class EditShelf extends Component {
 						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
 						<div className="booktitle" id="booktitle" ref="title">
 							<div>
-									<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(this.state.shelf.id, book.id)}></span>
-								</div>
-								<div className="col-md-12">
+									<span title="Remove book from shelf" className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(this.state.shelf.id, book.id)}></span>
+							</div>
+							<div>
 									{book.volumeInfo.title}
-								</div>
+							</div>
 						</div>
 					</div>)
 				}
@@ -105,7 +107,7 @@ class EditShelf extends Component {
 								<button className='savebtn' onClick={this.handleSave}><span className="glyphicon glyphicon-ok"></span> Save</button>
 							</Link>
 						</div>
-						<div className="shelf">
+						<div className="collection">
 							{bookList}
 						</div>
 						<Link to="/profile">

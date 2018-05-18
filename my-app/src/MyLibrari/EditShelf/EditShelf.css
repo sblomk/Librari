@@ -1,0 +1,34 @@
+
+
+#inputChange{
+border: 1px solid #fff;
+}
+
+input:focus::-webkit-input-placeholder{
+color: #C0C0C0;
+}
+
+input:focus{
+color: #000;
+}
+
+.trashbtn, .savebtn{
+color: #fff;
+margin: 5px;
+border: 1px solid #fff;
+/*width: 200px;*/
+}
+
+.trashbtn:active, .savebtn:active {
+transform: translateY(2px);
+}
+
+.trashbtn:hover, .savebtn:hover{
+opacity: 0.8;
+}
+
+.noBooks{
+color: #C0C0C0;
+padding: 10px;
+margin-bottom: 0px;
+}
