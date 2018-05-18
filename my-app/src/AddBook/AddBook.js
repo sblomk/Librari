@@ -9,32 +9,45 @@ class AddBook extends Component {
     constructor(props){
         super(props);
 
-        this.state = { 
-            newShelfName: "", 
-            activeShelf: null,
-            status: 'INITIAL'
-        }
-
-        //this.props.model.addObserver(this);
-        this.handleDropdownChange = this.handleDropdownChange.bind(this)
-        this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleDropdownChange = this.handleDropdownChange.bind(this);
+        this.enableMessage = this.enableMessage.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.getAllShelves = this.getAllShelves.bind(this);
         this.submitBook = this.submitBook.bind(this);
         this.handleFeatureChange = this.handleFeatureChange.bind(this);
+
+        this.state = { 
+            newShelfName: "", 
+            activeShelf: null,
+            status: 'INITIAL',
+			displayMessage: false
+		}
+        this.timer = setTimeout(this.enableMessage, 2500);
     }
 
     componentDidMount() {
-        this.getAllShelves()
+        this.getAllShelves();
       }
+    
+    componentWillUnmount() {
+        clearTimeout(this.timer);
+    }
 
     getAllShelves() {
         this.props.model.getShelves((shelves) => {
             if (shelves){
-                this.setState({
-                    shelves: shelves,
-                    feature: "ChooseShelf",
-                    status: 'LOADED'
-                })
+                if (shelves !== 'error'){
+                    this.setState({
+                        shelves: shelves,
+                        feature: "ChooseShelf",
+                        status: 'LOADED'
+                    })
+                }
+                else{
+                    this.setState({
+                        status: 'ERROR'
+                    })
+                }
             }
             else{
                 this.setState({
@@ -42,10 +55,14 @@ class AddBook extends Component {
                     status: 'LOADED'
                 })
             }
-        }, (errordata) => {
-            console.log("The read failed: ")
-            ;})
+        })
     }
+
+    enableMessage() {
+		this.setState({
+			displayMessage: true
+		});
+	}
 
     // handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
@@ -100,7 +117,8 @@ class AddBook extends Component {
 
 
     render(){
-        let feature = this.state.feature
+        let feature = this.state.feature;
+        const {displayMessage} = this.state;
 
         if (this.props.model.getUserStatus() === 'LoggedOut'){
             feature = <p className='loginmsg'>Please log in to use the full features of Librari!</p>
@@ -134,7 +152,10 @@ class AddBook extends Component {
                             );
 
                 default:
-                //return 'hej';
+                    if (!displayMessage){
+                        return feature = <em><p className="loading">Loading...</p></em>
+                    }
+                    feature = <b>Failed to load data, please try again</b>
             }
         }
                 return(
