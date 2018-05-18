@@ -23,16 +23,18 @@ class MyLibrari extends Component {
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
- 			this.setState({
- 				shelves: shelves,
- 				status: 'LOADED'
- 			})
- 		}, (errordata) => {
-			 console.log("The read failed "+ errordata)
-			 this.setState({
+			if (shelves === 'error'){
+				this.setState({
 					status: 'ERROR'
-			})
- 			;})
+				})
+			}
+			else{
+				this.setState({
+					shelves: shelves,
+					status: 'LOADED'
+				})
+			}
+ 		})
  	}
 
 
@@ -59,7 +61,7 @@ class MyLibrari extends Component {
 
 	    	case "LOADED":
 				if (!(this.state.shelves)){
-					shelfList = 'Finns inga hyllor';
+					shelfList = <p className="noShelves">You have not created any shelves yet. Go to Search to explore books and create shelves.</p>;
 				}
 				else{
 					let bookList;
@@ -95,7 +97,7 @@ class MyLibrari extends Component {
 					});
 				}
 			break;
-			default:
+			case 'ERROR':
 				shelfList = <b>Failed to load data, please try again</b>
 			break;
 		};

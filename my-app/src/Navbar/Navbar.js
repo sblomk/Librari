@@ -14,7 +14,7 @@ class Navbar extends Component {
 			email: null,
 			status: this.props.model.getUserStatus()
 		})
-		console.log(this.state.status + " status ya")
+		//console.log(this.state.status + " status ya")
 		this.addListener();
 
 		this.logOut = this.logOut.bind(this)
@@ -41,21 +41,9 @@ class Navbar extends Component {
 					status: "LoggedIn"
 				});
 				this.props.model.setUserStatus(this.state.status)
-				/*
-				var mail = user.email;
-				var displayName = user.displayName;
-				var emailVerified = user.emailVerified;
-				var photoURL = user.photoURL;
-				var isAnonymous = user.isAnonymous;
-				var uid = user.uid;
-				var providerData = user.providerData;
-		    	// ...
-		    	console.log(this.state.email)
-		    	console.log(uid)
-		    	*/
+
 		    } else {
 				// User is signed out.
-				// ...
 				this.setState({
 					status: "LoggedOut"
 				})

@@ -20,7 +20,6 @@ class EditShelf extends Component {
 	componentDidMount() {
 		this.props.model.addObserver(this);
 		this.getAllShelves()
-		console.log(this.state.id + ' ********')
 	 }
 
 	componentWillUnmount() {

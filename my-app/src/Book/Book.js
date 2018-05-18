@@ -63,9 +63,9 @@ class Book extends Component {
                             <img src={this.state.img.thumbnail} alt=''/>
                         </div>
                         <div className="right">
-                            <h1>{this.state.title}</h1>
-                            <h2>{this.state.subtitle}</h2>
-                            <h3>{this.state.authors[0]}</h3>
+                            <h2>{this.state.title}</h2>
+                            <h3>{this.state.subtitle}</h3>
+                            <h4>{this.state.authors[0]}</h4>
                             <AddBook book={this.state.chosenBook} model={this.props.model} />
                         </div>
                     </div>

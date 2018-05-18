@@ -8,17 +8,13 @@ const BookModel = function() {
       if (user) { 
         this.userId = user.uid;
         localStorage.setItem("userId",this.userId);
-        console.log('user id '+this.userId);
       }
       else { }
     }.bind(this));
   }
   this.addListener();
 
-
-  // let apiKey = 'AIzaSyCdfNCyUlSSV9AkebmZhTW_Rfw2yjzJHK4';
-
-  let apiKey = "AIzaSyCH6Rel4hni_csxJ_S258w-yEU8Dl7Wupg"; // 'AIzaSyCdfNCyUlSSV9AkebmZhTW_Rfw2yjzJHK4';
+  let apiKey = "AIzaSyCH6Rel4hni_csxJ_S258w-yEU8Dl7Wupg";
   let shelves = [];
   let observers = [];
   let chosenBook = null;
@@ -26,7 +22,6 @@ const BookModel = function() {
 
   this.setUserStatus = function (status){
     userStatus = status
-    console.log("Ny status i BookModel: " + userStatus)
 
     if (status === "LoggedOut") { 
       localStorage.setItem("userId", ""); 
@@ -53,23 +48,33 @@ const BookModel = function() {
   }
 
   // get books from db
-  this.getDatabase = (callback, errorcallback) => {
-        var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
-        ref.once('value', function(snapshot) {
-        console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-          if (Array.isArray(snapshot.val())) {
-            callback(snapshot.val());
-          } else if (!(snapshot.val())) {
-            callback(snapshot.val());
-          } else {
-            callback([snapshot.val()])
-          }
-        }); //.bind(this));
-      /*}
-      else{
-        errorcallback();
-      }
-    })*/
+  this.getDatabase = (callback) => {
+
+    var connectedRef = firebase.database().ref(".info/connected");
+    console.log(connectedRef)
+    connectedRef.on("value", function(snap) {
+    console.log(snap.val())
+    if (snap.val() === true) {
+      console.log('connected')
+      var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
+      ref.once('value', function(snapshot) {
+      console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
+        if (Array.isArray(snapshot.val())) {
+          callback(snapshot.val());
+        } else if (!(snapshot.val())) {
+          callback(snapshot.val());
+        } else {
+          callback([snapshot.val()])
+        }
+      }); //.bind(this));
+    }
+    else {
+      console.log('inte connected')
+      callback('error');
+    }
+  });
+
+
 
   }
 
@@ -92,7 +97,7 @@ const BookModel = function() {
   this.getQuery = () => {
     var query = localStorage.getItem('query')
     if (!query){
-      query = 'Tolkien'
+      query = 'Tove Jansson'
     }
     return query;
   }
@@ -110,7 +115,7 @@ const BookModel = function() {
   }
 
   // adding the chosen book to the chosen shelf
-  this.addToShelf = (shelfId, book) => {
+  this.addToShelf = (shelfId, book, callback) => {
 
     this.getDatabase((shelves) => {
 
@@ -129,6 +134,9 @@ const BookModel = function() {
           if (!exists) {
             this.getShelfByID(shelves, shelfId).books.push(book);
             this.setDatabase(shelves);
+          }
+          else{
+            callback()
           }
         }
       }
@@ -167,7 +175,6 @@ const BookModel = function() {
   }
 
   this.removeShelf = (shelfId) => {
-    console.log('tar bort hylla med id: ' + shelfId)
     this.getDatabase((shelves) => {
       var updatedShelves = shelves.filter((s) => { return s.id !== shelfId; });
       this.setDatabase(updatedShelves);
