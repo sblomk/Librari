@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './About.css';
 import calleImg from '../images/calle.png';
 import camillaImg from './../images/camilla.png';
@@ -24,22 +23,22 @@ class About extends Component {
                 </div>
                 <div id="aboutUs">
                     <div className="aboutPerson">
-                        <div className="aboutImage"><img src={calleImg}/></div>
+                        <div className="aboutImage"><img alt="" src={calleImg}/></div>
                         <div className="aboutName">Calle Svedhag</div> 
                         <div className="aboutIcons"></div>
                     </div>
                     <div className="aboutPerson">
-                        <div className="aboutImage"><img src={camillaImg}/></div>
+                        <div className="aboutImage"><img alt="" src={camillaImg}/></div>
                         <div className="aboutName">Camilla Ahlenius</div> 
                         <div className="aboutIcons"></div>
                     </div>
                     <div className="aboutPerson">
-                        <div className="aboutImage"><img src={davidImg}/></div>
+                        <div className="aboutImage"><img alt="" src={davidImg}/></div>
                         <div className="aboutName">David Tranæus</div> 
                         <div className="aboutIcons"></div>
                     </div>
                     <div className="aboutPerson">
-                        <div className="aboutImage"><img src={matildaImg}/></div>
+                        <div className="aboutImage"><img alt="" src={matildaImg}/></div>
                         <div className="aboutName">Matilda Carlson</div> 
                         <div className="aboutIcons"></div>
                     </div>
