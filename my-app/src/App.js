@@ -11,6 +11,7 @@ import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 import LogIn from './LogIn/LogIn';
 import EditShelf from './EditShelf/EditShelf';
+import About from './About/About';
 
 
 
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/book/:value" render={()=> <Book model={modelInstance}/>}/>
             <Route path="/profile" render={()=> <MyLibrari model={modelInstance}/>}/>
             <Route path="/edit_shelf/:value" render={()=> <EditShelf model={modelInstance}/>}/>
+            <Route path="/about" render={() => <About/>} />
           </center>
         </div>
         <div className="Navbar">

@@ -8,6 +8,10 @@ font-family: Futura;
 text-align: center;
 }
 
+#welcomeText{
+color: #FFF;
+}
+
 #loginHeader{
 font-size: 20px;
 margin-bottom: 20px;
@@ -17,3 +21,4 @@ margin-bottom: 20px;
 color: #446083;
 cursor: pointer;
 }
+

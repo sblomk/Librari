@@ -1,0 +1,24 @@
+#About{
+color: #FFF;
+width: 80%
+}
+
+#aboutText{
+max-width: 600px;
+min-width: 300px;
+margin-bottom: 20px;
+margin-top: 10px;
+
+}
+
+.aboutPerson{
+display: inline-block;
+margin: 10px;
+margin-top: 30px;
+width: 200px;
+}
+
+.aboutPerson img{
+width: 200px;
+margin-bottom: 10px;
+}

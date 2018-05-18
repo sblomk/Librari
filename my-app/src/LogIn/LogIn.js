@@ -100,7 +100,11 @@ class LogIn extends Component {
 		let changeFeature;
 
 		if (currentStatus === "LoggedIn"){
-			feature = <h1>Welcome to Librari!</h1>
+			document.getElementById("Login").style.background = "None";
+			feature = 	<div id="welcomeText">
+							<h1>Welcome to Librari!</h1>
+							<p>Click on Search to get started.</p>
+						</div>
 		}
 
 		else if (this.state.feature === "SignIn"){

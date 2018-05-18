@@ -41,9 +41,8 @@ class Navbar extends Component {
 					status: "LoggedIn"
 				});
 				this.props.model.setUserStatus(this.state.status)
-
 		    } else {
-				// User is signed out.
+				//User is signed out
 				this.setState({
 					status: "LoggedOut"
 				})
@@ -89,7 +88,6 @@ class Navbar extends Component {
 	render() {
 
 		let currentStatus = this.state.status
-
 		let profile;
 		let loginFeature;
 		let library;
@@ -126,9 +124,12 @@ class Navbar extends Component {
 				<Link to="/" title="Search for books">
 					<span className="glyphicon glyphicon-search"></span> Search
 				</Link>
+				<Link to="/about" title="About">
+					<span className="glyphicon glyphicon-info-sign"></span> About
+				</Link>
 				{loginFeature}
 				{profile}
-				<a href="javascript:void(0);" className="icon" onClick={this.showResponsiveBar}>
+				<a href="" className="icon" onClick={this.showResponsiveBar}>
     				<span className="glyphicon glyphicon-menu-hamburger"></span>
   				</a>
 			
