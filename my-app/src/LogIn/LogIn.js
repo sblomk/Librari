@@ -14,15 +14,20 @@ class LogIn extends Component {
 			feature: "SignIn", 
 			status: this.props.model.getUserStatus()
 		}
-
-		this.props.model.addObserver(this)
-
+		
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePwdChange = this.handlePwdChange.bind(this);
 		this.handleFeatureChange = this.handleFeatureChange.bind(this);
 		this.signIn = this.signIn.bind(this);
 		this.signUp = this.signUp.bind(this);
 		this.update = this.update.bind(this)
+	}
+
+	componentDidMount() {
+		this.props.model.addObserver(this);
+	}
+	componentWillUnmount() {
+		this.props.model.removeObserver(this);
 	}
 
 	handleEmailChange(event) {
