@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EditShelf.css';
+import placeholder from './../images/placeholder.png';
 
 var newShelfname;
 
@@ -80,19 +81,27 @@ class EditShelf extends Component {
 			case 'LOADED':
 				var bookList;
 				if (this.state.shelf.books){
-					bookList = this.state.shelf.books.map((book, i) => 
-					<div className="collectionBook" key={i}>
-						<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
-						<div className="booktitle" id="booktitle" ref="title">
-							<div>
-									<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(this.state.shelf.id, book.id)}></span>
+					bookList = this.state.shelf.books.map((book, i) => {
+						var img;
+						if (!(book.volumeInfo.imageLinks)){
+							img = <img className="bookimg" src={placeholder} alt=''/>;
+						}
+						else {
+							img = <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>;
+						}
+						return(
+							<div className="collectionBook" key={i}>
+								{img}
+								<div className="booktitle" id="booktitle" ref="title">
+									<div>
+											<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(this.state.shelf.id, book.id)}></span>
+										</div>
+										<div className="col-md-12">
+											{book.volumeInfo.title}
+										</div>
 								</div>
-								<div className="col-md-12">
-									{book.volumeInfo.title}
-								</div>
-						</div>
-					</div>)
-				}
+							</div>)})
+				}												
 				else{
 					bookList = <p className="noBooks">There are no books in this shelf</p>;
 				}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './MyLibrari.css';
+import placeholder from './../images/placeholder.png';
 
 class MyLibrari extends Component {
 
@@ -83,17 +84,26 @@ class MyLibrari extends Component {
 							bookList = <p className="noBooks">There are no books in this shelf</p>;
 						}
 						else{
-							bookList = shelf.books.map((book, i) => 
+							bookList = shelf.books.map((book, i) => {
+								var img;
+								if (!(book.volumeInfo.imageLinks)){
+									img = <img className="bookimg" src={placeholder} alt=''/>;
+								}
+								else {
+									img = <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>;
+								}
+								return(
 								<div className="collectionBook" key={i}>
-									<img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>
+									{img}
 									<div className="booktitle">
 										<div id="removediv">
 											<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
 										</div>
-										<div className="col-md-12"> {book.volumeInfo.title} 
+										<div className="col-md-12"> 
+											{book.volumeInfo.title} 
 										</div>
 									</div>
-								</div>);
+								</div>)});
 						}
 						return(
 							<div className="personalShelf" id={shelf.id} key={shelf.id}>
@@ -102,7 +112,8 @@ class MyLibrari extends Component {
 										<span className="editbtn glyphicon glyphicon-pencil" id={shelf.id} title="Edit shelf"></span>
 									</Link>
 								</div> 
-								<div className="collection"> {bookList} 
+								<div className="collection"> 
+									{bookList} 
 								</div>
 							</div>
 						);

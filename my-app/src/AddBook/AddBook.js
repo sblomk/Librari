@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CreateShelf from '../BookHandle/CreateShelf/CreateShelf';
-import ChooseShelf from '../BookHandle/ChooseShelf/ChooseShelf';
+import CreateShelf from '../AddBook/CreateShelf/CreateShelf';
+import ChooseShelf from '../AddBook/ChooseShelf/ChooseShelf';
 import './AddBook.css';
 
 
@@ -81,18 +81,10 @@ class AddBook extends Component {
     // returns a shelf id, and creates an id in the case that there is none
     submitBook(){  
         if (this.state.feature ==="ChooseShelf"){
-            if (!(this.state.activeShelf)){
-                this.setState({
-                    status: 'noShelf'
-                })
-            }
-            else {
-                this.props.model.addToShelf(parseInt(this.state.activeShelf, 10), this.props.book, () => {
-                    alert("This book is already in this shelf! If you want to store this book again, create or choose a new shelf.")}
-                )
-            }
+            this.props.model.addToShelf(parseInt(this.state.activeShelf, 10), this.props.book, () => {
+                alert("This book is already in this shelf! If you want to store this book again, create or choose a new shelf.")}
+            )
         }
-
         else if(this.state.feature ==="CreateShelf"){
             this.props.model.createNewShelfAndAddBook(
                 this.state.newShelfName,
