@@ -33,14 +33,10 @@ class SearchView extends Component {
 
   	//When clicking on book
   	handleClick(event) {
-  		//console.log(event.target.id + "activeBookId")
-  		//console.log(document.getElementById('bookWindow').style.display + "display innan")
-		//this.props.model.setChosen(event.target)
 		this.setState({
 			activeBookId: event.target.id
 		})
 		document.getElementById('bookWindow').style.display = "block";
-		//console.log(document.getElementById('bookWindow').style.display + "display efter")
 	}
 
 	newSearch(newFilter) {

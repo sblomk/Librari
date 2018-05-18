@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Book.css';
 import AddBook from '../AddBook/AddBook'
+import placeholder from './../images/placeholder.png'
 
 // This view displays the chosen book, after clicking on it in the Landing view.
 // Here, the book can be added to one of the shelves.
@@ -27,7 +28,7 @@ class Book extends Component {
         var subtitle = this.state.chosenBook.volumeInfo.subtitle;
         var authors = this.state.chosenBook.volumeInfo.authors;
 
-        var imgState = img ? img : {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+        var imgState = img ? img : {thumbnail: placeholder};
         var titleState = title ? title : "Could not find a title for this book";
         var subtitleState = subtitle ? subtitle : "Could not find a subtitle for this book";
         var authorState = authors ? authors : ["Could not find an author for this book"];
@@ -60,7 +61,7 @@ class Book extends Component {
                             </Link>
                         </div>
                         <div className="left">
-                            <img src={this.state.img.thumbnail} alt=''/>
+                            <img className="bookthumb" src={this.state.img.thumbnail} alt=''/>
                         </div>
                         <div className="right">
                             <h2>{this.state.title}</h2>
