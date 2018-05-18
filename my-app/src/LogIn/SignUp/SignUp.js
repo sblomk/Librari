@@ -10,7 +10,7 @@ class SignUp extends Component {
 				<input placeholder="password" type="password" onChange={this.props.handlePwdChange}/>
 				<br/>
 				<button onClick={this.props.signUp}>
-				  Go
+					Go
 				</button>
 			</div>
 	     );

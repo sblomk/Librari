@@ -32,18 +32,23 @@ class LogIn extends Component {
 		this.props.model.removeObserver(this);
 	}
 
+	//Handle the input for the e-mail
 	handleEmailChange(event) {
 		this.setState({
 			email: event.target.value
 		})
 	}
 
+	//Handle the input for password
 	handlePwdChange(event) {
 		this.setState({
 			pwd: event.target.value
 		})
 	}
 
+	//Controller to decide which feature to change to (the text in the bottom of the login window)
+	//If the SignIn feature is active, you will be able to change to the SignUp feature, 
+	//And vice versa
 	handleFeatureChange(){
 		if(this.state.feature === "SignUp"){
 			this.setState({
@@ -57,32 +62,30 @@ class LogIn extends Component {
 		}
 	}
 
+	//Firebase function to login
 	signIn(event) {
 		event.preventDefault()
 		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
 			// Handle Errors here
 			var errorCode = error.code;
 			var errorMessage = error.message;
-			// [START_EXCLUDE]
+
 			if (errorCode === 'auth/wrong-password') {
 			alert('Wrong password.');
-			} else {
+			} 
+			else {
 			alert(errorMessage);
 			}
-			this.setState({
-				background: "None"
-			})
-			// [END_EXCLUDE]
 		})
 	}
 
+	//Firebase function to sign up. 
+	//If the password is weak or the username is not an email adress, it will cause alerts.
 	signUp() {
-		//event.preventDefault();
 		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pwd).catch(function(error) {
-		  // Handle Errors here.
 		  let errorCode = error.code;
 		  let errorMessage = error.message;
-		  // ...
+
 		  if (errorCode === 'auth/weak-password') {
 		  	alert('The password is too weak.');
 		  }
@@ -92,6 +95,7 @@ class LogIn extends Component {
 		})
 	}
 
+	//The page will re render as the user status is changed.
 	update(details){
 		if(details === 'user'){
 			this.setState({
@@ -99,16 +103,16 @@ class LogIn extends Component {
 			})
 		}
 	}
-
 		
 	render() {
-		let currentStatus = this.props.model.getUserStatus()
 
+		let currentStatus = this.props.model.getUserStatus()
 		let feature;
 		let header;
 		let changeFeature;
 		let welcome;
 
+		//If you enter /login and are already logged in, it will only render a welcome text
 		if (currentStatus === "LoggedIn"){
 			welcome = 	<div>
 							<h1>Welcome to Librari!</h1>
@@ -116,14 +120,17 @@ class LogIn extends Component {
 						</div>
 		}
 
+		//Otherwise it will either render the SignIn component or the SignUp component depending on what login feature is selected
 		else{
 			if (this.state.feature === "SignIn"){
 				header = <div id="loginHeader">Sign in</div>
-	
+				
+				//The functions needed are sent as properties to the component
 				feature = 	<SignIn handleEmailChange={this.handleEmailChange} 
 									handlePwdChange={this.handlePwdChange} 
 									signIn={this.signIn}
 									/>
+				//If you are currently at the SignIn feature, you are able to change the feature here
 				changeFeature = <div className="changeFeature">Not registered?
 									<div className="linkDiv" onClick={this.handleFeatureChange}> Create an account.</div>
 								</div>
@@ -132,17 +139,19 @@ class LogIn extends Component {
 			else if (this.state.feature === "SignUp"){	
 				
 				header = 	<div id="loginHeader">Register</div>
-	
+
+				//The functions needed are sent as properties to the component
 				feature = 	<SignUp handleEmailChange={this.handleEmailChange} 
 									handlePwdChange={this.handlePwdChange} 
 									signUp={this.signUp} 	
 									/>
+				//If you are currently at the SignUp feature, you are able to change the feature here
 				changeFeature  = 	<div className="changeFeature">Already a user?
 										<div className="linkDiv" onClick={this.handleFeatureChange}>Sign in here</div>
 									</div>			
 			}
 			else{
-				feature = "Something went terribly wrong"
+				feature = "Something went terribly wrong. Please reload the page."
 			}
 
 		}

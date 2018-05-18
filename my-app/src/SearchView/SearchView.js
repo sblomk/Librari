@@ -31,21 +31,26 @@ class SearchView extends Component {
 		this.props.model.setQuery(event.target.value);
   	}
 
-  	//When clicking on book
+  	//When clicking on book, we change the state activeBookId
   	handleClick(event) {
 		this.setState({
 			activeBookId: event.target.id
 		})
-		document.getElementById('bookWindow').style.display = "block";
+
 	}
 
+	//In order to not crash, we look if the new searchvalue is not null
+	//If it is not, it will call getBooks with the new filter
+	//Otherwise, it will reuse the old one.
 	newSearch(newFilter) {
 		var search = this.state.filter
-		this.setState({ status: "INITIAL",
+		this.setState({ 
+			status: "INITIAL",
 			filter: newFilter !== "" ? newFilter : search
 		}, () => this.getBooks());		
 	}
 
+	//Calling getAllBooks in the model with the search filter
 	getBooks() {
 		this.props.model.getAllBooks(this.state.filter).then(books => {
 			this.props.model.setSearchResults(books.items);
@@ -84,10 +89,9 @@ class SearchView extends Component {
 	    }
 
 	    return (
-	      <div className="SearchView">
-	        <Search handleChange={this.handleChange}/>
-	        <SearchResults results={bookList}/>
-	   
+	      	<div className="SearchView">
+	    		<Search handleChange={this.handleChange}/>
+	        	<SearchResults results={bookList}/>
 	      </div>
 	      );
   	}

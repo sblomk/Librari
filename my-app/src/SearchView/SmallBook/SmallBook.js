@@ -7,6 +7,7 @@ class SmallBook extends Component {
 
 	render() {
 
+		//Adding a placeholder if it might not exist a cover for the book
 		if (this.props.book.volumeInfo.imageLinks == null) {
 			this.props.book.volumeInfo.imageLinks = {thumbnail: placeholder};
 		}

@@ -1,8 +1,11 @@
 #loginWindow{
 margin-top: 30px;
+margin-left: 10px;
+margin-right: 10px;
 background: #FFF;
 border-radius: 5px;
-width: 400px;
+min-width: 300px;
+max-width: 400px;
 font-family: Futura;
 text-align: center;
 }

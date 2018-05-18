@@ -5,19 +5,7 @@ text-align: center;
 
 
 .searchWindow{
-/*border: 0px;
-border-radius: 5px;*/
 background: #FFF;
-max-width: 500px;
-min-width: 300px;
-/*padding: 5px;
-font-family: Futura;
-color: #000;
-text-align: center;*/
-/*}
-
-.searchWindow:focus {
-outline: none;
-}*/
-
+width: 50%;
+min-width: 280px;
 }
