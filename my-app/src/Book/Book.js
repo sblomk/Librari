@@ -30,7 +30,7 @@ class Book extends Component {
 
         var imgState = img ? img : {thumbnail: placeholder};
         var titleState = title ? title : "Could not find a title for this book";
-        var subtitleState = subtitle ? subtitle : "Could not find a subtitle for this book";
+        var subtitleState = subtitle ? subtitle : "";
         var authorState = authors ? authors : ["Could not find an author for this book"];
 
         this.setState({

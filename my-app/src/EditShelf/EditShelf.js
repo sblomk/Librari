@@ -28,18 +28,20 @@ class EditShelf extends Component {
 	 
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
-			var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id, 10));
- 			this.setState({
- 				shelf: shelf,
- 				status: 'LOADED'
-			 })
- 		}, (errordata) => {
-			 console.log("The read failed "+ errordata)
-			 this.setState({
+			if (shelves === 'error'){
+				this.setState({
 					status: 'ERROR'
-			})
- 			;})
- 	}
+				})
+			}
+			else{
+				var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id, 10));
+				this.setState({
+					shelf: shelf,
+					status: 'LOADED'
+				})
+			}
+ 		})
+	 }
 
 
 	handleRemove = (sID, bID) => {

@@ -121,6 +121,9 @@ class AddBook extends Component {
         const {displayMessage} = this.state;
 
         if (this.props.model.getUserStatus() === 'LoggedOut'){
+            if (!displayMessage){
+                return feature = <em><p className="loading">Loading...</p></em>
+            }
             feature = <p className='loginmsg'>Please log in to use the full features of Librari!</p>
         }
         else{
