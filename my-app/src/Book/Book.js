@@ -6,22 +6,23 @@ import placeholder from './../images/placeholder.png'
 
 // This view displays the chosen book, after clicking on it in the Landing view.
 // Here, the book can be added to one of the shelves.
-
-
 class Book extends Component {
     
     constructor(props){
         super(props);
 
+        // Get the selected book's ID from the URL.
         this.state = {
             chosenBook: this.props.model.getBookFromSearchResults(window.location.href.toString().split("book/")[1]),
             status: 'INITIAL'
         }
     }
+
     componentDidMount(){
         this.checkState();
     }
     
+    // Check state of a book. Defualt values are assigned if they are missing.
     checkState(){
         var img= this.state.chosenBook.volumeInfo.imageLinks;
         var title = this.state.chosenBook.volumeInfo.title;
@@ -44,16 +45,19 @@ class Book extends Component {
 
     render(){
         switch(this.state.status){
+
+            // Initial rendering while data is loading.
             case 'INITIAL':
                 return (
                     <div className="bookWindow">
                         <em><p className="loading">Loading...</p></em>
                     </div>
                 )
-                
+            
+            // Renders the book and the AddBook component which handles where
+            // the new book should be stored.
             case 'LOADED':
                 return(
-                    // displaying information about the book, as well as the option of shelves
                     <div className="bookWindow">
                         <div className="windowHeader">
                             <Link to="/">
@@ -71,6 +75,8 @@ class Book extends Component {
                         </div>
                     </div>
                 );
+
+            // Default rendering in case loading of data failed.
             default: 
                 return (
                     <div className="bookWindow">

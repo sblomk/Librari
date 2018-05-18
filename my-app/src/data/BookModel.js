@@ -2,7 +2,9 @@ import firebase from "../firebase.js"
 
 const BookModel = function() {
 
-  
+  // Add this as a listener to the Firebase API.
+  // Listens if/which user is signed in to the Firebase Auth.
+  // This model uses the user ID in order to save/get the users data.
   this.addListener = function() {
     firebase.auth().onAuthStateChanged(function(user){
       if (user) { 
@@ -14,71 +16,67 @@ const BookModel = function() {
   }
   this.addListener();
 
+  // apiKey for Google Books API.
   let apiKey = "AIzaSyCH6Rel4hni_csxJ_S258w-yEU8Dl7Wupg";
-  let shelves = [];
+
+  // Observers to this model.
   let observers = [];
-  let chosenBook = null;
+
+  // Set initial user status.
   let userStatus = "LoggedOut"
 
   this.setUserStatus = function (status){
     userStatus = status
-
     if (status === "LoggedOut") { 
       localStorage.setItem("userId", ""); 
       localStorage.setItem("query", ""); 
     }
-    
     notifyObservers('user')
   }
 
-  this.getUserStatus= function(){ 
-    return userStatus
+  this.getUserStatus = function(){ 
+    return userStatus;
   }
 
-  // get all shelves
-  this.getShelves = (callback, errorcallback) => { 
-    this.getDatabase(callback, errorcallback);
+  // Get all shelves from db. Used from components.
+  this.getShelves = (callback) => { 
+    this.getDatabase(callback);
   }  
 
-  // update database
+  // Update db.
   this.setDatabase = (shelves) => {
     firebase.database().ref('users/' + this.userId).set(
       { allShelves: shelves }
     );
   }
 
-  // get books from db
+  // Get books from db. Takes a callback which handles request results.
   this.getDatabase = (callback) => {
-
     var connectedRef = firebase.database().ref(".info/connected");
     connectedRef.on("value", function(snap) {
-    if (snap.val() === true) {
-      var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
-      ref.once('value', function(snapshot) {
-      //console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
-        if (Array.isArray(snapshot.val())) {
-          callback(snapshot.val());
-        } else if (!(snapshot.val())) {
-          callback(snapshot.val());
-        } else {
-          callback([snapshot.val()])
-        }
-      }); //.bind(this));
-    }
-    else {
-      callback('error');
-    }
-  });
-
-
-
+      if (snap.val() === true) {
+        var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
+        ref.once('value', function(snapshot) {
+          if (Array.isArray(snapshot.val())) {
+            callback(snapshot.val());
+          } else if (!(snapshot.val())) {
+            callback(snapshot.val());
+          } else {
+            callback([snapshot.val()])
+          }
+        });
+      }
+      else {
+        callback('error');
+      }
+    });
   }
 
-  // get and set searchresults
+  // Get and set the search results.
   this.setSearchResults = (results) => {localStorage.setItem('search', JSON.stringify(results))}
   this.getSearchResults = () => {return localStorage.getItem('search');}
 
-  // get book from search results by id
+  // Get book from the search results by id.
   this.getBookFromSearchResults = (id) => {
     var search = JSON.parse(localStorage.getItem('search'))
     for (var i=0; i < search.length; i++){
@@ -86,9 +84,9 @@ const BookModel = function() {
         return search[i];
       }
     }
-    //return this.getSearchResults().filter((b) => { console.log(b.id); return b.id === id; })[0];
   }
 
+  // Get and set the query for searching books.
   this.setQuery = (query) => {localStorage.setItem('query', query)}
   this.getQuery = () => {
     var query = localStorage.getItem('query')
@@ -98,11 +96,7 @@ const BookModel = function() {
     return query;
   }
 
-  // get and set chosen book
-  this.setChosen = (book) => { chosenBook = book; }
-  this.getChosen = () => { return chosenBook; }
-
-  // get a shelf by id
+  // Get a shelf by id
   this.getShelfByID = (manyShelves, id) => {
     if (manyShelves){
       return manyShelves.filter((s) => { 
@@ -110,11 +104,9 @@ const BookModel = function() {
     }
   }
 
-  // adding the chosen book to the chosen shelf
+  // Add a book to a chosen shelf. Takes a callback in case a book already exists.
   this.addToShelf = (shelfId, book, callback) => {
-
     this.getDatabase((shelves) => {
-
       if (shelves){
         for ( var i=0; i < shelves.length; i++){
           if(shelves[i].id === shelfId){
@@ -139,23 +131,17 @@ const BookModel = function() {
     })
   }
 
-
-
-  // remove book from chosen shelf
+  // Remove a book from a chosen shelf.
   this.removeBookFromShelf = (shelfId, bookId) => {
-
     this.getDatabase((shelves) => {
         var updatedBooks = this.getShelfByID(shelves, shelfId).books.filter((b) => { return b.id !== bookId; });
-
         this.getShelfByID(shelves, shelfId).books = updatedBooks;
         this.setDatabase(shelves);
-        notifyObservers();
-        
+        notifyObservers(); 
       })
   }
 
   this.changeShelfName = (shelfId, newName) => {
-    //console.log('byter namn på hylla '+shelfId + ' till ' + newName)
     this.getDatabase((shelves) => {
       if (shelves){
         var updatedShelves = shelves.filter((s) => { 
@@ -180,38 +166,23 @@ const BookModel = function() {
     })
   }
 
-  // create a new shelf
   this.createNewShelfAndAddBook = (name, book) => {
-
     this.getDatabase((shelves) => {
-      
       let counter = 1;
-
       if (shelves !== null){
         shelves.forEach((s) => { if (s.id >= counter) { counter = s.id + 1; } });
       }
-      
       let emptyShelf = { id: counter, name: name, books: [] }
-
       emptyShelf.books.push(book);
       if ( shelves === null){
         shelves = [];
       }
       shelves.push(emptyShelf)
-
       this.setDatabase(shelves);
-
     })
-
   }
 
-
-  // get id of shelf
-  this.getShelfId = (name) => {
-    return shelves.filter((s) => { return s.name === name; })[0].id;
-  }
-
-  // API call returning a maximum of 40 books, with the filter set by the user
+  // API call returning a maximum of 40 books, with the filter set by the user.
   this.getAllBooks = function(filter) {
     const url = 'https://www.googleapis.com/books/v1/volumes?q=' + filter + '&maxResults=40&key=' + apiKey;
     return fetch(url)
@@ -219,7 +190,7 @@ const BookModel = function() {
         .catch(handleError)
   }
 
-  // API Helper methods
+  // API Helper methods.
   const processResponse = function (response) {
     if (response.ok) {
       return response.json()
@@ -237,6 +208,7 @@ const BookModel = function() {
     }
   }
 
+  // Handle observers.
   this.addObserver = function (observer) {
     observers.push(observer);
   };
