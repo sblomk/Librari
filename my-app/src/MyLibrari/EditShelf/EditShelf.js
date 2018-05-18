@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EditShelf.css';
-import placeholder from './../images/placeholder.png';
+import placeholder from './../../images/placeholder.png';
 import '../MyLibrari.css';
 
 var newShelfname;
