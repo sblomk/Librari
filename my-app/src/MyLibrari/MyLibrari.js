@@ -59,6 +59,13 @@ class MyLibrari extends Component {
 		let shelfList = null;
 		const {displayMessage} = this.state;
 
+		if (this.props.model.getUserStatus() === 'LoggedOut'){
+            if (!displayMessage){
+                return shelfList = <em><p className="loading">Loading...</p></em>
+            }
+            return shelfList = <p className='loginmsg'>Please log in to use the full features of Librari!</p>
+		}
+
 		switch (this.state.status) {
 			case "INITIAL":
 				shelfList = <em><p className="loading">Loading...</p></em>
