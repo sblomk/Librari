@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "../AddBook.css";
 
+//This component passes a new shelf name to parent component AddBook.js
 class CreateShelf extends Component {
     
     render(){
