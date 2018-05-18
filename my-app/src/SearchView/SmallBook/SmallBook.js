@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import placeholder from './../../images/placeholder.png'
+
 
 class SmallBook extends Component {
 
 	render() {
 
 		if (this.props.book.volumeInfo.imageLinks == null) {
-			this.props.book.volumeInfo.imageLinks = {thumbnail: 'https://www.orionbooks.co.uk/assets/img/newsletter_placeholder.jpg'};
+			this.props.book.volumeInfo.imageLinks = {thumbnail: placeholder};
 		}
 
 		return (
