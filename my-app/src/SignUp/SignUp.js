@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import './SignUp.css';
-
-// This view contains the header of our website
 
 class SignUp extends Component {
 		

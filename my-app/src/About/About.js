@@ -5,10 +5,8 @@ import camillaImg from './../images/camilla.png';
 import davidImg from './../images/david.png';
 import matildaImg from './../images/matilda.png';
 
-// This view displays the chosen book, after clicking on it in the Landing view.
-// Here, the book can be added to one of the shelves.
 
-
+//This component displays information about the app and its' creators
 class About extends Component {
     
     render(){
