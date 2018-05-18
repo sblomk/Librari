@@ -51,14 +51,11 @@ const BookModel = function() {
   this.getDatabase = (callback) => {
 
     var connectedRef = firebase.database().ref(".info/connected");
-    console.log(connectedRef)
     connectedRef.on("value", function(snap) {
-    console.log(snap.val())
     if (snap.val() === true) {
-      console.log('connected')
       var ref = firebase.database().ref('users/' + localStorage.getItem("userId") + "/allShelves");
       ref.once('value', function(snapshot) {
-      console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
+      //console.log(snapshot.val() + " bra object från funktionen this.getDatabase");
         if (Array.isArray(snapshot.val())) {
           callback(snapshot.val());
         } else if (!(snapshot.val())) {
@@ -69,7 +66,6 @@ const BookModel = function() {
       }); //.bind(this));
     }
     else {
-      console.log('inte connected')
       callback('error');
     }
   });

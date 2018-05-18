@@ -6,11 +6,14 @@ class MyLibrari extends Component {
 
 	constructor(props){
 		super(props);
-		this.handleRemove = this.handleRemove.bind(this)
+		this.handleRemove = this.handleRemove.bind(this);
+		this.enableMessage = this.enableMessage.bind(this);
 		this.getAllShelves = this.getAllShelves.bind(this);
 		this.state = {
-			status: 'INITIAL'
+			status: 'INITIAL',
+			displayMessage: false
 		}
+		this.timer = setTimeout(this.enableMessage, 2500);
 	}
 
 	componentDidMount() {
@@ -19,14 +22,12 @@ class MyLibrari extends Component {
 	}
 	componentWillUnmount() {
 		this.props.model.removeObserver(this);
+		clearTimeout(this.timer);
 	}
 	 
  	getAllShelves() {
-		 console.log('get all shelves')
  		this.props.model.getShelves((shelves) => {
-			 console.log('shelves i mylibrari ' + shelves)
 			if (shelves === 'error'){
-				console.log('ERROOOOOR')
 				this.setState({
 					status: 'ERROR'
 				})
@@ -40,6 +41,11 @@ class MyLibrari extends Component {
  		})
  	}
 
+	enableMessage() {
+		this.setState({
+			displayMessage: true
+		});
+	}
 
 	handleRemove = (sID, bID) => {
 		this.props.model.removeBookFromShelf(sID, bID);
@@ -51,6 +57,7 @@ class MyLibrari extends Component {
 
 	render(){
 		let shelfList = null;
+		const {displayMessage} = this.state;
 
 		switch (this.state.status) {
 			case "INITIAL":
@@ -96,6 +103,9 @@ class MyLibrari extends Component {
 				}
 			break;
 			default:
+				if (!displayMessage){
+					return shelfList = <em><p className="loading">Loading...</p></em>
+				}
 				shelfList = <b>Failed to load data, please try again</b>
 			break;
 		};
