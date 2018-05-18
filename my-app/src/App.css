@@ -16,10 +16,9 @@ position: fixed;
 position: absolute;
 margin-top: 30px;
 display: block;
-overflow: scroll;
+overflow: hidden;
 width: 100%;
 text-align: center;
-justify-content: center;
 }
 
 input, button, select {
