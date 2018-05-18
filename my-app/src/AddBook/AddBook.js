@@ -3,25 +3,24 @@ import CreateShelf from '../AddBook/CreateShelf/CreateShelf';
 import ChooseShelf from '../AddBook/ChooseShelf/ChooseShelf';
 import './AddBook.css';
 
-
+//This compnent enables creating new shelves as well as adding books to shelves within
+//the parent component Book.js
 class AddBook extends Component {
-    
-    constructor(props){
+   constructor(props){
         super(props);
-
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.enableMessage = this.enableMessage.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.getAllShelves = this.getAllShelves.bind(this);
         this.submitBook = this.submitBook.bind(this);
         this.handleFeatureChange = this.handleFeatureChange.bind(this);
-
+	 
         this.state = { 
             newShelfName: "", 
             activeShelf: null,
             status: 'INITIAL',
-			displayMessage: false
-		}
+	    displayMessage: false
+	}
         this.timer = setTimeout(this.enableMessage, 2500);
     }
 
@@ -33,25 +32,31 @@ class AddBook extends Component {
         clearTimeout(this.timer);
     }
 
+    //Retrieves shelves from firebase db.
+    //Also sets type of feature component in accordance with has been retrieved
     getAllShelves() {
         this.props.model.getShelves((shelves) => {
+            //If previously user made shelves has been retrieved from firebase db
             if (shelves){
+		//If the user is connected
                 if (shelves !== 'error'){
                     this.setState({
                         shelves: shelves,
-                        feature: "ChooseShelf",
+                        feature: "ChooseShelf", //"ChooseShelf" is set if previously made shelves is retrieved from firebase db
                         status: 'LOADED'
                     })
                 }
-                else{
+		//If the user is disconnected
+                else{ 
                     this.setState({
                         status: 'ERROR'
                     })
                 }
             }
+	    //If the user has not previously made any shelves
             else{
                 this.setState({
-                    feature: "CreateShelf",
+                    feature: "CreateShelf", //"CreateShelf" is set if the user has not made any shelves previously
                     status: 'LOADED'
                 })
             }
@@ -64,21 +69,21 @@ class AddBook extends Component {
 		});
 	}
 
-    // handler listening to what shelf is chosen in the dropdown menu
+    //Handler listening to what shelf is chosen in the dropdown menu
     handleDropdownChange(e) {
         this.setState({
             activeShelf: e.target.value
         })
     }
 
-    // handler for creating new shelves
+    //Handler for the input field of creating new shelves
     handleInputChange(e) {
         this.setState({
             newShelfName: e.target.value
         })
     }
 
-    // returns a shelf id, and creates an id in the case that there is none
+    //Returns a shelf id, and creates an id in the case that there is none
     submitBook(){  
         if (this.state.feature ==="ChooseShelf"){
             this.props.model.addToShelf(parseInt(this.state.activeShelf, 10), this.props.book, () => {

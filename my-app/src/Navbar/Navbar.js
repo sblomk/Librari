@@ -129,7 +129,7 @@ class Navbar extends Component {
 				</Link>
 				{loginFeature}
 				{profile}
-				<a href="" className="icon" onClick={this.showResponsiveBar}>
+				<a href="javascript:void(0)" className="icon" onClick={this.showResponsiveBar}>
     				<span className="glyphicon glyphicon-menu-hamburger"></span>
   				</a>
 			

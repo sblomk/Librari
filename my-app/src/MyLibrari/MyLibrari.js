@@ -96,8 +96,8 @@ class MyLibrari extends Component {
 								<div className="collectionBook" key={i}>
 									{img}
 									<div className="booktitle">
-										<div id="removediv">
-											<span className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
+										<div className="removediv">
+											<span title="Remove book from shelf" className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
 										</div>
 										<div className="col-md-12"> 
 											{book.volumeInfo.title} 
@@ -107,7 +107,8 @@ class MyLibrari extends Component {
 						}
 						return(
 							<div className="personalShelf" id={shelf.id} key={shelf.id}>
-								<div className="shelfname">{shelf.name}
+								<div className="shelfName">
+									{shelf.name}
 									<Link to={'/edit_shelf/' + shelf.id}>
 										<span className="editbtn glyphicon glyphicon-pencil" id={shelf.id} title="Edit shelf"></span>
 									</Link>

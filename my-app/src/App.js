@@ -10,7 +10,7 @@ import SearchView from './SearchView/SearchView';
 import MyLibrari from './MyLibrari/MyLibrari';
 import Navbar from './Navbar/Navbar';
 import LogIn from './LogIn/LogIn';
-import EditShelf from './EditShelf/EditShelf';
+import EditShelf from './MyLibrari/EditShelf/EditShelf';
 import About from './About/About';
 
 
