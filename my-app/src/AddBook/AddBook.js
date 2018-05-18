@@ -121,7 +121,7 @@ class AddBook extends Component {
             if (!displayMessage){
                 return feature = <em><p className="loading">Loading...</p></em>
             }
-            feature = <p className='loginmsg'>Please log in to use the full features of Librari!</p>
+            feature = <p className='recommendLogin'>Please log in to use the full features of Librari!</p>
         }
         else{
             switch (this.state.status) {  
