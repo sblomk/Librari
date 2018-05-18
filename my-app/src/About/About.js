@@ -16,7 +16,7 @@ class About extends Component {
                     Librari is your personal library, where you can keep track of your books in your personalized bookshelves.
                     Maybe you want to keep track of what books you wish to buy, your favorite books, or which ones you want to recommend to your friends. 
                     Whatever your purpose is, it is possible to create shelves that fits your personal need.
-                    With the possibility to log in with an unique account, you can reach your Librari anywhere, anytime.<br/><br/>
+                    With the possibility to log in with a unique account, you can reach your Librari anywhere, anytime.<br/><br/>
                     We hope you enjoy!
                 </div>
                 <div id="aboutUs">
