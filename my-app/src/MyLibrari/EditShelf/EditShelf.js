@@ -27,7 +27,8 @@ class EditShelf extends Component {
 	componentWillUnmount() {
 		this.props.model.removeObserver(this)
 	  }
-	 
+	
+	// Getting all shelves from the database, setting the state to loaded if it is not an error
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
 			if (shelves === 'error'){
@@ -36,6 +37,7 @@ class EditShelf extends Component {
 				})
 			}
 			else{
+				// Shelf is the actual book object which we get with the book id
 				var shelf = this.props.model.getShelfByID(shelves, parseInt(this.state.id, 10));
 				this.setState({
 					shelf: shelf,
@@ -43,8 +45,7 @@ class EditShelf extends Component {
 				})
 			}
  		})
-	 }
-
+	}
 
 	handleRemove = (sID, bID) => {
 		this.props.model.removeBookFromShelf(sID, bID);
@@ -62,13 +63,11 @@ class EditShelf extends Component {
 		newShelfname = '';
 	}
 
-	update(details) {
+	update() {
 		this.setState({
 			status: 'INITIAL'
 		})
-		if (details !== 'user') {
-			this.getAllShelves();
-		}
+		this.getAllShelves();
 	}
 
 	render(){
@@ -83,6 +82,8 @@ class EditShelf extends Component {
 				var bookList;
 				if (this.state.shelf.books){
 					bookList = this.state.shelf.books.map((book, i) => {
+						//Checking the image attribute of each book and replaces it 
+						// with a placeholder img if there is no thumbnail
 						var img;
 						if (!(book.volumeInfo.imageLinks)){
 							img = <img className="bookimg" src={placeholder} alt=''/>;
@@ -90,6 +91,7 @@ class EditShelf extends Component {
 						else {
 							img = <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>;
 						}
+
 						return(
 							<div className="collectionBook" key={i}>
 								{img}

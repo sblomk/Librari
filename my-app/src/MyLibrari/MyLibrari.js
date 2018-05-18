@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './MyLibrari.css';
 import placeholder from './../images/placeholder.png';
 
+
 class MyLibrari extends Component {
 
 	constructor(props){
@@ -14,18 +15,19 @@ class MyLibrari extends Component {
 			status: 'INITIAL',
 			displayMessage: false
 		}
+		// error message is enabled after 2500 ms
 		this.timer = setTimeout(this.enableMessage, 2500);
 	}
 
 	componentDidMount() {
 		this.props.model.addObserver(this);
-		this.getAllShelves()
+		this.getAllShelves();
 	}
 	componentWillUnmount() {
 		this.props.model.removeObserver(this);
 		clearTimeout(this.timer);
 	}
-	 
+	
  	getAllShelves() {
  		this.props.model.getShelves((shelves) => {
 			if (shelves === 'error'){
@@ -40,8 +42,8 @@ class MyLibrari extends Component {
 				})
 			}
  		})
- 	}
-
+	 }
+	
 	enableMessage() {
 		this.setState({
 			displayMessage: true
@@ -52,14 +54,16 @@ class MyLibrari extends Component {
 		this.props.model.removeBookFromShelf(sID, bID);
 	}
 
-	update(details) {
-		this.getAllShelves()
+	update() {
+		this.getAllShelves();
 	}
 
 	render(){
 		let shelfList = null;
 		const {displayMessage} = this.state;
 
+		// If the user is not logged in, a message is shown.
+		// The message is delayed to avoid it showing after a refresh of the page, when one is actually logged in.
 		if (this.props.model.getUserStatus() === 'LoggedOut'){
             if (!displayMessage){
                 return shelfList = <em><p className="loading">Loading...</p></em>
@@ -71,7 +75,6 @@ class MyLibrari extends Component {
 			case "INITIAL":
 				shelfList = <em><p className="loading">Loading...</p></em>
 			break;
-
 	    	case "LOADED":
 				if (!(this.state.shelves)){
 					shelfList = <p className="noShelves">You have not created any shelves yet. Go to Search to explore books and create shelves.</p>;
@@ -79,12 +82,13 @@ class MyLibrari extends Component {
 				else{
 					let bookList;
 					shelfList = this.state.shelves.map((shelf) => {
-
 						if (shelf.books === undefined){
 							bookList = <p className="noBooks">There are no books in this shelf</p>;
 						}
 						else{
 							bookList = shelf.books.map((book, i) => {
+								//Checking the image attribute of each book and replaces it 
+								// with a placeholder img if there is no thumbnail
 								var img;
 								if (!(book.volumeInfo.imageLinks)){
 									img = <img className="bookimg" src={placeholder} alt=''/>;
@@ -92,6 +96,7 @@ class MyLibrari extends Component {
 								else {
 									img = <img className="bookimg" src={book.volumeInfo.imageLinks.thumbnail} alt=''/>;
 								}
+
 								return(
 								<div className="collectionBook" key={i}>
 									{img}
@@ -99,7 +104,7 @@ class MyLibrari extends Component {
 										<div className="removediv">
 											<span title="Remove book from shelf" className="removebtn glyphicon glyphicon-remove-circle" onClick = { () =>this.handleRemove(shelf.id, book.id)}></span>
 										</div>
-										<div className="col-md-12"> 
+										<div> 
 											{book.volumeInfo.title} 
 										</div>
 									</div>
@@ -122,6 +127,8 @@ class MyLibrari extends Component {
 				}
 			break;
 			default:
+				// delayed message to avoid it from showing a moment before established connection,
+				// but still showing when actually disconnected
 				if (!displayMessage){
 					return shelfList = <em><p className="loading">Loading...</p></em>
 				}

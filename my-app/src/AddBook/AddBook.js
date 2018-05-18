@@ -3,7 +3,7 @@ import CreateShelf from '../AddBook/CreateShelf/CreateShelf';
 import ChooseShelf from '../AddBook/ChooseShelf/ChooseShelf';
 import './AddBook.css';
 
-//This compnent enables creating new shelves as well as adding books to shelves within
+//This component enables creating new shelves as well as adding books to shelves within
 //the parent component Book.js
 class AddBook extends Component {
    constructor(props){
