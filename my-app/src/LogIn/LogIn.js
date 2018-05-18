@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './LogIn.css';
 import firebase from '../firebase.js';
-import SignIn from '../SignIn/SignIn';
-import SignUp from '../SignUp/SignUp';
+import SignIn from './SignIn/SignIn';
+import SignUp from './SignUp/SignUp';
 
 class LogIn extends Component {
 	
