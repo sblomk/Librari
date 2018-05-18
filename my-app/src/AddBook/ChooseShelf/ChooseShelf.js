@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "../AddBook.css";
 import { Link } from 'react-router-dom';
 
+//This component enables the user to add Books into previously saved shelves
 class ChooseShelf extends Component {
 
     render(){
@@ -18,7 +19,7 @@ class ChooseShelf extends Component {
         )}
         //Else if the user has no previously saved shelves
         else{
-            shelfList = <option value="">You don\'t have any shelves</option>
+            shelfList = <option value="">You don&apos;t have any shelves</option>
         }
         //If the user has selected a shelf in the dropdown menu of AddBook.js
         if (this.props.activeShelf){
